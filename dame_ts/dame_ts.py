@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from TS import attempting_insertion_using_ternary_search
+from dame_ts.ternary_search import attempting_insertion_using_ternary_search
 
 
 def dame_with_ternary_search(n, alpha, m, user_samples):
@@ -23,7 +23,7 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
     # Localization phase
     # use first half of users for localization
     X1 = user_samples[:int(n/2)]
-
+    
 
     # loc_samples = user_samples[:n//2]
     theta_hat_loc = attempting_insertion_using_ternary_search(alpha, delta, n//2, m, X1)
@@ -31,7 +31,7 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
     # Estimation phase using second half
     X2 = user_samples[int(n/2):]
     # est_samples = user_samples[n//2:]
-
+    
     hat_thetas = []
     scale = 14 * tau / alpha
     for x in X2:
@@ -46,5 +46,6 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
     # Aggregation
     bar_theta = (2 / n) * sum(hat_thetas)
     return bar_theta
+
 
 

@@ -35,7 +35,7 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
     # Computing group size b_max to balance accuracy and privacy
     denom = np.log(2 * m / math.log(12)) - 2 * math.log(3 / 2)
     b1 = (2 * n * np.log(3 / 2)) / denom
-    b2 = (2 / ((2 * pi_alpha - 1) ** 2)) * np.log(2 * n / delta)
+    b2 = (2 / (((2 * pi_alpha - 1) ** 2) + 1e-3)) * np.log(2 * n / (delta +1e-3))
     b_max = int(math.ceil(max(b1, b2)))
 
     # Maximum number of ternary-search rounds
