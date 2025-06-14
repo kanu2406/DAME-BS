@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/python:3.13.5 
+      - image: cimg/node:20.0.0-browsers
     steps:
       - checkout
 
