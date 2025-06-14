@@ -41,6 +41,7 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
         if x_bar > theta_hat_loc[1]:
             x_bar = theta_hat_loc[1]
         noisy = x_bar + scale * np.random.laplace(0, 1)
+        noisy = max(-1, min(1, noisy))
         hat_thetas.append(noisy)
 
     # Aggregation
