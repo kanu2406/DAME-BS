@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/python:3.10  # Or 3.13 if needed
+      - image: cimg/base:2022.09  
     steps:
       - checkout
 
