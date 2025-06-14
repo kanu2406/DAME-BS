@@ -3,8 +3,7 @@
 
 # DAME-TS: Differentially Private Mean Estimation via Ternary Search
 
-[![CircleCI](https://circleci.com/gh/kanu2406/DAME-TS.svg?style=svg)](https://circleci.com/gh/kanu2406/DAME-TS)
-
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/kanu2406/DAME-TS/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/kanu2406/DAME-TS/tree/main)
 
 This repository provides a Python implementation of the **DAME-TS** algorithm for locally differentially private mean estimation using ternary search. It includes theoretical upper bounds and extensive experiments across multiple distributions.
 
