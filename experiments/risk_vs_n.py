@@ -1,3 +1,20 @@
+"""
+experiments.risk_vs_n
+---------------------
+
+This script runs the DAME algorithm for various distributions and plots
+the mean squared error (MSE) vs. number of users `n`.
+
+It uses utility functions from `dame_ts.utils`.
+
+Usage:
+    Run directly to generate and save plots for multiple distributions. The value of n used in the experiments is 
+    greater than the minimum n required for given values of alpha and m
+
+"""
+
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -7,6 +24,21 @@ from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,t
 
 
 def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=5000, m=20, true_mean=0.3, trials=50):
+    """
+    Runs a risk-vs-n experiment for a given distribution.
+
+    Args:
+        distribution (str): Name of the distribution ( "normal", "uniform", "laplace","exponential").
+        alpha (float): Privacy parameter. Default is 0.6.
+        min_n (int): Minimum number of users. Default is 5000.
+        m (int): Number of candidates. Default is 20.
+        true_mean (float): True mean value used for the experiment. Default is 0.3.
+        trials (int): Number of experiment trials. Default is 50.
+
+    Returns:
+        None. Displays plots.
+    """
+
     n_values = list(range(min_n, 20000 + 1, 2000))
     mean_errors = []
     std_errors = []

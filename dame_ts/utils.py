@@ -141,6 +141,24 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
 
 
 def plot_errorbars_and_upper_bounds(alphas, mean_errors, std_errors,upper_bounds, xlabel, ylabel, title):
+    """
+    Plots error bars and theoretical upper bounds on a single chart.
+
+    This function is typically used to visualize the mean squared errors
+    alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n).
+
+    Args:
+        alphas (list or array-like): X-axis values (e.g., alpha values or user counts).
+        mean_errors (list or array-like): Mean squared error values corresponding to `alphas`.
+        std_errors (list or array-like): Standard deviation of the errors for each value in `alphas`.
+        upper_bounds (list or array-like): Theoretical upper bounds to be plotted as a dashed line.
+        xlabel (str): Label for the x-axis.
+        ylabel (str): Label for the y-axis.
+        title (str): Title of the plot.
+
+    Returns:
+        None. Displays the plot using `matplotlib.pyplot`.
+    """
     plt.figure(figsize=(8, 5))
     plt.errorbar(alphas, mean_errors, yerr=std_errors, fmt='o-', capsize=5)
     plt.plot(alphas, upper_bounds, 'r--', label='Theoretical Upper Bound')

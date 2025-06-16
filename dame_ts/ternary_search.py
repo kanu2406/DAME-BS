@@ -12,7 +12,7 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
     are exhausted, returning the remaining interval.
 
     Parameters:
-    ----------
+    -----------
     alpha : float
         Differential privacy parameter for the binary (randomized response) queries.
     delta : float
@@ -25,7 +25,7 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
         A list of length n, each entry an array-like of m real-valued samples for one user.
 
     Returns:
-    -------
+    --------
     List :
         [L,R] = The estimated interval that might contain true mean where L is the  lower and R is the upper bound.
     """

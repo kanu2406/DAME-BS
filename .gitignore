@@ -1,0 +1,6 @@
+# Sphinx build output
+docs/build/
+docs/build/html/
+
+# Pytest cache
+.pytest_cache/
