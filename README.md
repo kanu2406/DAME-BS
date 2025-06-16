@@ -40,5 +40,8 @@ python experiments/experiment_risk_vs_n.py
 
 ### Documentation
 
+The documentation can be found here -
+
+https://kanu2406.github.io/DAME-TS/modules.html
 
 
