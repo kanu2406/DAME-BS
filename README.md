@@ -17,3 +17,28 @@ This repository provides a Python implementation of the **DAME-TS** algorithm fo
 - tqdm
 
 All dependencies are listed in requirements.txt.
+
+
+```python
+pip install -r requirements.txt
+```
+
+### Installation
+Clone the repository:
+
+```python
+git clone https://github.com/kanu2406/DAME-TS.git
+```
+
+### Experiments
+You can run the included experiments to replicate results:
+
+```python
+python experiments/experiment_risk_vs_alpha.py
+python experiments/experiment_risk_vs_n.py
+```
+
+### Documentation
+
+
+
