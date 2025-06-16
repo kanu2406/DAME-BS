@@ -29,8 +29,27 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
     List :
         [L,R] = The estimated interval that might contain true mean where L is the  lower and R is the upper bound.
     """
+    # --- Input validation ---
+    if not isinstance(n, int) or n <= 0:
+        raise ValueError("n must be a positive integer")
+    if not isinstance(m, int) or m <= 0:
+        raise ValueError("m must be a positive integer")
+    if not (isinstance(alpha, (int, float)) and alpha > 0):
+        raise ValueError("alpha must be a positive number")
+    if not isinstance(user_samples, (list, tuple)) or len(user_samples) != n:
+        raise ValueError(f"user_samples must be a list of length {n}")
+
+    # Check that each sample set is an iterable of length m
+    for i, sample in enumerate(user_samples):
+        if not hasattr(sample, '__len__') or len(sample) != m:
+            raise ValueError(f"Each user sample must be an array-like of length {m}")
+        
+
     # Precomputing the probability of truthful response under randomized response
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    if alpha == np.inf:
+        pi_alpha=1
+    else:
+        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 
     # Computing group size b_max to balance accuracy and privacy
     denom = np.log(2 * m / math.log(12)) - 2 * math.log(3 / 2)

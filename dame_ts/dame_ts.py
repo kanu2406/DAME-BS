@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from dame_ts.ternary_search import attempting_insertion_using_ternary_search
-
+import warnings
 
 def dame_with_ternary_search(n, alpha, m, user_samples):
     """
@@ -15,9 +15,31 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
     Returns:
         bar_theta: aggregated estimator
     """
+
+    # --- Input validation ---
+    if not isinstance(n, int) or n <= 0:
+        raise ValueError("n must be a positive integer")
+    if n % 2 != 0:
+        warnings.warn(f"n = {n} is odd; reducing it to {n - 1} to make it even.")
+        n -= 1
+    if not isinstance(m, int) or m <= 0:
+        raise ValueError("m must be a positive integer")
+    if not (isinstance(alpha, (int, float)) and alpha > 0):
+        raise ValueError("alpha must be a positive number")
+    if not isinstance(user_samples, (list, tuple)) or len(user_samples) != n:
+        raise ValueError(f"user_samples must be a list of length {n}")
+
+    for i, sample in enumerate(user_samples):
+        if not hasattr(sample, '__len__') or len(sample) != m:
+            raise ValueError(f"Each user sample must be an array-like of length {m}")
+
+
     # Compute tau and delta
     tau = (2 * math.log(max(8 * math.sqrt(m * n) * (alpha ** 2), 1))) / m
-    pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
+    if alpha==np.inf:
+        pi_alpha=1
+    else:
+        pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
     delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
 
     # Localization phase
