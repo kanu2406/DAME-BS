@@ -11,10 +11,14 @@ This repository provides a Python implementation of the **DAME-TS** algorithm fo
 
 ### Requirements
 
-- Python 3.8 or higher
-- numpy
-- matplotlib
-- tqdm
+```python
+numpy>=1.12
+matplotlib>=2.0.0
+pytest>=6.2.5
+tqdm>=4.62.0
+sphinx>=5.3.0
+sphinx_rtd_theme>=1.3.0
+```
 
 All dependencies are listed in requirements.txt.
 
