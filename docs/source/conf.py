@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 
 
 
+
 project = 'dame_ts'
 copyright = '2025, Kanupriya'
 author = 'Kanupriya'
@@ -25,7 +26,7 @@ extensions = ["sphinx.ext.autodoc",
     "sphinx.ext.todo"]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 
 
