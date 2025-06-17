@@ -24,11 +24,12 @@ release = '0.1'
 extensions = ["sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
+    "sphinx.ext.githubpages",
     "sphinx.ext.todo"]
 
 templates_path = ['_templates']
-exclude_patterns = []
-
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+napoleon_numpy_docstring = True
 
 
 # -- Options for HTML output -------------------------------------------------
