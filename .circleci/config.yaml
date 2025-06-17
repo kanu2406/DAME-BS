@@ -1,0 +1,33 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@5
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.8
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            pip install -e .
+
+      - run:
+          name: Run tests with coverage
+          command: |
+            pip install pytest pytest-cov
+            pytest --cov=your_module_name --cov-report=xml
+
+      - codecov/upload:
+          file: coverage.xml
+          token: $CODECOV_TOKEN  # Uncomment this line if your repo is private
+
+workflows:
+  test-and-upload:
+    jobs:
+      - test
