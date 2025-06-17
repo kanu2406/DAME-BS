@@ -6,7 +6,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/python:3.11  # or your actual Python version
+      - image: circleci/python:3.8
     steps:
       - checkout
 
@@ -16,18 +16,17 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
             pip install -e .
-            pip install pytest pytest-cov
 
       - run:
-          name: Run tests with coverage
+          name: Run tests and generate coverage report
           command: |
             pytest --cov=dame_ts --cov-report=xml
 
-      - codecov/upload:
+      - codecov/upload:  # Upload coverage report
           file: coverage.xml
-          token: $CODECOV_TOKEN  # Required for private repos
 
 workflows:
+  version: 2
   test-and-upload:
     jobs:
       - test
