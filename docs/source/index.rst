@@ -20,6 +20,7 @@ Welcome to DAME-TS's documentation!
    :caption: Contents:
 
    modules
+   usage
    
 
 Indices and tables
