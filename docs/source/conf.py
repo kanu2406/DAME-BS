@@ -23,11 +23,17 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
-    "sphinx.ext.todo"
+    "sphinx.ext.todo",
+    "sphinx.ext.autosummary"
 ]
 
 napoleon_numpy_docstring = True
 
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'show-inheritance': True,
+}
 
 templates_path = ['_templates']
 exclude_patterns = []
