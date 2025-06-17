@@ -1,4 +1,4 @@
-dame_ts
+DAME-TS
 =======
 
 .. toctree::
@@ -6,3 +6,4 @@ dame_ts
 
    dame_ts
    experiments
+   
