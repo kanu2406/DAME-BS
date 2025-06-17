@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  codecov: codecov/codecov@5
-
 jobs:
   test:
     docker:
@@ -18,15 +15,12 @@ jobs:
             pip install -e .
 
       - run:
-          name: Run tests and generate coverage report
-          command: |
-            pytest --cov=dame_ts --cov-report=xml
-
-      - codecov/upload:  # Upload coverage report
-          file: coverage.xml
-
+          name: Run tests
+          command: pytest
+          
 workflows:
   version: 2
-  test-and-upload:
+  test:
     jobs:
       - test
+
