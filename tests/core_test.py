@@ -100,7 +100,7 @@ def test_ternary_search_interval_shrinks():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n_small = 5000
-    n_large = 8000
+    n_large = 15000
     delta_small = 2 * n_small * math.exp(-n_small * (2 * pi_alpha - 1)**2 / 2)
     delta_large = 2 * n_large * math.exp(-n_large * (2 * pi_alpha - 1)**2 / 2)
     m = 20
