@@ -34,8 +34,9 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
     if n % 2 != 0:
-        warnings.warn(f"n = {n} is odd; reducing it to {n - 1} to make it even.")
+        warnings.warn(f"n = {n} is odd; reducing n and user samples to {n - 1} to make it even.")
         n -= 1
+        user_samples = user_samples[:n]
     if not isinstance(m, int) or m <= 0:
         raise ValueError("m must be a positive integer")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
