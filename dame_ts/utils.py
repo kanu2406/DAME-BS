@@ -67,10 +67,12 @@ def theoretical_upper_bound(alpha, n, m):
 
 
     '''
-    if alpha == np.inf:
-        pi_alpha=1
-    else:
-        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    # if alpha == np.inf:
+    #     pi_alpha=1
+    # else:
+    #     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 
     
     term1 = (9 * np.log(12)) / (8 * m) + 8 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
