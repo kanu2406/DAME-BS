@@ -28,8 +28,8 @@ def experiment_risk_vs_alpha_for_dist(distribution,n=9000, m=20, true_mean=0.3, 
 
     Args:
         distribution (str): Name of the distribution ( "normal", "uniform","laplace","exponential").
-        n (int): Number of agents. Default is 5000.
-        m (int): Number of candidates. Default is 20.
+        n (int): Number of users. Default is 9000.
+        m (int): Number of samples per user. Default is 20.
         true_mean (float): True mean value used for the experiment. Default is 0.3.
         trials (int): Number of experiment trials. Default is 50.
 

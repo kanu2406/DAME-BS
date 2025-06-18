@@ -6,7 +6,7 @@ from dame_ts.utils import min_n_required
 
 def dame_with_ternary_search(n, alpha, m, user_samples):
     """
-    Implements DAME algorithm with ternary search localization and Laplace estimation.
+    Implements DAME-TS algorithm with ternary search (localization phase) and Estimation Phase.
 
     Args:
         n: number of users (integer, even)
@@ -14,7 +14,7 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
         m: number of samples per user
         user_samples: list or array of shape (n, m)
     Returns:
-        bar_theta: aggregated estimator
+        bar_theta: estimated mean
     """
 
     # --- Input validation ---

@@ -47,7 +47,7 @@ def min_n_required(alpha):
 
 def theoretical_upper_bound(alpha, n, m):
     '''
-    Computes a theoretical upper bound on the mean squared error (MSE) of the DAME algorithm's 
+    Computes a theoretical upper bound on the mean squared error (MSE) of the DAME-TS algorithm's 
     estimate of the true mean, under differential privacy constraints.
 
     Parameters
@@ -67,7 +67,12 @@ def theoretical_upper_bound(alpha, n, m):
 
 
     '''
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    if alpha == np.inf:
+        pi_alpha=1
+    else:
+        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+
+    
     term1 = (9 * np.log(12)) / (8 * m) + 8 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
 
     denom = np.sqrt(2) + np.sqrt(2 + np.log(3/2) * (2 * pi_alpha - 1)**2)
@@ -130,7 +135,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
             # Laplace
             user_samples = [np.random.laplace(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
         if distribution=="exponential":
-            # Exponential shifted by true_mean - 1/λ so mean approx true_mean
+            # Exponential 
             user_samples = [np.random.exponential(scale=1.0, size=m) + (true_mean - 1.0) for _ in range(n)]
 
             
@@ -144,15 +149,15 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
     return np.mean(errors), np.std(errors)
 
 
-def plot_errorbars_and_upper_bounds(alphas, mean_errors, std_errors,upper_bounds, xlabel, ylabel, title):
+def plot_errorbars_and_upper_bounds(x_values, mean_errors, std_errors,upper_bounds, xlabel, ylabel, title):
     """
-    Plots error bars and theoretical upper bounds on a single chart.
+    Plots error bars and theoretical upper bounds on a single graph.
 
     This function is typically used to visualize the mean squared errors
     alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n).
 
     Args:
-        alphas (list or array-like): X-axis values (e.g., alpha values or user counts).
+        x_values (list or array-like): X-axis values (e.g., alpha values or user counts).
         mean_errors (list or array-like): Mean squared error values corresponding to `alphas`.
         std_errors (list or array-like): Standard deviation of the errors for each value in `alphas`.
         upper_bounds (list or array-like): Theoretical upper bounds to be plotted as a dashed line.
@@ -164,8 +169,8 @@ def plot_errorbars_and_upper_bounds(alphas, mean_errors, std_errors,upper_bounds
         None. Displays the plot using `matplotlib.pyplot`.
     """
     plt.figure(figsize=(8, 5))
-    plt.errorbar(alphas, mean_errors, yerr=std_errors, fmt='o-', capsize=5)
-    plt.plot(alphas, upper_bounds, 'r--', label='Theoretical Upper Bound')
+    plt.errorbar(x_values, mean_errors, yerr=std_errors, fmt='o-', capsize=5)
+    plt.plot(x_values, upper_bounds, 'r--', label='Theoretical Upper Bound')
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)

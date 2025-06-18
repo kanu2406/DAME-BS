@@ -30,8 +30,8 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
     Args:
         distribution (str): Name of the distribution ( "normal", "uniform", "laplace","exponential").
         alpha (float): Privacy parameter. Default is 0.6.
-        min_n (int): Minimum number of users. Default is 5000.
-        m (int): Number of candidates. Default is 20.
+        min_n (int): Minimum number of users. Default is 9000.
+        m (int): Number of samples per user. Default is 20.
         true_mean (float): True mean value used for the experiment. Default is 0.3.
         trials (int): Number of experiment trials. Default is 50.
 
