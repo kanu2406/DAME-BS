@@ -4,6 +4,7 @@ from dame_ts.dame_ts import dame_with_ternary_search
 from dame_ts.utils import min_n_required
 import numpy as np
 import math
+import warnings
 
 ###########################################################################################
 # Tests for output ranges
@@ -172,6 +173,49 @@ def test_ternary_search_wrong_sample_length():
         attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
 
 
+def test_ternary_search_warns_and_corrects_odd_n():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n1 = 5001
+    n2 = 5000
+    delta = 2 * n2 * math.exp(-n2 * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
+    user_samples2 = user_samples1[:n2]
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        result1 = attempting_insertion_using_ternary_search(alpha, delta, n1, m, user_samples1)  
+        assert any("is odd" in str(warning.message) for warning in w)
+    
+    result2 = attempting_insertion_using_ternary_search(alpha, delta, n2, m, user_samples2)  
+    assert result1 == result2
+
+def test_ternary_search_invalid_m_not_int():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 5000
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match=f"m must be a positive integer"):
+        attempting_insertion_using_ternary_search(alpha, delta, n, "a", user_samples)
+
+
+def test_ternary_search_invalid_m_negative():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 5000
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match="m must be a positive integer"):
+        attempting_insertion_using_ternary_search(alpha, delta, n, -m, user_samples)
+
+
+
 ##################################################################################################
 # Invalid Input Check for dame_ts
 
@@ -208,7 +252,7 @@ def test_dame_with_ternary_search_mismatch_samples():
     with pytest.raises(ValueError, match=f"user_samples must be a list of length {n}"):
         dame_with_ternary_search(n, alpha, m, user_samples)
 
-def test_ternary_search_wrong_sample_length():
+def test_dame_with_ternary_search_wrong_sample_length():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
@@ -221,6 +265,44 @@ def test_ternary_search_wrong_sample_length():
 
 
 
+def test_dame_with_ternary_search_warns_and_corrects_odd_n():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n1 = 5001
+    n2 = 5000
+    delta = 2 * n2 * math.exp(-n2 * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
+    user_samples2 = user_samples1[:n2]
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        result1 = dame_with_ternary_search(n1, alpha, m, user_samples1)  
+        assert any("is odd" in str(warning.message) for warning in w)
+    
+    result2 = dame_with_ternary_search(n2, alpha, m, user_samples2)
+    assert result1 == result2
+
+def test_dame_with_ternary_search_invalid_m_not_int():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 5000
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match=f"m must be a positive integer"):
+        dame_with_ternary_search(n, alpha, "a", user_samples)
 
 
+def test_dame_with_ternary_search_invalid_m_negative():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 5000
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match="m must be a positive integer"):
+        dame_with_ternary_search(n, alpha, -m, user_samples)
 
