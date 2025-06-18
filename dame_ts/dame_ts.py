@@ -2,6 +2,7 @@ import numpy as np
 import math
 from dame_ts.ternary_search import attempting_insertion_using_ternary_search
 import warnings
+from dame_ts.utils import min_n_required
 
 def dame_with_ternary_search(n, alpha, m, user_samples):
     """
@@ -33,6 +34,11 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
     for i, sample in enumerate(user_samples):
         if not hasattr(sample, '__len__') or len(sample) != m:
             raise ValueError(f"Each user sample must be an array-like of length {m}")
+        
+    # check n is greater than min_n_required
+    if n< min_n_required(alpha):
+        warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
+
 
 
     # Compute tau and delta

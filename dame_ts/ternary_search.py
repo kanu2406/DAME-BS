@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import warnings
+from dame_ts.utils import min_n_required
 
 
 def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
@@ -49,6 +50,9 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
         if not hasattr(sample, '__len__') or len(sample) != m:
             raise ValueError(f"Each user sample must be an array-like of length {m}")
         
+    # check n is greater than min_n_required
+    if n< min_n_required(alpha):
+        warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
 
     # Precomputing the probability of truthful response under randomized response
     if alpha == np.inf:

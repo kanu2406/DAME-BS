@@ -182,7 +182,6 @@ def test_ternary_search_warns_and_corrects_odd_n():
     m = 20
     true_mean = 0.3
     user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
-    user_samples2 = user_samples1[:n2]
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         result1 = attempting_insertion_using_ternary_search(alpha, delta, n1, m, user_samples1)  
@@ -212,7 +211,21 @@ def test_ternary_search_invalid_m_negative():
     with pytest.raises(ValueError, match="m must be a positive integer"):
         attempting_insertion_using_ternary_search(alpha, delta, n, -m, user_samples)
 
-
+def test_ternary_search_warns_min_n_required():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 4000
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples) 
+        warning_messages = [str(warn.message) for warn in w]
+        assert any("below the recommended minimum" in msg for msg in warning_messages), \
+            "Expected warning for n < recommended minimum was not raised"
+    
 
 ##################################################################################################
 # Invalid Input Check for dame_ts
@@ -301,3 +314,19 @@ def test_dame_with_ternary_search_invalid_m_negative():
     with pytest.raises(ValueError, match="m must be a positive integer"):
         dame_with_ternary_search(n, alpha, -m, user_samples)
 
+
+def test_dame_with_ternary_search_warns_min_n_required():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = min_n_required(alpha) - 1
+    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        dame_with_ternary_search(n, alpha, m, user_samples) 
+        warning_messages = [str(warn.message) for warn in w]
+        assert any("below the recommended minimum" in msg for msg in warning_messages), \
+            "Expected warning for n < recommended minimum was not raised"
+    
