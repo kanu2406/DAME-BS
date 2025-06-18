@@ -73,14 +73,10 @@
 <span class="sd">experiments.risk_vs_n</span>
 <span class="sd">---------------------</span>
 
-<span class="sd">This script runs the DAME algorithm for various distributions and plots</span>
+<span class="sd">This script runs the DAME-TS algorithm for various distributions and plots</span>
 <span class="sd">the mean squared error (MSE) vs. number of users `n`.</span>
 
 <span class="sd">It uses utility functions from `dame_ts.utils`.</span>
-
-<span class="sd">Usage:</span>
-<span class="sd">    Run directly to generate and save plots for multiple distributions. The value of n used in the experiments is </span>
-<span class="sd">    greater than the minimum n required for given values of alpha and m</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -96,7 +92,7 @@
 
 <div class="viewcode-block" id="experiment_risk_vs_n_for_dist">
 <a class="viewcode-back" href="../../experiments.html#experiments.risk_vs_n.experiment_risk_vs_n_for_dist">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">experiment_risk_vs_n_for_dist</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">min_n</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">experiment_risk_vs_n_for_dist</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">min_n</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs a risk-vs-n experiment for a given distribution.</span>
 
@@ -131,10 +127,6 @@
                    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean Squared Error vs Number of Users (n) for the </span><span class="si">{</span><span class="n">distribution</span><span class="si">}</span><span class="s2"> distribution&quot;</span><span class="p">)</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">distributions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;laplace&quot;</span><span class="p">,</span> <span class="s2">&quot;exponential&quot;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">distributions</span><span class="p">:</span>
-        <span class="n">experiment_risk_vs_n_for_dist</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
 </pre></div>
 
            </div>
