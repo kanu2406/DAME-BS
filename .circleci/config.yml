@@ -1,9 +1,38 @@
+# version: 2.1
+
+# jobs:
+#   test:
+#     docker:
+#       - image: circleci/python:3.8
+#     steps:
+#       - checkout
+
+#       - run:
+#           name: Install dependencies
+#           command: |
+#             python -m pip install --upgrade pip
+#             pip install -r requirements.txt
+#             pip install -e .
+
+#       - run:
+#           name: Run tests
+#           command: pytest
+          
+# workflows:
+#   version: 2
+#   test:
+#     jobs:
+#       - test
+
 version: 2.1
+
+orbs:
+  codecov: codecov/codecov@3  
 
 jobs:
   test:
     docker:
-      - image: circleci/python:3.8
+      - image: circleci/python:3.8 
     steps:
       - checkout
 
@@ -12,15 +41,19 @@ jobs:
           command: |
             python -m pip install --upgrade pip
             pip install -r requirements.txt
+            pip install pytest pytest-cov
             pip install -e .
 
+
       - run:
-          name: Run tests
-          command: pytest
-          
+          name: Run tests with coverage
+          command: |
+            pytest --cov=dame_ts --cov-report=xml
+
+      - codecov/upload:
+          file: coverage.xml  
+
 workflows:
-  version: 2
-  test:
+  test-and-upload:
     jobs:
       - test
-

@@ -1,0 +1,14 @@
+[run]
+branch = True
+source =
+    dame_ts
+
+[report]
+omit =
+    tests/*
+    */__init__.py
+    setup.py
+    */site-packages/*
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:

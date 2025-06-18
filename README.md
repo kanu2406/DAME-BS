@@ -5,6 +5,9 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/kanu2406/DAME-TS/tree/main.svg?style=svg&circle-token=CCIPRJ_HwgZxRmn4FC9KWA4t8tmKG_42331c11496c635f99cf9fdd0514727175f5446a)](https://dl.circleci.com/status-badge/redirect/gh/kanu2406/DAME-TS/tree/main)
 
+[![codecov](https://codecov.io/gh/kanu2406/DAME-TS/branch/main/graph/badge.svg)](https://codecov.io/gh/kanu2406/DAME-TS)
+
+
 This repository provides a Python implementation of the **DAME-TS** algorithm for locally differentially private mean estimation using ternary search. It includes theoretical upper bounds and extensive experiments across multiple distributions.
 
 ---
