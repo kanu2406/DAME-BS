@@ -2,13 +2,10 @@
 experiments.risk_vs_alpha
 --------------------------
 
-This script runs the DAME algorithm for various distributions and plots
+This script runs the DAME-TS algorithm for various distributions and plots
 the mean squared error (MSE) vs. privacy parameter α.
 
 It imports core utilities from `dame_ts.utils` and supports multiple distributions.
-
-Usage:
-    Run directly to generate and save plots.
 
 """
 
@@ -21,7 +18,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
-def experiment_risk_vs_alpha_for_dist(distribution,n=5000, m=20, true_mean=0.3, trials=50):
+def experiment_risk_vs_alpha_for_dist(distribution,n=9000, m=20, true_mean=0.3, trials=50):
     """
     Runs a risk-vs-alpha experiment for a given distribution.
 
@@ -56,7 +53,3 @@ def experiment_risk_vs_alpha_for_dist(distribution,n=5000, m=20, true_mean=0.3, 
                    , ylabel="Mean Squared Error", 
                    title=f"Mean Squared Error vs Alpha for the {distribution} distribution")
 
-if __name__ == "__main__":
-    distributions = ["normal", "uniform", "laplace", "exponential"]
-    for dist in distributions:
-        experiment_risk_vs_alpha_for_dist(dist)
