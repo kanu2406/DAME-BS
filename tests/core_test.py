@@ -1,7 +1,7 @@
 import pytest 
 from dame_ts.ternary_search import attempting_insertion_using_ternary_search
 from dame_ts.dame_ts import dame_with_ternary_search
-from dame_ts.utils import min_n_required
+from dame_ts.utils import min_n_required,theoretical_upper_bound,run_dame_experiment
 import numpy as np
 import math
 import warnings
@@ -118,6 +118,40 @@ def test_ternary_search_interval_shrinks():
     width2 = R2 - L2
 
     assert width2 <= width1, f"Interval did not shrink with more users: {width1:.4f} vs {width2:.4f}"
+
+
+
+def test_dame_with_ternary_search_no_noise():
+    
+    # for no noise alpha = np.inf and pi_alpha = 1
+    alpha = np.inf
+    pi_alpha = 1
+    two_pi_minus_1 = 2 * pi_alpha - 1
+
+    if abs(two_pi_minus_1) < 1e-6:
+        n = np.inf  # Avoid division by near-zero
+
+    ln_32 = np.log(3 / 2)
+    term1 = 4 / (two_pi_minus_1 ** 4)
+    term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
+    n = int(np.ceil(term1 * (term2 ** 2))+1000)
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(2*n)]
+    estimated_mean=dame_with_ternary_search(2*n, alpha, m, user_samples)
+    assert -1 <= estimated_mean <= 1, f"Estimated mean {true_mean} not in estimated interval [-1,1]"
+    
+
+
+
+
+
+
+
+
+
+
+
 
 #########################################################################################################
 # Invalid Input Check for ternary search
