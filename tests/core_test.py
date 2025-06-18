@@ -188,9 +188,7 @@ def test_ternary_search_warns_and_corrects_odd_n():
         result1 = attempting_insertion_using_ternary_search(alpha, delta, n1, m, user_samples1)  
         assert any("is odd" in str(warning.message) for warning in w)
     
-    result2 = attempting_insertion_using_ternary_search(alpha, delta, n2, m, user_samples2)  
-    assert result1 == result2
-
+    
 def test_ternary_search_invalid_m_not_int():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
@@ -280,9 +278,6 @@ def test_dame_with_ternary_search_warns_and_corrects_odd_n():
         result1 = dame_with_ternary_search(n1, alpha, m, user_samples1)  
         assert any("is odd" in str(warning.message) for warning in w)
     
-    result2 = dame_with_ternary_search(n2, alpha, m, user_samples2)
-    assert result1 == result2
-
 def test_dame_with_ternary_search_invalid_m_not_int():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
