@@ -42,6 +42,10 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-TS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_alpha">Risk_vs_alpha</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_n">Risk_vs_n</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
 </ul>
 
         </div>
@@ -77,6 +81,10 @@
 <span class="sd">the mean squared error (MSE) vs. privacy parameter α.</span>
 
 <span class="sd">It imports core utilities from `dame_ts.utils` and supports multiple distributions.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    Run directly to generate and save plots.</span>
+
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -127,6 +135,13 @@
                    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean Squared Error vs Alpha for the </span><span class="si">{</span><span class="n">distribution</span><span class="si">}</span><span class="s2"> distribution&quot;</span><span class="p">)</span></div>
 
 
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">distributions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;laplace&quot;</span><span class="p">,</span> <span class="s2">&quot;exponential&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">distributions</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Running experiment for distribution: </span><span class="si">{</span><span class="n">dist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">experiment_risk_vs_alpha_for_dist</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        
 </pre></div>
 
            </div>
