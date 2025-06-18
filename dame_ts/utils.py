@@ -26,8 +26,12 @@ def min_n_required(alpha):
         the theoretical guarantees. Returns `np.inf` if α is too small, making the denominator 
         near zero and the bound undefined.
     '''
+    
+    if alpha == np.inf:
+        pi_alpha=1
+    else:
+        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     two_pi_minus_1 = 2 * pi_alpha - 1
 
     if abs(two_pi_minus_1) < 1e-6:
