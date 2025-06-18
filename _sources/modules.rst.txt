@@ -5,5 +5,4 @@ DAME-TS
    :maxdepth: 4
 
    dame_ts
-   experiments
-   
+
