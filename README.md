@@ -20,6 +20,8 @@ pytest>=6.2.5
 tqdm>=4.62.0
 sphinx>=5.3.0
 sphinx_rtd_theme>=1.3.0
+pytest>=8.0.0
+pytest-cov>=4.1.0
 ```
 
 All dependencies are listed in requirements.txt.
