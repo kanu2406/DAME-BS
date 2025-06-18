@@ -214,7 +214,7 @@ def test_ternary_search_invalid_m_negative():
 def test_ternary_search_warns_min_n_required():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-    n = 4000
+    n = min_n_required(alpha) - 1
     delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
     m = 20
     true_mean = 0.3

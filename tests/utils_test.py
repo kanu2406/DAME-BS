@@ -1,10 +1,10 @@
 import pytest
-from dame_ts.utils import min_n_required, theoretical_upper_bound,run_dame_experiment
+from dame_ts.utils import min_n_required, theoretical_upper_bound,run_dame_experiment,plot_errorbars_and_upper_bounds
 import numpy as np
 from dame_ts.dame_ts import dame_with_ternary_search
+import matplotlib.pyplot as plt
 
-
-
+########################################################################################
 
 def test_min_n_required_basic():
     alpha = 0.6
@@ -26,6 +26,8 @@ def test_theoretical_upper_bound_valid():
     assert bound >= 0
     assert isinstance(bound, float)
 
+#####################################################################################
+# Tests for different distributions
 
 def test_run_dame_experiment_normal():
     mean_err, std_err = run_dame_experiment(n=5000,
@@ -52,12 +54,12 @@ def test_run_dame_experiment_exponential():
     assert std_err >= 0
 
 
-
+###########################################################################################
 def test_estimate_within_error_and_bound(tol=0.1):
     np.random.seed(42)
 
     true_mean = 0.3
-    n = 4000
+    n = 5000
     m = 20
     alpha = 0.6
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
@@ -71,3 +73,35 @@ def test_estimate_within_error_and_bound(tol=0.1):
     # Theoretical bound check
     theoretical_bound = theoretical_upper_bound(alpha, n, m)  
     assert error <= theoretical_bound, f"Error {error:.4f} exceeds theoretical bound {theoretical_bound:.4f}"
+
+##################################################################################################
+
+def test_plot_errorbars_and_upper_bounds_runs(monkeypatch):
+    # Monkeypatch plt.show to avoid displaying the plot during test
+    monkeypatch.setattr(plt, "show", lambda: None)
+
+    true_mean = 0.3
+    n = 5000
+    m = 20
+    alpha = 0.6
+    mean_errors = []
+    std_errors = []
+    alphas=[]
+    distribution="normal"
+
+    for alpha in alphas:
+        
+        alphas.append(alpha)
+        mean_err, std_err = run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
+        mean_errors.append(mean_err)
+        std_errors.append(std_err)
+
+    upper_bounds = [theoretical_upper_bound(a, n, m) for a in alphas]
+
+    plot_errorbars_and_upper_bounds(alphas, mean_errors, std_errors,upper_bounds, 
+                   xlabel="Privacy parameter α"
+                   , ylabel="Mean Squared Error", 
+                   title=f"Mean Squared Error vs Alpha for the {distribution} distribution")
+
+
+    

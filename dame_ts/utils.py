@@ -2,7 +2,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from tqdm import tqdm 
-from dame_ts import dame_with_ternary_search
+
 
 
 def min_n_required(alpha):
@@ -111,7 +111,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
         The standard deviation of the squared error over all trials.
 
     """
-
+    from dame_ts import dame_with_ternary_search
 
     errors = []
     for _ in range(trials):
