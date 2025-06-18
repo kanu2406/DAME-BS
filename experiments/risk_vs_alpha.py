@@ -7,6 +7,10 @@ the mean squared error (MSE) vs. privacy parameter α.
 
 It imports core utilities from `dame_ts.utils` and supports multiple distributions.
 
+Usage:
+    Run directly to generate and save plots.
+
+
 """
 
 
@@ -53,3 +57,10 @@ def experiment_risk_vs_alpha_for_dist(distribution,n=9000, m=20, true_mean=0.3, 
                    , ylabel="Mean Squared Error", 
                    title=f"Mean Squared Error vs Alpha for the {distribution} distribution")
 
+
+if __name__ == "__main__":
+    distributions = ["normal", "uniform", "laplace", "exponential"]
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_alpha_for_dist(dist)
+        

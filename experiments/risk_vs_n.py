@@ -7,6 +7,10 @@ the mean squared error (MSE) vs. number of users `n`.
 
 It uses utility functions from `dame_ts.utils`.
 
+
+Usage:
+    Run directly to generate and save plots.
+
 """
 
 
@@ -35,7 +39,7 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
         None. Displays plots.
     """
 
-    n_values = list(range(min_n, 20000 + 1, 2000))
+    n_values = list(range(min_n, 20000 + 1, 1000))
     mean_errors = []
     std_errors = []
     
@@ -53,3 +57,8 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
                    , ylabel="Mean Squared Error", 
                    title=f"Mean Squared Error vs Number of Users (n) for the {distribution} distribution")
 
+if __name__ == "__main__":
+    distributions = ["normal", "uniform", "laplace", "exponential"]
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_n_for_dist(dist)
