@@ -122,7 +122,7 @@ def test_theoretical_bound_no_noise():
     m = 20
     true_mean = 0.3
     
-    mean_err,std_err = run_dame_experiment(2*n, alpha, m, true_mean, trials=50,distribution="normal")
+    mean_err,std_err = run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
     theoretical_bound=theoretical_upper_bound(alpha, n, m)
     assert mean_err < theoretical_bound, f" Mean squared error size is greater than theoretical upper bound"
 
