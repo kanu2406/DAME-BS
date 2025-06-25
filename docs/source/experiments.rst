@@ -35,7 +35,7 @@ Results
 -------
 Mean Squared Error vs Alpha for the different distributions.
 
-.. image:: ../source/_static/risk_vs_alpha.png
+.. image:: ../figures/risk_vs_alpha.png
    :alt: Mean Squared Error vs Alpha for the different distributions
    :align: center
    :width: 600px
@@ -43,10 +43,17 @@ Mean Squared Error vs Alpha for the different distributions.
 Mean Squared Error vs n (total number of users) for the different distributions.
 
 
-.. image:: ../source/_static/risk_vs_n.png
+.. image:: ../figures/risk_vs_n.png
    :alt: Mean Squared Error vs n (total number of users) for the different distributions
    :align: center
    :width: 600px
 
+Mean Squared Error vs delta (tolerated failure probability of Ternary Search) for the different distributions.
+
+
+.. image:: ../figures/risk_vs_delta.png
+   :alt: Mean Squared Error vs delta (tolerated failure probability of Ternary Search) for the different distributions
+   :align: center
+   :width: 600px
 
 

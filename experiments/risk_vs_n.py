@@ -23,7 +23,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
-def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_mean=0.3, trials=50,delta=0.1):
+def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=500, m=20, true_mean=0.3, trials=50,delta=0.1):
     """
     Runs a risk-vs-n experiment for a given distribution.
 
@@ -40,7 +40,7 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
         None. Displays plots.
     """
 
-    n_values = list(range(min_n, 20000 + 1, 1000))
+    n_values = list(range(min_n, 15000 , 1000))
     mean_errors = []
     std_errors = []
     

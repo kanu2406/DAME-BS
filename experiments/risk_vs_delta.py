@@ -51,17 +51,26 @@ def experiment_risk_vs_delta_for_dist(distribution,n=9000, m=20, true_mean=0.3, 
         mean_errors.append(mean_err)
         std_errors.append(std_err)
 
-    upper_bounds = [theoretical_upper_bound(alpha, n, m,delta) for delta in deltas]
+    # upper_bounds = [theoretical_upper_bound(alpha, n, m,delta) for delta in deltas]
 
-    plot_errorbars_and_upper_bounds(deltas, mean_errors, std_errors,upper_bounds, 
-                   xlabel="Tolerated Failure Probability delta"
-                   , ylabel="Mean Squared Error", 
-                   title=f"Mean Squared Error vs Alpha for the {distribution} distribution")
+    # plot_errorbars_and_upper_bounds(deltas, mean_errors, std_errors,upper_bounds, 
+    #                xlabel="Tolerated Failure Probability delta"
+    #                , ylabel="Mean Squared Error", 
+    #                title=f"Mean Squared Error vs Delta for the {distribution} distribution")
+    
+    plt.figure(figsize=(8, 5))
+    plt.errorbar(deltas, mean_errors, yerr=std_errors, fmt='o-', capsize=5)
+    plt.title(f"Mean Squared Error vs Delta for the {distribution} distribution")
+    plt.xlabel("Tolerated Failure Probability delta")
+    plt.ylabel("Mean Squared Error")
+    plt.grid(True)
+    plt.show()
+
 
 
 if __name__ == "__main__":
-    # distributions = ["normal", "uniform", "poisson", "exponential"]
-    distributions = ["poisson"]
+    distributions = ["normal", "uniform", "poisson", "exponential"]
+    # distributions = ["poisson"]
     for dist in distributions:
         print(f"\n Running experiment for distribution: {dist}")
         experiment_risk_vs_delta_for_dist(dist)
