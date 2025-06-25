@@ -58,6 +58,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_n.experiment_risk_vs_n_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_for_dist()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_delta">Risk_vs_delta</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-delta">experiments.risk_vs_delta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_delta_for_dist()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a></li>
 </ul>
 
@@ -99,22 +104,23 @@
 the mean squared error (MSE) vs. privacy parameter α.</p>
 <p>It imports core utilities from <cite>dame_ts.utils</cite> and supports multiple distributions.</p>
 <dl class="simple">
-<dt>Usage:</dt><dd><p>Run directly to generate and save plots.</p>
+<dt>Usage:</dt><dd><p>Run directly to generate plots.</p>
 </dd>
 </dl>
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist">
-<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_alpha.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_alpha_for_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_alpha.html#experiment_risk_vs_alpha_for_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_alpha.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_alpha_for_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_alpha.html#experiment_risk_vs_alpha_for_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist" title="Link to this definition"></a></dt>
 <dd><p>Runs a risk-vs-alpha experiment for a given distribution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”,”laplace”,”exponential”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”,”poisson”,”exponential”).</p></li>
 <li><p><strong>n</strong> (<em>int</em>) – Number of users. Default is 9000.</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – Number of samples per user. Default is 20.</p></li>
 <li><p><strong>true_mean</strong> (<em>float</em>) – True mean value used for the experiment. Default is 0.3.</p></li>
 <li><p><strong>trials</strong> (<em>int</em>) – Number of experiment trials. Default is 50.</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -132,27 +138,62 @@ the mean squared error (MSE) vs. privacy parameter α.</p>
 the mean squared error (MSE) vs. number of users <cite>n</cite>.</p>
 <p>It uses utility functions from <cite>dame_ts.utils</cite>.</p>
 <dl class="simple">
-<dt>Usage:</dt><dd><p>Run directly to generate and save plots.</p>
+<dt>Usage:</dt><dd><p>Run directly to generate plots.</p>
 </dd>
 </dl>
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="experiments.risk_vs_n.experiment_risk_vs_n_for_dist">
-<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_n.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_n_for_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_n.html#experiment_risk_vs_n_for_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_n.experiment_risk_vs_n_for_dist" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_n.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_n_for_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_n.html#experiment_risk_vs_n_for_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_n.experiment_risk_vs_n_for_dist" title="Link to this definition"></a></dt>
 <dd><p>Runs a risk-vs-n experiment for a given distribution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”, “laplace”,”exponential”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”, “poisson”,”exponential”).</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter. Default is 0.6.</p></li>
 <li><p><strong>min_n</strong> (<em>int</em>) – Minimum number of users. Default is 9000.</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – Number of samples per user. Default is 20.</p></li>
 <li><p><strong>true_mean</strong> (<em>float</em>) – True mean value used for the experiment. Default is 0.3.</p></li>
 <li><p><strong>trials</strong> (<em>int</em>) – Number of experiment trials. Default is 50.</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None. Displays plots.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.risk_vs_delta">
+<span id="risk-vs-delta"></span><h1>Risk_vs_delta<a class="headerlink" href="#module-experiments.risk_vs_delta" title="Link to this heading"></a></h1>
+<section id="experiments-risk-vs-delta">
+<h2>experiments.risk_vs_delta<a class="headerlink" href="#experiments-risk-vs-delta" title="Link to this heading"></a></h2>
+<p>This script runs the DAME-TS algorithm for various distributions and plots
+the mean squared error (MSE) vs. failure probability of ternary search delta.</p>
+<p>It imports core utilities from <cite>dame_ts.utils</cite> and supports multiple distributions.</p>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>Run directly to generate plots.</p>
+</dd>
+</dl>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist">
+<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_delta.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_delta_for_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_delta.html#experiment_risk_vs_delta_for_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist" title="Link to this definition"></a></dt>
+<dd><p>Runs a risk-vs-delta experiment for a given distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”,”poisson”,”exponential”).</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users. Default is 9000.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user. Default is 20.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – True mean value used for the experiment. Default is 0.3.</p></li>
+<li><p><strong>trials</strong> (<em>int</em>) – Number of experiment trials. Default is 50.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter. Default is 0.6.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None. Displays plots for each distribution.</p>
 </dd>
 </dl>
 </dd></dl>

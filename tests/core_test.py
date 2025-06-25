@@ -14,7 +14,7 @@ def test_dame_with_ternary_search_output_range():
     m = 20
     true_mean = 0.5
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    estimate = dame_with_ternary_search(n, alpha, m, user_samples)
+    estimate = dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1)
     assert isinstance(estimate, float)
     assert -1 <= estimate <= 1
 
@@ -26,7 +26,7 @@ def test_ternary_search_output_format():
     m = 20
     true_mean = 0.3
     pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
 
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     interval = attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
@@ -46,8 +46,7 @@ def test_ternary_search_no_nan_inf():
     m = 20
     true_mean = 0.3
     pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
-
+    delta = 0.1
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     interval = attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
 
@@ -61,7 +60,7 @@ def test_ternary_search_interval_bounds():
     m = 20
     true_mean = 0.3
     pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
 
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     interval = attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
@@ -77,16 +76,17 @@ def test_ternary_search_interval_no_noise():
     # for no noise alpha = np.inf and pi_alpha = 1
     alpha = np.inf
     pi_alpha = 1
-    two_pi_minus_1 = 2 * pi_alpha - 1
+    # two_pi_minus_1 = 2 * pi_alpha - 1
 
-    if abs(two_pi_minus_1) < 1e-6:
-        n = np.inf  # Avoid division by near-zero
+    # if abs(two_pi_minus_1) < 1e-6:
+    #     n = np.inf  # Avoid division by near-zero
 
-    ln_32 = np.log(3 / 2)
-    term1 = 4 / (two_pi_minus_1 ** 4)
-    term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
-    n = int(np.ceil(term1 * (term2 ** 2))+1000)
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    # ln_32 = np.log(3 / 2)
+    # term1 = 4 / (two_pi_minus_1 ** 4)
+    # term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
+    # n = int(np.ceil(term1 * (term2 ** 2))+1000)
+    n = 9000
+    delta = 0.1
     m = 20
     true_mean = 0.3
 
@@ -99,11 +99,13 @@ def test_ternary_search_interval_no_noise():
 
 def test_ternary_search_interval_shrinks():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    # pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n_small = 5000
     n_large = 15000
-    delta_small = 2 * n_small * math.exp(-n_small * (2 * pi_alpha - 1)**2 / 2)
-    delta_large = 2 * n_large * math.exp(-n_large * (2 * pi_alpha - 1)**2 / 2)
+    # delta_small = 2 * n_small * math.exp(-n_small * (2 * pi_alpha - 1)**2 / 2)
+    # delta_large = 2 * n_large * math.exp(-n_large * (2 * pi_alpha - 1)**2 / 2)
+    delta_small=0.1
+    delta_large=0.1
     m = 20
     true_mean = 0.3
 
@@ -126,20 +128,23 @@ def test_dame_with_ternary_search_no_noise():
     # for no noise alpha = np.inf and pi_alpha = 1
     alpha = np.inf
     pi_alpha = 1
-    two_pi_minus_1 = 2 * pi_alpha - 1
+    # two_pi_minus_1 = 2 * pi_alpha - 1
 
-    if abs(two_pi_minus_1) < 1e-6:
-        n = np.inf  # Avoid division by near-zero
+    # if abs(two_pi_minus_1) < 1e-6:
+    #     n = np.inf  # Avoid division by near-zero
 
-    ln_32 = np.log(3 / 2)
-    term1 = 4 / (two_pi_minus_1 ** 4)
-    term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
-    n = int(np.ceil(term1 * (term2 ** 2))+1000)
+    # ln_32 = np.log(3 / 2)
+    # term1 = 4 / (two_pi_minus_1 ** 4)
+    # term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
+    # n = int(np.ceil(term1 * (term2 ** 2))+1000)
+    n=9000
     m = 20
     true_mean = 0.3
+    delta=0.1
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(2*n)]
-    estimated_mean=dame_with_ternary_search(2*n, alpha, m, user_samples)
-    assert -1 <= estimated_mean <= 1, f"Estimated mean {true_mean} not in estimated interval [-1,1]"
+    estimated_mean=dame_with_ternary_search(n, alpha, m, user_samples,delta)
+    assert -1 <= estimated_mean <= 1, f"Estimated mean {estimated_mean} not in interval [-1,1]"
+    assert np.abs(estimated_mean-true_mean)**2<= 1e-3, f"Estimated mean and true mean are not close."
     
 
 
@@ -160,7 +165,7 @@ def test_ternary_search_invalid_n_type():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = -5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
@@ -170,9 +175,8 @@ def test_ternary_search_invalid_n_type():
 
 def test_ternary_search_invalid_alpha_type():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
@@ -185,9 +189,8 @@ def test_ternary_search_invalid_alpha_type():
 
 def test_ternary_search_mismatch_samples():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n-1)]
@@ -197,9 +200,8 @@ def test_ternary_search_mismatch_samples():
 
 def test_ternary_search_wrong_sample_length():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m-1) for _ in range(n)]
@@ -212,7 +214,7 @@ def test_ternary_search_warns_and_corrects_odd_n():
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n1 = 5001
     n2 = 5000
-    delta = 2 * n2 * math.exp(-n2 * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
@@ -224,41 +226,61 @@ def test_ternary_search_warns_and_corrects_odd_n():
     
 def test_ternary_search_invalid_m_not_int():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     with pytest.raises(ValueError, match=f"m must be a positive integer"):
         attempting_insertion_using_ternary_search(alpha, delta, n, "a", user_samples)
 
+def test_ternary_search_invalid_delta_not_positive():
+    alpha = 0.6
+    n = 5000
+    delta = 0.1
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match=f"delta must be a positive number less than 1"):
+        attempting_insertion_using_ternary_search(alpha, -delta, n, m, user_samples)
+
+def test_ternary_search_invalid_delta_interval():
+    alpha = 0.6
+    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+    n = 5000
+    delta = 2
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match=f"delta must be a positive number less than 1"):
+        attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
+
 
 def test_ternary_search_invalid_m_negative():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     with pytest.raises(ValueError, match="m must be a positive integer"):
         attempting_insertion_using_ternary_search(alpha, delta, n, -m, user_samples)
 
-def test_ternary_search_warns_min_n_required():
-    alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-    n = int(np.ceil(min_n_required(alpha) - 1))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
-    m = 20
-    true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    with warnings.catch_warnings(record=True) as w:
-        warnings.simplefilter("always")
-        attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples) 
-        warning_messages = [str(warn.message) for warn in w]
-        assert any("below the recommended minimum" in msg for msg in warning_messages), \
-            "Expected warning for n < recommended minimum was not raised"
+# def test_ternary_search_warns_min_n_required():
+#     alpha = 0.6
+#     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+#     n = int(np.ceil(min_n_required(alpha) - 1))
+#     delta = 0.1
+#     m = 20
+#     true_mean = 0.3
+#     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+#     with warnings.catch_warnings(record=True) as w:
+#         warnings.simplefilter("always")
+#         attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples) 
+#         warning_messages = [str(warn.message) for warn in w]
+#         assert any("below the recommended minimum" in msg for msg in warning_messages), \
+#             "Expected warning for n < recommended minimum was not raised"
     
 
 ##################################################################################################
@@ -272,7 +294,7 @@ def test_dame_with_ternary_search_invalid_n_type():
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     
     with pytest.raises(ValueError, match="n must be a positive integer"):
-        dame_with_ternary_search(n, alpha, m, user_samples)
+        dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1)
 
 def test_dame_with_ternary_search_invalid_alpha_type():
     alpha = 0.6
@@ -282,7 +304,7 @@ def test_dame_with_ternary_search_invalid_alpha_type():
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     
     with pytest.raises(ValueError, match="alpha must be a positive number"):
-        dame_with_ternary_search(n, -alpha, m, user_samples)
+        dame_with_ternary_search(n, -alpha, m, user_samples,delta=0.1)
 
 
 
@@ -295,18 +317,18 @@ def test_dame_with_ternary_search_mismatch_samples():
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n-1)]
     
     with pytest.raises(ValueError, match=f"user_samples must be a list of length {n}"):
-        dame_with_ternary_search(n, alpha, m, user_samples)
+        dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1)
 
 def test_dame_with_ternary_search_wrong_sample_length():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m-1) for _ in range(n)]
     with pytest.raises(ValueError, match=f"Each user sample must be an array-like of length {m}"):
-        dame_with_ternary_search(n, alpha, m, user_samples)
+        dame_with_ternary_search(n, alpha, m, user_samples,delta)
 
 
 
@@ -315,52 +337,72 @@ def test_dame_with_ternary_search_warns_and_corrects_odd_n():
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n1 = 5001
     n2 = 5000
-    delta = 2 * n2 * math.exp(-n2 * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
     user_samples2 = user_samples1[:n2]
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        result1 = dame_with_ternary_search(n1, alpha, m, user_samples1)  
+        result1 = dame_with_ternary_search(n1, alpha, m, user_samples1,delta)  
         assert any("is odd" in str(warning.message) for warning in w)
     
 def test_dame_with_ternary_search_invalid_m_not_int():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     with pytest.raises(ValueError, match=f"m must be a positive integer"):
-        dame_with_ternary_search(n, alpha, "a", user_samples)
+        dame_with_ternary_search(n, alpha, "a", user_samples,delta)
 
 
 def test_dame_with_ternary_search_invalid_m_negative():
     alpha = 0.6
     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
     n = 5000
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     with pytest.raises(ValueError, match="m must be a positive integer"):
-        dame_with_ternary_search(n, alpha, -m, user_samples)
+        dame_with_ternary_search(n, alpha, -m, user_samples,delta)
 
-
-def test_dame_with_ternary_search_warns_min_n_required():
+def test_dame_with_ternary_search_invalid_delta_negative():
     alpha = 0.6
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-    n = int(np.ceil(min_n_required(alpha) - 1))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    n = 5000
+    delta = 0.1
     m = 20
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    with warnings.catch_warnings(record=True) as w:
-        warnings.simplefilter("always")
-        dame_with_ternary_search(n, alpha, m, user_samples) 
-        warning_messages = [str(warn.message) for warn in w]
-        assert any("below the recommended minimum" in msg for msg in warning_messages), \
-            "Expected warning for n < recommended minimum was not raised"
+    with pytest.raises(ValueError, match="delta must be a positive number less than 1"):
+        dame_with_ternary_search(n, alpha, m, user_samples,-delta)
+
+def test_dame_with_ternary_search_invalid_delta_interval():
+    alpha = 0.6
+    n = 5000
+    delta = 2
+    m = 20
+    true_mean = 0.3
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    with pytest.raises(ValueError, match="delta must be a positive number less than 1"):
+        dame_with_ternary_search(n, alpha, m, user_samples,delta)
+
+
+# def test_dame_with_ternary_search_warns_min_n_required():
+#     alpha = 0.6
+#     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+#     n = int(np.ceil(min_n_required(alpha) - 1))
+#     delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+#     m = 20
+#     true_mean = 0.3
+#     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+#     with warnings.catch_warnings(record=True) as w:
+#         warnings.simplefilter("always")
+#         dame_with_ternary_search(n, alpha, m, user_samples) 
+#         warning_messages = [str(warn.message) for warn in w]
+#         assert any("below the recommended minimum" in msg for msg in warning_messages), \
+#             "Expected warning for n < recommended minimum was not raised"
     

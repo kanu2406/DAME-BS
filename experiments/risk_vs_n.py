@@ -9,7 +9,7 @@ It uses utility functions from `dame_ts.utils`.
 
 
 Usage:
-    Run directly to generate and save plots.
+    Run directly to generate plots.
 
 """
 
@@ -23,17 +23,18 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
-def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_mean=0.3, trials=50):
+def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_mean=0.3, trials=50,delta=0.1):
     """
     Runs a risk-vs-n experiment for a given distribution.
 
     Args:
-        distribution (str): Name of the distribution ( "normal", "uniform", "laplace","exponential").
+        distribution (str): Name of the distribution ( "normal", "uniform", "poisson","exponential").
         alpha (float): Privacy parameter. Default is 0.6.
         min_n (int): Minimum number of users. Default is 9000.
         m (int): Number of samples per user. Default is 20.
         true_mean (float): True mean value used for the experiment. Default is 0.3.
         trials (int): Number of experiment trials. Default is 50.
+        delta (float): tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.
 
     Returns:
         None. Displays plots.
@@ -46,7 +47,7 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
 
     for n in n_values:
         
-        mean_err, std_err = run_dame_experiment(n, alpha, m, true_mean, trials,distribution)
+        mean_err, std_err = run_dame_experiment(n, alpha, m, true_mean, trials,distribution,delta)
         mean_errors.append(mean_err)
         std_errors.append(std_err)
 
@@ -58,7 +59,7 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=9000, m=20, true_
                    title=f"Mean Squared Error vs Number of Users (n) for the {distribution} distribution")
 
 if __name__ == "__main__":
-    distributions = ["normal", "uniform", "laplace", "exponential"]
+    distributions = ["normal", "uniform", "poisson", "exponential"]
     for dist in distributions:
         print(f"\n Running experiment for distribution: {dist}")
         experiment_risk_vs_n_for_dist(dist)

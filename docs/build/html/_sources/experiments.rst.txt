@@ -20,6 +20,14 @@ Risk\_vs\_n
    :show-inheritance:
    :undoc-members:
 
+Risk\_vs\_delta
+------------------------------
+
+.. automodule:: experiments.risk_vs_delta
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 
 
 

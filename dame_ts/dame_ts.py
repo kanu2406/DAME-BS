@@ -2,9 +2,9 @@ import numpy as np
 import math
 from dame_ts.ternary_search import attempting_insertion_using_ternary_search
 import warnings
-from dame_ts.utils import min_n_required
+# from dame_ts.utils import min_n_required
 
-def dame_with_ternary_search(n, alpha, m, user_samples):
+def dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1):
     """
     Implements DAME-TS algorithm with ternary search (localization phase) and Estimation Phase.
 
@@ -26,6 +26,8 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
         user_samples = user_samples[:n]
     if not isinstance(m, int) or m <= 0:
         raise ValueError("m must be a positive integer")
+    if not isinstance(delta, (int, float)) or delta <= 0 or delta>1:
+        raise ValueError("delta must be a positive number less than 1")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
         raise ValueError("alpha must be a positive number")
     if not isinstance(user_samples, (list, tuple)) or len(user_samples) != n:
@@ -35,19 +37,19 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
         if not hasattr(sample, '__len__') or len(sample) != m:
             raise ValueError(f"Each user sample must be an array-like of length {m}")
         
-    # check n is greater than min_n_required
-    if n< min_n_required(alpha):
-        warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
+    # # check n is greater than min_n_required
+    # if n< min_n_required(alpha):
+    #     warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
 
 
 
     # Compute tau and delta
-    tau = (2 * math.log(max(8 * math.sqrt(m * n) * (alpha ** 2), 1))) / m
+    # tau = (2 * math.log(max(8 * math.sqrt(m * n) * (alpha ** 2), 1))) / m
     if alpha==np.inf:
         pi_alpha=1
     else:
         pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
-    delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+    # delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
 
     # Localization phase
     # use first half of users for localization
@@ -59,10 +61,13 @@ def dame_with_ternary_search(n, alpha, m, user_samples):
 
     # Estimation phase using second half
     X2 = user_samples[int(n/2):]
-    # est_samples = user_samples[n//2:]
     
     hat_thetas = []
-    scale = 14 * tau / alpha
+    # scale = 14 * tau / alpha
+    A = np.log((9*np.log(12)/(8*m)))
+    B = (2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta)))
+    C = max(A,B)
+    scale = (2/alpha)*np.sqrt(C)
     for x in X2:
         x_bar = np.mean(x)
         if x_bar < theta_hat_loc[0]:

@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import warnings
-from dame_ts.utils import min_n_required
+# from dame_ts.utils import min_n_required
 
 
 def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
@@ -40,6 +40,8 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
         user_samples = user_samples[:n]
     if not isinstance(m, int) or m <= 0:
         raise ValueError("m must be a positive integer")
+    if not isinstance(delta, (int, float)) or delta<=0 or delta>1:
+        raise ValueError("delta must be a positive number less than 1")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
         raise ValueError("alpha must be a positive number")
     if not isinstance(user_samples, (list, tuple)) or len(user_samples) != n:
@@ -51,8 +53,8 @@ def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
             raise ValueError(f"Each user sample must be an array-like of length {m}")
         
     # check n is greater than min_n_required
-    if n< min_n_required(alpha):
-        warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
+    # if n< min_n_required(alpha):
+    #     warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
 
     # Precomputing the probability of truthful response under randomized response
     if alpha == np.inf:

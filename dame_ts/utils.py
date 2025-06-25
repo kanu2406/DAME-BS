@@ -4,48 +4,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm 
 
 
-
-def min_n_required(alpha):
-    '''
-    Computes the minimum number of users (n) required to satisfy a privacy and accuracy condition 
-    for the DAME-TS algorithm, based on the given differential privacy parameter α.
-
-        n ≥ (4 / (2π_α - 1)^4) * (√2 + √(2 + ln(3/2)(2π_α - 1)^2))^2
-
-    where π_α = e^α / (1 + e^α)
-
-    Parameters
-    ----------
-    alpha : float
-        The differential privacy parameter (α > 0). Higher α means less privacy.
-
-    Returns
-    -------
-    float
-        The minimum required number of users `n` to ensure the localization step satisfies 
-        the theoretical guarantees. Returns `np.inf` if α is too small, making the denominator 
-        near zero and the bound undefined.
-    '''
-    
-    if alpha == np.inf:
-        pi_alpha=1
-    else:
-        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-
-    two_pi_minus_1 = 2 * pi_alpha - 1
-
-    if abs(two_pi_minus_1) < 1e-6:
-        return np.inf  # Avoid division by near-zero
-
-    ln_32 = np.log(3 / 2)
-    term1 = 4 / (two_pi_minus_1 ** 4)
-    term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
-    return term1 * (term2 ** 2)
-
-
-
-
-def theoretical_upper_bound(alpha, n, m):
+def theoretical_upper_bound(alpha, n, m,delta=0.1):
     '''
     Computes a theoretical upper bound on the mean squared error (MSE) of the DAME-TS algorithm's 
     estimate of the true mean, under differential privacy constraints.
@@ -63,32 +22,52 @@ def theoretical_upper_bound(alpha, n, m):
     -------
     float
         A theoretical upper bound on the expected squared error:
-        E[(μ - 𝜃̂)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.
+        E[(theta_hat - theta)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.
+        The theoretical bound is given by -
 
+        E[(theta_hat - theta)^2]<= 32/n  + 
+                        (16/(α^2 n)) max{log((9*np.log(12)/(8*m))),(2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta_val)))}+
+                        4 delta
+                            
+       where π_α = e^α / (1 + e^α)
 
     '''
-    # if alpha == np.inf:
-    #     pi_alpha=1
-    # else:
-    #     pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-
-    pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
-
-    
-    term1 = (9 * np.log(12)) / (8 * m) + 8 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
-
-    denom = np.sqrt(2) + np.sqrt(2 + np.log(3/2) * (2 * pi_alpha - 1)**2)
-    exponent = ((2 * pi_alpha - 1)**2) / denom * np.sqrt(n)
-    term2 = (2/3)**exponent + 8 * n * np.exp(-np.sqrt(np.log(3/2) * (2 * pi_alpha - 1)**2 * n))
-
-    return max(term1, term2)
+    if alpha == np.inf:
+        pi_alpha=1
+    else:
+        pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 
 
+    #### OLD BOUND ######################################################################
+
+    # term1 = (9 * np.log(12)) / (8 * m) + 8 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+
+    # denom = np.sqrt(2) + np.sqrt(2 + np.log(3/2) * (2 * pi_alpha - 1)**2)
+    # exponent = ((2 * pi_alpha - 1)**2) / denom * np.sqrt(n)
+    # term2 = (2/3)**exponent + 8 * n * np.exp(-np.sqrt(np.log(3/2) * (2 * pi_alpha - 1)**2 * n))
+
+    # return max(term1, term2)
+
+    ######################################################################################
 
 
-def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal"):
+
+
+    #### NEW BOUND #####
+    term1 = 32/n
+    A = np.log((9*np.log(12)/(8*m)))
+    B = (2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta)))
+    term2 = (16/((alpha**2)*n))* max(A,B)
+    term3 = 4*delta
+    return term1+term2+term3
+
+
+
+
+
+def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",delta=0.1):
     """
-    Runs the DAME algorithm multiple times to empirically evaluate its estimation error 
+    Runs the DAME-TS algorithm multiple times to empirically evaluate its estimation error 
     under different data distributions and privacy settings.
 
     This function simulates a scenario with `n` users, each having `m` samples generated 
@@ -111,8 +90,9 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
         Type of distribution to sample user data from. Supported values:
             - "normal"     : Samples from N(true_mean, 0.5^2)
             - "uniform"    : Samples from U(true_mean - 1, true_mean + 1)
-            - "laplace"    : Samples from Laplace(true_mean, 0.5)
+            - "poisson"    : Samples from Poisson(true_mean)
             - "exponential": Samples from Exponential(1.0) shifted to have mean ≈ true_mean
+    delta : tolerated failure probability of ternary search in DAME-TS
 
     Returns
     -------
@@ -133,16 +113,16 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal")
         if distribution=="uniform":
             # Uniform
             user_samples = [np.random.uniform(low=true_mean-1, high=true_mean+1, size=m) for _ in range(n)]
-        if distribution=="laplace":
-            # Laplace
-            user_samples = [np.random.laplace(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+        if distribution=="poisson":
+            # Poisson
+            user_samples = [np.random.poisson(lam=true_mean, size=m) for _ in range(n)]
         if distribution=="exponential":
             # Exponential 
             user_samples = [np.random.exponential(scale=1.0, size=m) + (true_mean - 1.0) for _ in range(n)]
 
             
         # Run algorithm
-        estimate = dame_with_ternary_search(n, alpha, m, user_samples)
+        estimate = dame_with_ternary_search(n, alpha, m, user_samples,delta)
         
         # Measure error
         error = (estimate - true_mean)**2
@@ -156,7 +136,7 @@ def plot_errorbars_and_upper_bounds(x_values, mean_errors, std_errors,upper_boun
     Plots error bars and theoretical upper bounds on a single graph.
 
     This function is typically used to visualize the mean squared errors
-    alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n).
+    alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n or delta).
 
     Args:
         x_values (list or array-like): X-axis values (e.g., alpha values or user counts).
@@ -178,4 +158,45 @@ def plot_errorbars_and_upper_bounds(x_values, mean_errors, std_errors,upper_boun
     plt.ylabel(ylabel)
     plt.grid(True)
     plt.show()
+
+
+
+##################################### NOT REQUIRED ###########################################
+
+# def min_n_required(alpha):
+#     '''
+#     Computes the minimum number of users (n) required to satisfy a privacy and accuracy condition 
+#     for the DAME-TS algorithm, based on the given differential privacy parameter α.
+
+#         n ≥ (4 / (2π_α - 1)^4) * (√2 + √(2 + ln(3/2)(2π_α - 1)^2))^2
+
+#     where π_α = e^α / (1 + e^α)
+
+#     Parameters
+#     ----------
+#     alpha : float
+#         The differential privacy parameter (α > 0). Higher α means less privacy.
+
+#     Returns
+#     -------
+#     float
+#         The minimum required number of users `n` to ensure the localization step satisfies 
+#         the theoretical guarantees. Returns `np.inf` if α is too small, making the denominator 
+#         near zero and the bound undefined.
+#     '''
+    
+#     if alpha == np.inf:
+#         pi_alpha=1
+#     else:
+#         pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
+
+#     two_pi_minus_1 = 2 * pi_alpha - 1
+
+#     if abs(two_pi_minus_1) < 1e-6:
+#         return np.inf  # Avoid division by near-zero
+
+#     ln_32 = np.log(3 / 2)
+#     term1 = 4 / (two_pi_minus_1 ** 4)
+#     term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
+#     return term1 * (term2 ** 2)
 

@@ -83,7 +83,7 @@
 <span class="sd">It imports core utilities from `dame_ts.utils` and supports multiple distributions.</span>
 
 <span class="sd">Usage:</span>
-<span class="sd">    Run directly to generate and save plots.</span>
+<span class="sd">    Run directly to generate plots.</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -99,22 +99,24 @@
 
 <div class="viewcode-block" id="experiment_risk_vs_alpha_for_dist">
 <a class="viewcode-back" href="../../experiments.html#experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">experiment_risk_vs_alpha_for_dist</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">experiment_risk_vs_alpha_for_dist</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs a risk-vs-alpha experiment for a given distribution.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        distribution (str): Name of the distribution ( &quot;normal&quot;, &quot;uniform&quot;,&quot;laplace&quot;,&quot;exponential&quot;).</span>
+<span class="sd">        distribution (str): Name of the distribution ( &quot;normal&quot;, &quot;uniform&quot;,&quot;poisson&quot;,&quot;exponential&quot;).</span>
 <span class="sd">        n (int): Number of users. Default is 9000.</span>
 <span class="sd">        m (int): Number of samples per user. Default is 20.</span>
 <span class="sd">        true_mean (float): True mean value used for the experiment. Default is 0.3.</span>
 <span class="sd">        trials (int): Number of experiment trials. Default is 50.</span>
+<span class="sd">        delta (float): tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.</span>
+
 
 <span class="sd">    Returns:</span>
 <span class="sd">        None. Displays plots for each distribution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">alpha_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">alpha_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
     <span class="n">mean_errors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">std_errors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">alphas</span><span class="o">=</span><span class="p">[]</span>
@@ -123,11 +125,11 @@
     <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alpha_values</span><span class="p">:</span>
         
         <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="n">mean_err</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span><span class="n">distribution</span><span class="p">)</span>
+        <span class="n">mean_err</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span>
         <span class="n">mean_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_err</span><span class="p">)</span>
         <span class="n">std_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_err</span><span class="p">)</span>
 
-    <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">]</span>
+    <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">]</span>
 
     <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">mean_errors</span><span class="p">,</span> <span class="n">std_errors</span><span class="p">,</span><span class="n">upper_bounds</span><span class="p">,</span> 
                    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Privacy parameter α&quot;</span>
@@ -137,7 +139,8 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">distributions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;laplace&quot;</span><span class="p">,</span> <span class="s2">&quot;exponential&quot;</span><span class="p">]</span>
+    <span class="n">distributions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;poisson&quot;</span><span class="p">,</span> <span class="s2">&quot;exponential&quot;</span><span class="p">]</span>
+    <span class="c1"># distributions = [&quot;poisson&quot;]</span>
     <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">distributions</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Running experiment for distribution: </span><span class="si">{</span><span class="n">dist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">experiment_risk_vs_alpha_for_dist</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
