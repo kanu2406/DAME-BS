@@ -1,7 +1,7 @@
 import pytest 
 from dame_ts.ternary_search import attempting_insertion_using_ternary_search
 from dame_ts.dame_ts import dame_with_ternary_search
-from dame_ts.utils import min_n_required,theoretical_upper_bound,run_dame_experiment
+from dame_ts.utils import theoretical_upper_bound,run_dame_experiment
 import numpy as np
 import math
 import warnings

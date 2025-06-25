@@ -1,5 +1,5 @@
 import pytest
-from dame_ts.utils import min_n_required, theoretical_upper_bound,run_dame_experiment,plot_errorbars_and_upper_bounds
+from dame_ts.utils import theoretical_upper_bound,run_dame_experiment,plot_errorbars_and_upper_bounds
 import numpy as np
 from dame_ts.dame_ts import dame_with_ternary_search
 import matplotlib.pyplot as plt
