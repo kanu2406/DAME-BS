@@ -141,7 +141,7 @@ def test_dame_with_ternary_search_no_noise():
     m = 20
     true_mean = 0.3
     delta=0.1
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(2*n)]
+    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     estimated_mean=dame_with_ternary_search(n, alpha, m, user_samples,delta)
     assert -1 <= estimated_mean <= 1, f"Estimated mean {estimated_mean} not in interval [-1,1]"
     assert np.abs(estimated_mean-true_mean)**2<= 1e-3, f"Estimated mean and true mean are not close."
