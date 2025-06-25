@@ -56,7 +56,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-dame_ts.utils">dame_ts.utils module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#dame_ts.utils.min_n_required"><code class="docutils literal notranslate"><span class="pre">min_n_required()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.utils.plot_errorbars_and_upper_bounds"><code class="docutils literal notranslate"><span class="pre">plot_errorbars_and_upper_bounds()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.utils.run_dame_experiment"><code class="docutils literal notranslate"><span class="pre">run_dame_experiment()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.utils.theoretical_upper_bound"><code class="docutils literal notranslate"><span class="pre">theoretical_upper_bound()</span></code></a></li>
@@ -65,7 +64,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-dame_ts">Module contents</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.attempting_insertion_using_ternary_search"><code class="docutils literal notranslate"><span class="pre">attempting_insertion_using_ternary_search()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.dame_with_ternary_search"><code class="docutils literal notranslate"><span class="pre">dame_with_ternary_search()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dame_ts.min_n_required"><code class="docutils literal notranslate"><span class="pre">min_n_required()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dame_ts.plot_errorbars_and_upper_bounds"><code class="docutils literal notranslate"><span class="pre">plot_errorbars_and_upper_bounds()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.run_dame_experiment"><code class="docutils literal notranslate"><span class="pre">run_dame_experiment()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dame_ts.theoretical_upper_bound"><code class="docutils literal notranslate"><span class="pre">theoretical_upper_bound()</span></code></a></li>
 </ul>
@@ -77,6 +76,7 @@
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html#module-experiments.risk_vs_alpha">Risk_vs_alpha</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html#module-experiments.risk_vs_n">Risk_vs_n</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html#module-experiments.risk_vs_delta">Risk_vs_delta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a></li>
 </ul>
 
@@ -114,7 +114,7 @@
 <span id="dame-ts-dame-ts-module"></span><h2>dame_ts.dame_ts module<a class="headerlink" href="#module-dame_ts.dame_ts" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.dame_ts.dame_with_ternary_search">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.dame_ts.</span></span><span class="sig-name descname"><span class="pre">dame_with_ternary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/dame_ts.html#dame_with_ternary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.dame_ts.dame_with_ternary_search" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">dame_ts.dame_ts.</span></span><span class="sig-name descname"><span class="pre">dame_with_ternary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/dame_ts.html#dame_with_ternary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.dame_ts.dame_with_ternary_search" title="Link to this definition"></a></dt>
 <dd><p>Implements DAME-TS algorithm with ternary search (localization phase) and Estimation Phase.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -173,35 +173,11 @@ are exhausted, returning the remaining interval.</p>
 <section id="module-dame_ts.utils">
 <span id="dame-ts-utils-module"></span><h2>dame_ts.utils module<a class="headerlink" href="#module-dame_ts.utils" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="dame_ts.utils.min_n_required">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">min_n_required</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#min_n_required"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.min_n_required" title="Link to this definition"></a></dt>
-<dd><p>Computes the minimum number of users (n) required to satisfy a privacy and accuracy condition
-for the DAME-TS algorithm, based on the given differential privacy parameter α.</p>
-<blockquote>
-<div><p>n ≥ (4 / (2π_α - 1)^4) * (√2 + √(2 + ln(3/2)(2π_α - 1)^2))^2</p>
-</div></blockquote>
-<p>where π_α = e^α / (1 + e^α)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>alpha</strong> (<em>float</em>) – The differential privacy parameter (α &gt; 0). Higher α means less privacy.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The minimum required number of users <cite>n</cite> to ensure the localization step satisfies
-the theoretical guarantees. Returns <cite>np.inf</cite> if α is too small, making the denominator
-near zero and the bound undefined.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.utils.plot_errorbars_and_upper_bounds">
 <span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">plot_errorbars_and_upper_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#plot_errorbars_and_upper_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.plot_errorbars_and_upper_bounds" title="Link to this definition"></a></dt>
 <dd><p>Plots error bars and theoretical upper bounds on a single graph.</p>
 <p>This function is typically used to visualize the mean squared errors
-alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n).</p>
+alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n or delta).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -222,8 +198,8 @@ alongside their corresponding theoretical upper bounds for different values (e.g
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.utils.run_dame_experiment">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">run_dame_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#run_dame_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.run_dame_experiment" title="Link to this definition"></a></dt>
-<dd><p>Runs the DAME algorithm multiple times to empirically evaluate its estimation error
+<span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">run_dame_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#run_dame_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.run_dame_experiment" title="Link to this definition"></a></dt>
+<dd><p>Runs the DAME-TS algorithm multiple times to empirically evaluate its estimation error
 under different data distributions and privacy settings.</p>
 <p>This function simulates a scenario with <cite>n</cite> users, each having <cite>m</cite> samples generated
 from a specified distribution centered around a known <cite>true_mean</cite>.</p>
@@ -240,12 +216,13 @@ with weaker privacy guarantees.</p></li>
 <dt>Type of distribution to sample user data from. Supported values:</dt><dd><ul>
 <li><p>”normal”     : Samples from N(true_mean, 0.5^2)</p></li>
 <li><p>”uniform”    : Samples from U(true_mean - 1, true_mean + 1)</p></li>
-<li><p>”laplace”    : Samples from Laplace(true_mean, 0.5)</p></li>
+<li><p>”poisson”    : Samples from Poisson(true_mean)</p></li>
 <li><p>”exponential”: Samples from Exponential(1.0) shifted to have mean ≈ true_mean</p></li>
 </ul>
 </dd>
 </dl>
 </p></li>
+<li><p><strong>delta</strong> (<em>tolerated failure probability</em><em> of </em><em>ternary search in DAME-TS</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -260,7 +237,7 @@ with weaker privacy guarantees.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.utils.theoretical_upper_bound">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">theoretical_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#theoretical_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.theoretical_upper_bound" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">dame_ts.utils.</span></span><span class="sig-name descname"><span class="pre">theoretical_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#theoretical_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.utils.theoretical_upper_bound" title="Link to this definition"></a></dt>
 <dd><p>Computes a theoretical upper bound on the mean squared error (MSE) of the DAME-TS algorithm’s
 estimate of the true mean, under differential privacy constraints.</p>
 <dl class="field-list simple">
@@ -272,8 +249,18 @@ estimate of the true mean, under differential privacy constraints.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A theoretical upper bound on the expected squared error:
-E[(μ - 𝜃̂)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.</p>
+<dd class="field-even"><p><dl>
+<dt>A theoretical upper bound on the expected squared error:</dt><dd><p>E[(theta_hat - theta)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.
+The theoretical bound is given by -</p>
+<dl class="simple">
+<dt>E[(theta_hat - theta)^2]&lt;= 32/n  +</dt><dd><p>(16/(α^2 n)) max{log((9*np.log(12)/(8*m))),(2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta_val)))}+
+4 delta</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>where π_α = e^α / (1 + e^α)</p>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -319,7 +306,7 @@ are exhausted, returning the remaining interval.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.dame_with_ternary_search">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">dame_with_ternary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/dame_ts.html#dame_with_ternary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.dame_with_ternary_search" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">dame_with_ternary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/dame_ts.html#dame_with_ternary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.dame_with_ternary_search" title="Link to this definition"></a></dt>
 <dd><p>Implements DAME-TS algorithm with ternary search (localization phase) and Estimation Phase.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -340,33 +327,33 @@ are exhausted, returning the remaining interval.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="dame_ts.min_n_required">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">min_n_required</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#min_n_required"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.min_n_required" title="Link to this definition"></a></dt>
-<dd><p>Computes the minimum number of users (n) required to satisfy a privacy and accuracy condition
-for the DAME-TS algorithm, based on the given differential privacy parameter α.</p>
-<blockquote>
-<div><p>n ≥ (4 / (2π_α - 1)^4) * (√2 + √(2 + ln(3/2)(2π_α - 1)^2))^2</p>
-</div></blockquote>
-<p>where π_α = e^α / (1 + e^α)</p>
+<dt class="sig sig-object py" id="dame_ts.plot_errorbars_and_upper_bounds">
+<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">plot_errorbars_and_upper_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_errors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#plot_errorbars_and_upper_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.plot_errorbars_and_upper_bounds" title="Link to this definition"></a></dt>
+<dd><p>Plots error bars and theoretical upper bounds on a single graph.</p>
+<p>This function is typically used to visualize the mean squared errors
+alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n or delta).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>alpha</strong> (<em>float</em>) – The differential privacy parameter (α &gt; 0). Higher α means less privacy.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_values</strong> (<em>list</em><em> or </em><em>array-like</em>) – X-axis values (e.g., alpha values or user counts).</p></li>
+<li><p><strong>mean_errors</strong> (<em>list</em><em> or </em><em>array-like</em>) – Mean squared error values corresponding to <cite>alphas</cite>.</p></li>
+<li><p><strong>std_errors</strong> (<em>list</em><em> or </em><em>array-like</em>) – Standard deviation of the errors for each value in <cite>alphas</cite>.</p></li>
+<li><p><strong>upper_bounds</strong> (<em>list</em><em> or </em><em>array-like</em>) – Theoretical upper bounds to be plotted as a dashed line.</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – Label for the x-axis.</p></li>
+<li><p><strong>ylabel</strong> (<em>str</em>) – Label for the y-axis.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Title of the plot.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The minimum required number of users <cite>n</cite> to ensure the localization step satisfies
-the theoretical guarantees. Returns <cite>np.inf</cite> if α is too small, making the denominator
-near zero and the bound undefined.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-even"><p>None. Displays the plot using <cite>matplotlib.pyplot</cite>.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.run_dame_experiment">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">run_dame_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#run_dame_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.run_dame_experiment" title="Link to this definition"></a></dt>
-<dd><p>Runs the DAME algorithm multiple times to empirically evaluate its estimation error
+<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">run_dame_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#run_dame_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.run_dame_experiment" title="Link to this definition"></a></dt>
+<dd><p>Runs the DAME-TS algorithm multiple times to empirically evaluate its estimation error
 under different data distributions and privacy settings.</p>
 <p>This function simulates a scenario with <cite>n</cite> users, each having <cite>m</cite> samples generated
 from a specified distribution centered around a known <cite>true_mean</cite>.</p>
@@ -383,12 +370,13 @@ with weaker privacy guarantees.</p></li>
 <dt>Type of distribution to sample user data from. Supported values:</dt><dd><ul>
 <li><p>”normal”     : Samples from N(true_mean, 0.5^2)</p></li>
 <li><p>”uniform”    : Samples from U(true_mean - 1, true_mean + 1)</p></li>
-<li><p>”laplace”    : Samples from Laplace(true_mean, 0.5)</p></li>
+<li><p>”poisson”    : Samples from Poisson(true_mean)</p></li>
 <li><p>”exponential”: Samples from Exponential(1.0) shifted to have mean ≈ true_mean</p></li>
 </ul>
 </dd>
 </dl>
 </p></li>
+<li><p><strong>delta</strong> (<em>tolerated failure probability</em><em> of </em><em>ternary search in DAME-TS</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -403,7 +391,7 @@ with weaker privacy guarantees.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dame_ts.theoretical_upper_bound">
-<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">theoretical_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#theoretical_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.theoretical_upper_bound" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">dame_ts.</span></span><span class="sig-name descname"><span class="pre">theoretical_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_ts/utils.html#theoretical_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_ts.theoretical_upper_bound" title="Link to this definition"></a></dt>
 <dd><p>Computes a theoretical upper bound on the mean squared error (MSE) of the DAME-TS algorithm’s
 estimate of the true mean, under differential privacy constraints.</p>
 <dl class="field-list simple">
@@ -415,8 +403,18 @@ estimate of the true mean, under differential privacy constraints.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A theoretical upper bound on the expected squared error:
-E[(μ - 𝜃̂)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.</p>
+<dd class="field-even"><p><dl>
+<dt>A theoretical upper bound on the expected squared error:</dt><dd><p>E[(theta_hat - theta)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.
+The theoretical bound is given by -</p>
+<dl class="simple">
+<dt>E[(theta_hat - theta)^2]&lt;= 32/n  +</dt><dd><p>(16/(α^2 n)) max{log((9*np.log(12)/(8*m))),(2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta_val)))}+
+4 delta</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>where π_α = e^α / (1 + e^α)</p>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
