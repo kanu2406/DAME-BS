@@ -63,6 +63,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_delta_for_dist()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_n_with_alpha">Risk_vs_n_with_alpha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-n-with-alpha">experiments.risk_vs_n_with_alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_n_with_alpha.experiment_risk_vs_n_multiple_alphas"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_multiple_alphas()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a></li>
 </ul>
 
@@ -199,6 +204,42 @@ the mean squared error (MSE) vs. failure probability of ternary search delta.</p
 </dd></dl>
 
 </section>
+<section id="module-experiments.risk_vs_n_with_alpha">
+<span id="risk-vs-n-with-alpha"></span><h1>Risk_vs_n_with_alpha<a class="headerlink" href="#module-experiments.risk_vs_n_with_alpha" title="Link to this heading"></a></h1>
+<section id="experiments-risk-vs-n-with-alpha">
+<h2>experiments.risk_vs_n_with_alpha<a class="headerlink" href="#experiments-risk-vs-n-with-alpha" title="Link to this heading"></a></h2>
+<p>This script runs the DAME-TS algorithm for various distributions and plots
+the mean squared error (MSE) vs. number of users <cite>n</cite> for different values of alphas.</p>
+<p>It uses utility functions from <cite>dame_ts.utils</cite>.</p>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>Run directly to generate plots.</p>
+</dd>
+</dl>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.risk_vs_n_with_alpha.experiment_risk_vs_n_multiple_alphas">
+<span class="sig-prename descclassname"><span class="pre">experiments.risk_vs_n_with_alpha.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_n_multiple_alphas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[inf,</span> <span class="pre">1.0,</span> <span class="pre">0.5,</span> <span class="pre">0.2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/risk_vs_n_with_alpha.html#experiment_risk_vs_n_multiple_alphas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.risk_vs_n_with_alpha.experiment_risk_vs_n_multiple_alphas" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Name of the distribution ( “normal”, “uniform”, “poisson”,”exponential”).</p></li>
+<li><p><strong>alpha_values</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – List of privacy/risk parameters α to compare. Use <cite>np.inf</cite> to indicate the non-private (infinite-α) case.</p></li>
+<li><p><strong>min_n</strong> (<em>int</em>) – Smallest user population size to test.Default is 500.</p></li>
+<li><p><strong>max_n</strong> (<em>int</em>) – Largest user population size to test. Default id 15000.</p></li>
+<li><p><strong>step</strong> (<em>int</em>) – Increment in n between successive experiment points. Default is 500.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user. Default is 20.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – True mean value used for the experiment. Default is 0.3.</p></li>
+<li><p><strong>trials</strong> (<em>int</em>) – Number of experiment trials. Default is 50.</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None. Displays plots.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="results">
 <h1>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h1>
 <p>Mean Squared Error vs Alpha for the different distributions.</p>
@@ -209,6 +250,9 @@ the mean squared error (MSE) vs. failure probability of ternary search delta.</p
 </a>
 <p>Mean Squared Error vs delta (tolerated failure probability of Ternary Search) for the different distributions.</p>
 <a class="reference internal image-reference" href="_images/risk_vs_delta.png"><img alt="Mean Squared Error vs delta (tolerated failure probability of Ternary Search) for the different distributions" class="align-center" src="_images/risk_vs_delta.png" style="width: 600px;" />
+</a>
+<p>Mean Squared Error vs n (total number of users) for the different distributions for different values of privacy parameter alpha.</p>
+<a class="reference internal image-reference" href="_images/risk_vs_n_diff_alpha.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/risk_vs_n_diff_alpha.png" style="width: 600px;" />
 </a>
 </section>
 
