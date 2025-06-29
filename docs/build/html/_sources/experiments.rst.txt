@@ -29,6 +29,14 @@ Risk\_vs\_delta
    :undoc-members:
 
 
+Risk\_vs\_n\_with\_alpha
+------------------------------
+
+.. automodule:: experiments.risk_vs_n_with_alpha
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 
 
 Results
@@ -56,4 +64,10 @@ Mean Squared Error vs delta (tolerated failure probability of Ternary Search) fo
    :align: center
    :width: 600px
 
+Mean Squared Error vs n (total number of users) for the different distributions for different values of privacy parameter alpha.
 
+
+.. image:: ../figures/risk_vs_n_diff_alpha.png
+   :alt: Mean Squared Error vs n (total number of users) for the different distributions
+   :align: center
+   :width: 600px
