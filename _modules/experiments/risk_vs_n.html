@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>experiments.risk_vs_n &mdash; dame_ts 0.1 documentation</title>
+  <title>experiments.risk_vs_n &mdash; dame_bs 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            dame_ts
+            dame_bs
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -56,7 +56,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">dame_ts</a>
+          <a href="../../index.html">dame_bs</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -79,10 +79,10 @@
 <span class="sd">experiments.risk_vs_n</span>
 <span class="sd">---------------------</span>
 
-<span class="sd">This script runs the DAME-TS algorithm for various distributions and plots</span>
+<span class="sd">This script runs the DAME-BS algorithm for various distributions and plots</span>
 <span class="sd">the mean squared error (MSE) vs. number of users `n`.</span>
 
-<span class="sd">It uses utility functions from `dame_ts.utils`.</span>
+<span class="sd">It uses utility functions from `dame_bs.utils`.</span>
 
 
 <span class="sd">Usage:</span>
@@ -97,7 +97,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">)))</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dame_ts.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_dame_experiment</span><span class="p">,</span> <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">,</span><span class="n">theoretical_upper_bound</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_dame_experiment</span><span class="p">,</span> <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">,</span><span class="n">theoretical_upper_bound</span>
 
 
 <div class="viewcode-block" id="experiment_risk_vs_n_for_dist">
@@ -113,7 +113,7 @@
 <span class="sd">        m (int): Number of samples per user. Default is 20.</span>
 <span class="sd">        true_mean (float): True mean value used for the experiment. Default is 0.3.</span>
 <span class="sd">        trials (int): Number of experiment trials. Default is 50.</span>
-<span class="sd">        delta (float): tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.</span>
+<span class="sd">        delta (float): tolerated probability of failure of binary search in DAME-BS. Default is 0.1.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        None. Displays plots.</span>
