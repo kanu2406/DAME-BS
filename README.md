@@ -1,8 +1,8 @@
-# DAME-TS: Differentially Private Mean Estimation via Ternary Search
+# DAME-TS: Differentially Private Mean Estimation via Binary Search
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/kanu2406/DAME-TS/tree/main.svg?style=svg&circle-token=CCIPRJ_HwgZxRmn4FC9KWA4t8tmKG_42331c11496c635f99cf9fdd0514727175f5446a)](https://dl.circleci.com/status-badge/redirect/gh/kanu2406/DAME-TS/tree/main) [![codecov](https://codecov.io/gh/kanu2406/DAME-TS/graph/badge.svg?token=LBKGKXDCGV)](https://codecov.io/gh/kanu2406/DAME-TS)
 
-This repository provides a Python implementation of the **DAME-TS** algorithm for locally differentially private mean estimation using ternary search. It includes theoretical upper bounds and experiments across multiple distributions.
+This repository provides a Python implementation of the **DAME-BS** algorithm for locally differentially private mean estimation using binary search. It includes theoretical upper bounds and experiments across multiple distributions.
 
 ---
 
@@ -47,8 +47,8 @@ python experiments/experiment_risk_vs_n.py
 ```python
 import numpy as np
 import math
-from dame_ts.dame_ts import dame_with_ternary_search
-from dame_ts.ternary_search import attempting_insertion_using_ternary_search
+from dame_ts.dame_ts import dame_with_binary_search
+from dame_ts.ternary_search import attempting_insertion_using_binary_search
  
 alpha = 0.6
 pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
