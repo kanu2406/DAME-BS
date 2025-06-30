@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_alpha">Risk_vs_alpha</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_n">Risk_vs_n</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_delta">Risk_vs_delta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#module-experiments.risk_vs_n_with_alpha">Risk_vs_n_with_alpha</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
 </ul>
 
@@ -78,10 +79,10 @@
 <span class="sd">experiments.risk_vs_delta</span>
 <span class="sd">--------------------------</span>
 
-<span class="sd">This script runs the DAME-TS algorithm for various distributions and plots</span>
-<span class="sd">the mean squared error (MSE) vs. failure probability of ternary search delta.</span>
+<span class="sd">This script runs the DAME-BS algorithm for various distributions and plots</span>
+<span class="sd">the mean squared error (MSE) vs. failure probability of binary search delta.</span>
 
-<span class="sd">It imports core utilities from `dame_ts.utils` and supports multiple distributions.</span>
+<span class="sd">It imports core utilities from `dame_bs.utils` and supports multiple distributions.</span>
 
 <span class="sd">Usage:</span>
 <span class="sd">    Run directly to generate plots.</span>
@@ -95,7 +96,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">)))</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dame_ts.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_dame_experiment</span><span class="p">,</span> <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">,</span><span class="n">theoretical_upper_bound</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_dame_experiment</span><span class="p">,</span> <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">,</span><span class="n">theoretical_upper_bound</span>
 
 
 <div class="viewcode-block" id="experiment_risk_vs_delta_for_dist">

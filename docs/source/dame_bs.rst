@@ -1,29 +1,29 @@
-dame\_ts package
+dame\_bs package
 ================
 
 Submodules
 ----------
 
-dame\_ts.dame\_ts module
+dame\_bs.binary\_search module
+------------------------------
+
+.. automodule:: dame_bs.binary_search
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dame\_bs.dame\_bs module
 ------------------------
 
-.. automodule:: dame_ts.dame_ts
+.. automodule:: dame_bs.dame_bs
    :members:
    :show-inheritance:
    :undoc-members:
 
-dame\_ts.ternary\_search module
--------------------------------
-
-.. automodule:: dame_ts.ternary_search
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-dame\_ts.utils module
+dame\_bs.utils module
 ---------------------
 
-.. automodule:: dame_ts.utils
+.. automodule:: dame_bs.utils
    :members:
    :show-inheritance:
    :undoc-members:
@@ -31,7 +31,7 @@ dame\_ts.utils module
 Module contents
 ---------------
 
-.. automodule:: dame_ts
+.. automodule:: dame_bs
    :members:
    :show-inheritance:
    :undoc-members:

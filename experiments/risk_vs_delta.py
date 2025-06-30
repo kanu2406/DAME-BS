@@ -2,10 +2,10 @@
 experiments.risk_vs_delta
 --------------------------
 
-This script runs the DAME-TS algorithm for various distributions and plots
-the mean squared error (MSE) vs. failure probability of ternary search delta.
+This script runs the DAME-BS algorithm for various distributions and plots
+the mean squared error (MSE) vs. failure probability of binary search delta.
 
-It imports core utilities from `dame_ts.utils` and supports multiple distributions.
+It imports core utilities from `dame_bs.utils` and supports multiple distributions.
 
 Usage:
     Run directly to generate plots.
@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
+from dame_bs.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
 def experiment_risk_vs_delta_for_dist(distribution,n=9000, m=20, true_mean=0.3, trials=50,alpha=0.6):

@@ -13,7 +13,7 @@ sys.path.insert(0,os.path.abspath("../../"))
 
 
 
-project = 'dame_ts'
+project = 'dame_bs'
 copyright = '2025, Kanupriya'
 author = 'Kanupriya'
 release = '0.1'

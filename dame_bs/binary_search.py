@@ -4,9 +4,9 @@ import warnings
 # from dame_ts.utils import min_n_required
 
 
-def attempting_insertion_using_ternary_search(alpha,delta,n,m,user_samples):
+def attempting_insertion_using_binary_search(alpha,delta,n,m,user_samples):
     """
-    Perform the localization phase of DAME using a private ternary search.
+    Perform the localization phase of DAME using a private binary search.
 
     This procedure partitions the interval [-1, 1] into three segments at each iteration,
     uses randomized response to privately count how many user sample-means fall into the

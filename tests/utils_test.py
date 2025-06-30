@@ -1,7 +1,7 @@
 import pytest
-from dame_ts.utils import theoretical_upper_bound,run_dame_experiment,plot_errorbars_and_upper_bounds
+from dame_bs.utils import theoretical_upper_bound,run_dame_experiment,plot_errorbars_and_upper_bounds
 import numpy as np
-from dame_ts.dame_ts import dame_with_ternary_search
+from dame_bs.dame_bs import dame_with_binary_search
 import matplotlib.pyplot as plt
 
 ########################################################################################
@@ -52,7 +52,7 @@ def test_estimate_within_error_and_bound(tol=0.1):
     alpha = 0.6
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
 
-    estimated_mean = dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1)
+    estimated_mean = dame_with_binary_search(n, alpha, m, user_samples,delta=0.1)
     error = abs(estimated_mean - true_mean)
 
     # Theoretical bound check

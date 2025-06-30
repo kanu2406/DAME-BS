@@ -2,10 +2,10 @@
 experiments.risk_vs_n
 ---------------------
 
-This script runs the DAME-TS algorithm for various distributions and plots
+This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. number of users `n`.
 
-It uses utility functions from `dame_ts.utils`.
+It uses utility functions from `dame_bs.utils`.
 
 
 Usage:
@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
+from dame_bs.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
 def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=500, m=20, true_mean=0.3, trials=50,delta=0.1):
@@ -34,7 +34,7 @@ def experiment_risk_vs_n_for_dist(distribution,alpha=0.6,min_n=500, m=20, true_m
         m (int): Number of samples per user. Default is 20.
         true_mean (float): True mean value used for the experiment. Default is 0.3.
         trials (int): Number of experiment trials. Default is 50.
-        delta (float): tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.
+        delta (float): tolerated probability of failure of binary search in DAME-BS. Default is 0.1.
 
     Returns:
         None. Displays plots.

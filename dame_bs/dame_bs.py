@@ -1,12 +1,12 @@
 import numpy as np
 import math
-from dame_ts.ternary_search import attempting_insertion_using_ternary_search
+from dame_bs.binary_search import attempting_insertion_using_binary_search
 import warnings
 # from dame_ts.utils import min_n_required
 
-def dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1):
+def dame_with_binary_search(n, alpha, m, user_samples,delta=0.1):
     """
-    Implements DAME-TS algorithm with ternary search (localization phase) and Estimation Phase.
+    Implements DAME algorithm with Binary search (localization phase) and Estimation Phase.
 
     Args:
         n: number of users (integer, even)
@@ -42,8 +42,6 @@ def dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1):
     #     warnings.warn(f"n = {n} is below the recommended minimum {min_n_required(alpha)}; result may be unreliable.")
 
 
-
-    # Compute tau and delta
     # tau = (2 * math.log(max(8 * math.sqrt(m * n) * (alpha ** 2), 1))) / m
     if alpha==np.inf:
         pi_alpha=1
@@ -57,7 +55,7 @@ def dame_with_ternary_search(n, alpha, m, user_samples,delta=0.1):
     
 
     # loc_samples = user_samples[:n//2]
-    theta_hat_loc = attempting_insertion_using_ternary_search(alpha, delta, n//2, m, X1)
+    theta_hat_loc = attempting_insertion_using_binary_search(alpha, delta, n//2, m, X1)
 
     # Estimation phase using second half
     X2 = user_samples[int(n/2):]

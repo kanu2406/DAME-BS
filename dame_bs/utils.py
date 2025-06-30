@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 def theoretical_upper_bound(alpha, n, m,delta=0.1):
     '''
-    Computes a theoretical upper bound on the mean squared error (MSE) of the DAME-TS algorithm's 
+    Computes a theoretical upper bound on the mean squared error (MSE) of the algorithm's 
     estimate of the true mean, under differential privacy constraints.
 
     Parameters
@@ -22,7 +22,7 @@ def theoretical_upper_bound(alpha, n, m,delta=0.1):
     -------
     float
         A theoretical upper bound on the expected squared error:
-        E[(theta_hat - theta)^2], where μ is the true mean and 𝜃̂ is the estimate returned by DAME.
+        E[(theta_hat - theta)^2], where theta is the true mean and 𝜃theta_hat is the estimate returned by DAME.
         The theoretical bound is given by -
 
         E[(theta_hat - theta)^2]<= 32/n  + 
@@ -67,7 +67,7 @@ def theoretical_upper_bound(alpha, n, m,delta=0.1):
 
 def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",delta=0.1):
     """
-    Runs the DAME-TS algorithm multiple times to empirically evaluate its estimation error 
+    Runs the DAME-BS algorithm multiple times to empirically evaluate its estimation error 
     under different data distributions and privacy settings.
 
     This function simulates a scenario with `n` users, each having `m` samples generated 
@@ -92,7 +92,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",
             - "uniform"    : Samples from U(true_mean - 1, true_mean + 1)
             - "poisson"    : Samples from Poisson(true_mean)
             - "exponential": Samples from Exponential(1.0) shifted to have mean ≈ true_mean
-    delta : tolerated failure probability of ternary search in DAME-TS
+    delta : tolerated failure probability of binary search in DAME-TS
 
     Returns
     -------
@@ -102,7 +102,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",
         The standard deviation of the squared error over all trials.
 
     """
-    from dame_ts import dame_with_ternary_search
+    from dame_bs import dame_with_binary_search
 
     errors = []
     for _ in range(trials):
@@ -122,7 +122,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",
 
             
         # Run algorithm
-        estimate = dame_with_ternary_search(n, alpha, m, user_samples,delta)
+        estimate = dame_with_binary_search(n, alpha, m, user_samples,delta)
         
         # Measure error
         error = (estimate - true_mean)**2

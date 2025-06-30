@@ -2,10 +2,10 @@
 experiments.risk_vs_alpha
 --------------------------
 
-This script runs the DAME-TS algorithm for various distributions and plots
+This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. privacy parameter α.
 
-It imports core utilities from `dame_ts.utils` and supports multiple distributions.
+It imports core utilities from `dame_bs.utils` and supports multiple distributions.
 
 Usage:
     Run directly to generate plots.
@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from dame_ts.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
+from dame_bs.utils import run_dame_experiment, plot_errorbars_and_upper_bounds,theoretical_upper_bound
 
 
 def experiment_risk_vs_alpha_for_dist(distribution,n=9000, m=20, true_mean=0.3, trials=50,delta=0.1):
@@ -32,7 +32,7 @@ def experiment_risk_vs_alpha_for_dist(distribution,n=9000, m=20, true_mean=0.3, 
         m (int): Number of samples per user. Default is 20.
         true_mean (float): True mean value used for the experiment. Default is 0.3.
         trials (int): Number of experiment trials. Default is 50.
-        delta (float): tolerated probability of failure of ternary search in DAME-TS. Default is 0.1.
+        delta (float): tolerated probability of failure of binary search in DAME-BS. Default is 0.1.
 
 
     Returns:
