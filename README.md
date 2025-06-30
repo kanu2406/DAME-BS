@@ -1,6 +1,6 @@
 # DAME-BS: Differentially Private Mean Estimation via Binary Search
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/kanu2406/DAME-TS/tree/main.svg?style=svg&circle-token=CCIPRJ_HwgZxRmn4FC9KWA4t8tmKG_42331c11496c635f99cf9fdd0514727175f5446a)](https://dl.circleci.com/status-badge/redirect/gh/kanu2406/DAME-TS/tree/main) [![codecov](https://codecov.io/gh/kanu2406/DAME-TS/graph/badge.svg?token=LBKGKXDCGV)](https://codecov.io/gh/kanu2406/DAME-TS)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/kanu2406/DAME-BS/tree/main.svg?style=svg&circle-token=CCIPRJ_HwgZxRmn4FC9KWA4t8tmKG_42331c11496c635f99cf9fdd0514727175f5446a)](https://dl.circleci.com/status-badge/redirect/gh/kanu2406/DAME-BS/tree/main) [![codecov](https://codecov.io/gh/kanu2406/DAME-BS/graph/badge.svg?token=LBKGKXDCGV)](https://codecov.io/gh/kanu2406/DAME-BS)
 
 This repository provides a Python implementation of the **DAME-BS** algorithm for locally differentially private mean estimation using binary search. It includes theoretical upper bounds and experiments across multiple distributions.
 
