@@ -30,7 +30,7 @@ pip install -r requirements.txt
 Clone the repository:
 
 ```bash
-git clone https://github.com/kanu2406/DAME-TS.git
+git clone https://github.com/kanu2406/DAME-BS.git
 cd DAME-TS
 ```
 
@@ -61,11 +61,11 @@ delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
 user_samples= [np.random.normal(loc=true_mean, scale=0.6, size=m) for _ in range(n)]
 
 # Estimated Interval
-L, R = attempting_insertion_using_ternary_search(alpha, delta, n, m, user_samples)
-print(f"Ternary Search Interval: [{L:.3f}, {R:.3f}]")
+L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
+print(f"Binary Search Interval: [{L:.3f}, {R:.3f}]")
 
 # Estimated Mean
-bar_theta = dame_with_ternary_search(n, alpha, m, user_samples)
+bar_theta = dame_with_binary_search(n, alpha, m, user_samples)
 print(f"Final mean Estimate: {bar_theta:.3f}")
 
 
@@ -77,7 +77,7 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 The documentation can be found here -
 
-https://kanu2406.github.io/DAME-TS/
+https://kanu2406.github.io/DAME-BS/
 
 
 
