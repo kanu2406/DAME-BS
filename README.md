@@ -81,12 +81,18 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ### Results
 
-This plot shows how the mean squared error of the estimator varies with the privacy parameter 𝛼. As 𝛼 increases (less privacy), the risk decreases, 
-demonstrating the privacy-utility tradeoff for the given distribution. The data was generated using normal distribution.
+This plot shows how the mean squared error of the estimator varies with the privacy parameter 𝛼 along with the theoretical upper bound. 
 
-![risk_vs_alpha](docs/figures/risk_vs_alpha/normal_alpha.png)
+<img src="docs/figures/risk_vs_alpha/normal_alpha.png" alt="risk_vs_alpha" style="width:200px;"/>
 
+This plot shows how the mean squared error of the estimator varies with the number of users n along with the theoretical upper bound. 
 
+<img src="docs/figures/risk_vs_n/normal_n.png" alt="risk_vs_n" style="width:200px;"/>
+
+This plot compares empirical risks for different privacy parameters 𝛼 as 𝑛 increases, along with the derived theoretical upper bound (shown as dashed lines).
+<img src="docs/figures/risk_vs_n_diff_alpha/risk_vs_n_normal_diff_alpha.png" alt="risk_vs_n_diff_alpha" style="width:200px;"/>
+
+In all the plots above, data was generated using normal distribution.
 
 ### License
 
