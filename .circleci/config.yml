@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Run tests with coverage
           command: |
-            pytest --cov=dame_ts --cov-report=xml
+            pytest --cov=dame_bs --cov-report=xml
 
       - codecov/upload:
           file: coverage.xml  
