@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.utils_test &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-BS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.utils_test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.utils_test</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">theoretical_upper_bound</span><span class="p">,</span><span class="n">run_dame_experiment</span><span class="p">,</span><span class="n">plot_errorbars_and_upper_bounds</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1">########################################################################################</span>
+
+<div class="viewcode-block" id="test_theoretical_upper_bound_valid">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_theoretical_upper_bound_valid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_theoretical_upper_bound_valid</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Verifies that theoretical_upper_bound returns a non-negative float.&#39;&#39;&#39;</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">bound</span> <span class="o">=</span> <span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">bound</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bound</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span></div>
+
+
+<span class="c1">#####################################################################################</span>
+<span class="c1"># Tests for different distributions</span>
+
+<div class="viewcode-block" id="test_run_dame_experiment_for_distributions">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_run_dame_experiment_for_distributions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_run_dame_experiment_for_distributions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Runs the experiment using each supported distribution and asserts that errors are non-negative.&#39;&#39;&#39;</span>
+
+    <span class="n">distributions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="s2">&quot;exponential&quot;</span><span class="p">,</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span><span class="s2">&quot;poisson&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">distributions</span><span class="p">:</span>
+            <span class="n">mean_err</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="n">dist</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">mean_err</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+            <span class="k">assert</span> <span class="n">std_err</span> <span class="o">&gt;=</span> <span class="mi">0</span></div>
+
+
+
+<span class="c1">###########################################################################################</span>
+<div class="viewcode-block" id="test_estimate_within_error_and_bound">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_estimate_within_error_and_bound">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_estimate_within_error_and_bound</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures that the DAME-BS empirical error is less than theoretical bound.&#39;&#39;&#39;</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="n">mean_err</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># Theoretical bound check</span>
+    <span class="n">theoretical_bound</span> <span class="o">=</span> <span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  
+    <span class="k">assert</span> <span class="n">mean_err</span> <span class="o">&lt;=</span> <span class="n">theoretical_bound</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Error </span><span class="si">{</span><span class="n">mean_err</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> exceeds theoretical bound </span><span class="si">{</span><span class="n">theoretical_bound</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<span class="c1">##################################################################################################</span>
+
+<div class="viewcode-block" id="test_plot_errorbars_and_upper_bounds_runs">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_plot_errorbars_and_upper_bounds_runs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_plot_errorbars_and_upper_bounds_runs</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures the plotting function executes without crashing. </span>
+<span class="sd">    Uses monkeypatch to suppress actual plot display.&#39;&#39;&#39;</span>
+
+    <span class="c1"># Monkeypatch plt.show to avoid displaying the plot during test</span>
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="n">plt</span><span class="p">,</span> <span class="s2">&quot;show&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="n">mean_errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">std_errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">alphas</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span>
+
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+        
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">mean_err</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">mean_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_err</span><span class="p">)</span>
+        <span class="n">std_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_err</span><span class="p">)</span>
+
+    <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">]</span>
+
+    <span class="n">plot_errorbars_and_upper_bounds</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">mean_errors</span><span class="p">,</span> <span class="n">std_errors</span><span class="p">,</span><span class="n">upper_bounds</span><span class="p">,</span> 
+                   <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Privacy parameter α&quot;</span>
+                   <span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Squared Error&quot;</span><span class="p">,</span> 
+                   <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean Squared Error vs Alpha for the </span><span class="si">{</span><span class="n">distribution</span><span class="si">}</span><span class="s2"> distribution&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1">#############################################################################################</span>
+
+<div class="viewcode-block" id="test_theoretical_bound_no_noise">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_theoretical_bound_no_noise">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_theoretical_bound_no_noise</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Tests the edge case where alpha = ∞ (i.e., no added noise), </span>
+<span class="sd">    and ensures the theoretical bound is reduced to its minimal form.&#39;&#39;&#39;</span>
+
+    <span class="c1"># for no noise alpha = np.inf and pi_alpha = 1</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span>
+    
+    <span class="n">mean_err</span><span class="p">,</span><span class="n">std_err</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">theoretical_bound</span><span class="o">=</span><span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">mean_err</span> <span class="o">&lt;</span> <span class="n">theoretical_bound</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot; Mean squared error size is greater than theoretical upper bound&quot;</span>
+    <span class="k">assert</span> <span class="n">mean_err</span> <span class="o">&lt;</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Error is unexpectedly high without privacy: </span><span class="si">{</span><span class="n">mean_err</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">assert</span> <span class="n">theoretical_bound</span> <span class="o">==</span> <span class="p">(</span><span class="mi">32</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">delta</span><span class="p">),</span><span class="sa">f</span><span class="s2">&quot;Theoretical Upper bound still contains error due to noise&quot;</span></div>
+
+
+<span class="c1">#############################################################################################</span>
+
+<div class="viewcode-block" id="test_error_decreases_with_more_users">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_error_decreases_with_more_users">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_error_decreases_with_more_users</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures that emperical error reduces with more users&#39;&#39;&#39;</span>
+    <span class="n">err_few_users</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">err_many_users</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">err_many_users</span> <span class="o">&lt;</span> <span class="n">err_few_users</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Error did not decrease with more users: </span><span class="si">{</span><span class="n">err_few_users</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">err_many_users</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<span class="c1">#############################################################################################</span>
+
+<div class="viewcode-block" id="test_error_decreases_with_higher_alpha">
+<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_error_decreases_with_higher_alpha">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_error_decreases_with_higher_alpha</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures that emperical error reduces with higher alpha (lesser privacy)&#39;&#39;&#39;</span>
+    <span class="n">err_low_alpha</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">err_high_alpha</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">err_high_alpha</span> <span class="o">&lt;</span> <span class="n">err_low_alpha</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Error did not decrease with higher alpha: </span><span class="si">{</span><span class="n">err_low_alpha</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">err_high_alpha</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

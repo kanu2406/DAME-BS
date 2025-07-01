@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.core_test &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-BS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.core_test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.core_test</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;Unit Tests for dame_bs core functions binary_search() and dame_with_binary_search()&#39;&#39;&#39;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.binary_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">attempting_insertion_using_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">theoretical_upper_bound</span><span class="p">,</span><span class="n">run_dame_experiment</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="c1">###########################################################################################</span>
+<span class="c1"># Tests for output ranges</span>
+<div class="viewcode-block" id="test_dame_with_binary_search_output_range">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_output_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_output_range</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that dame_with_binary_search returns a float estimate within the valid range [-1, 1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">estimate</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">estimate</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">estimate</span> <span class="o">&lt;=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="test_binary_search_output_format">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_output_format">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_output_format</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that attempting_insertion_using_binary_search returns an interval as a list of two floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+    
+
+
+<div class="viewcode-block" id="test_binary_search_no_nan_inf">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_no_nan_inf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_no_nan_inf</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that the binary search interval does not contain NaN or infinite values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_interval_bounds">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_interval_bounds">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_interval_bounds</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Confirm that the interval returned by binary search lies within [-1, 1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span><span class="o">&lt;=</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span><span class="mi">1</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span><span class="o">&lt;=</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span><span class="mi">1</span></div>
+
+
+
+<span class="c1">##################################################################################################</span>
+
+<div class="viewcode-block" id="test_binary_search_interval_no_noise">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_interval_no_noise">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_interval_no_noise</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test binary search interval estimation with no noise (alpha = infinity).</span>
+<span class="sd">    Checks that true mean lies within the estimated interval and the interval length has decreased.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="c1"># for no noise alpha = np.inf and pi_alpha = 1</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># two_pi_minus_1 = 2 * pi_alpha - 1</span>
+
+    <span class="c1"># if abs(two_pi_minus_1) &lt; 1e-6:</span>
+    <span class="c1">#     n = np.inf  # Avoid division by near-zero</span>
+
+    <span class="c1"># ln_32 = np.log(3 / 2)</span>
+    <span class="c1"># term1 = 4 / (two_pi_minus_1 ** 4)</span>
+    <span class="c1"># term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))</span>
+    <span class="c1"># n = int(np.ceil(term1 * (term2 ** 2))+1000)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">9000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    
+    <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span>
+    
+    <span class="k">assert</span> <span class="n">L</span> <span class="o">&lt;=</span> <span class="n">true_mean</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;True mean </span><span class="si">{</span><span class="n">true_mean</span><span class="si">}</span><span class="s2"> not in estimated interval [</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">R</span><span class="si">}</span><span class="s2">]&quot;</span>
+    <span class="k">assert</span> <span class="n">R</span><span class="o">-</span><span class="n">L</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;estimated interval size has not decreased&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_interval_shrinks">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_interval_shrinks">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_interval_shrinks</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that the binary search confidence interval shrinks when number of users increases.</span>
+<span class="sd">    Compares interval widths for smaller and larger n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n_small</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">n_large</span> <span class="o">=</span> <span class="mi">15000</span>
+    <span class="n">delta_small</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="n">delta_large</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+
+    <span class="n">user_samples_small</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_small</span><span class="p">)]</span>
+    <span class="n">user_samples_large</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_large</span><span class="p">)]</span>
+
+    <span class="n">L1</span><span class="p">,</span> <span class="n">R1</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta_small</span><span class="p">,</span> <span class="n">n_small</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples_small</span><span class="p">)</span>
+    <span class="n">L2</span><span class="p">,</span> <span class="n">R2</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta_large</span><span class="p">,</span> <span class="n">n_large</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples_large</span><span class="p">)</span>
+
+    <span class="n">width1</span> <span class="o">=</span> <span class="n">R1</span> <span class="o">-</span> <span class="n">L1</span>
+    <span class="n">width2</span> <span class="o">=</span> <span class="n">R2</span> <span class="o">-</span> <span class="n">L2</span>
+
+    <span class="k">assert</span> <span class="n">width2</span> <span class="o">&lt;=</span> <span class="n">width1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Interval did not shrink with more users: </span><span class="si">{</span><span class="n">width1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">width2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_no_noise">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_no_noise">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_no_noise</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test dame_with_binary_search output when noise is absent (alpha = infinity).</span>
+<span class="sd">    Checks that estimated mean is within valid range and close to the true mean.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="c1"># for no noise alpha = np.inf and pi_alpha = 1</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">estimated_mean</span><span class="o">=</span><span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">estimated_mean</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Estimated mean </span><span class="si">{</span><span class="n">estimated_mean</span><span class="si">}</span><span class="s2"> not in interval [-1,1]&quot;</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">estimated_mean</span><span class="o">-</span><span class="n">true_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">&lt;=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Estimated mean and true mean are not close.&quot;</span></div>
+
+    
+
+<span class="c1">#########################################################################################################</span>
+<span class="c1"># Invalid Input Check for binary search</span>
+
+<div class="viewcode-block" id="test_binary_search_invalid_n_type">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_n_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_n_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that attempting_insertion_using_binary_search raises ValueError for negative n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;n must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_invalid_alpha_type">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_alpha_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_alpha_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that attempting_insertion_using_binary_search raises ValueError for negative alpha.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;alpha must be a positive number&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="test_binary_search_mismatch_samples">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_mismatch_samples">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_mismatch_samples</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if user_samples length does not match n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;user_samples must be a list of length </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_wrong_sample_length">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_wrong_sample_length">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_wrong_sample_length</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if individual user samples do not have length m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Each user sample must be an array-like of length </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_binary_search_warns_and_corrects_odd_n">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_warns_and_corrects_odd_n">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_warns_and_corrects_odd_n</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that a warning is issued when n is odd and corrected internally.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="mi">5001</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples1</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">)</span>
+        <span class="n">result1</span> <span class="o">=</span> <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples1</span><span class="p">)</span>  
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;is odd&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">warning</span><span class="o">.</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span></div>
+
+    
+    
+<div class="viewcode-block" id="test_binary_search_invalid_m_not_int">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_m_not_int">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_m_not_int</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised when m is not a positive integer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_invalid_delta_not_positive">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_delta_not_positive">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_delta_not_positive</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if delta is not a positive number less than 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;delta must be a positive number less than 1&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="o">-</span><span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_binary_search_invalid_delta_interval">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_delta_interval">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_delta_interval</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if delta is &gt;= 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;delta must be a positive number less than 1&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_binary_search_invalid_m_negative">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_binary_search_invalid_m_negative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_invalid_m_negative</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if m is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">attempting_insertion_using_binary_search</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span></div>
+
+
+    
+
+<span class="c1">##################################################################################################</span>
+<span class="c1"># Invalid Input Check for dame_bs</span>
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_n_type">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_n_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_n_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that dame_with_binary_search raises ValueError for negative n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;n must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_alpha_type">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_alpha_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_alpha_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that dame_with_binary_search raises ValueError for negative alpha.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;alpha must be a positive number&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_mismatch_samples">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_mismatch_samples">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_mismatch_samples</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if user_samples length does not match n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;user_samples must be a list of length </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_wrong_sample_length">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_wrong_sample_length">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_wrong_sample_length</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if individual user samples do not have length m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Each user sample must be an array-like of length </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_warns_and_corrects_odd_n">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_warns_and_corrects_odd_n">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_warns_and_corrects_odd_n</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that a warning is issued when n is odd and corrected internally.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="mi">5001</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples1</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">)]</span>
+    <span class="n">user_samples2</span> <span class="o">=</span> <span class="n">user_samples1</span><span class="p">[:</span><span class="n">n2</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">)</span>
+        <span class="n">result1</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples1</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span>  
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;is odd&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">warning</span><span class="o">.</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_m_not_int">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_m_not_int">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_m_not_int</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if m (number of samples per user) is not a positive inetger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_m_negative">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_m_negative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_m_negative</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if m is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="o">-</span><span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_delta_negative">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_delta_negative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_delta_negative</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if delta is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;delta must be a positive number less than 1&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="o">-</span><span class="n">delta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_delta_interval">
+<a class="viewcode-back" href="../../tests.html#tests.core_test.test_dame_with_binary_search_invalid_delta_interval">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_delta_interval</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if delta is not a positive number less than 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;delta must be a positive number less than 1&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

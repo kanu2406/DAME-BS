@@ -13,4 +13,5 @@ Welcome to dame_bs documentation
 
    modules
    experiments
+   tests
 
