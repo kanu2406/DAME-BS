@@ -1,6 +1,6 @@
 """
 experiments.risk_vs_n_with_alpha
----------------------
+--------------------------------
 
 This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. number of users `n` for different values of alphas.

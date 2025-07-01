@@ -1,11 +1,11 @@
 Usage 
------
+=====
 
 This section presents usage examples of the DAME-BS algorithm.
-===================
+
 
 Risk\_vs\_alpha 
-----------------------------------
+---------------
 
 .. automodule:: experiments.risk_vs_alpha
    :members:
@@ -13,7 +13,7 @@ Risk\_vs\_alpha
    :undoc-members:
 
 Risk\_vs\_n 
-------------------------------
+-----------
 
 .. automodule:: experiments.risk_vs_n
    :members:
@@ -21,7 +21,7 @@ Risk\_vs\_n
    :undoc-members:
 
 Risk\_vs\_delta
-------------------------------
+---------------
 
 .. automodule:: experiments.risk_vs_delta
    :members:
@@ -30,7 +30,7 @@ Risk\_vs\_delta
 
 
 Risk\_vs\_n\_with\_alpha
-------------------------------
+------------------------
 
 .. automodule:: experiments.risk_vs_n_with_alpha
    :members:

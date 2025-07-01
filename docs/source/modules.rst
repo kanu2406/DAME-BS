@@ -1,4 +1,4 @@
-DAME-TS
+DAME-BS
 =======
 
 .. toctree::

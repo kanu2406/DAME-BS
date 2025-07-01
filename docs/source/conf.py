@@ -28,7 +28,7 @@ extensions = ["sphinx.ext.autodoc",
     "sphinx.ext.todo"]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store','setup']
 napoleon_numpy_docstring = True
 
 

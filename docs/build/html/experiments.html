@@ -45,30 +45,29 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="modules.html">DAME-TS</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#this-section-presents-usage-examples-of-the-dame-bs-algorithm">This section presents usage examples of the DAME-BS algorithm.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.risk_vs_alpha">Risk_vs_alpha</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments-risk-vs-alpha">experiments.risk_vs_alpha</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_alpha_for_dist()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_alpha">Risk_vs_alpha</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-alpha">experiments.risk_vs_alpha</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_alpha.experiment_risk_vs_alpha_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_alpha_for_dist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.risk_vs_n">Risk_vs_n</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments-risk-vs-n">experiments.risk_vs_n</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.risk_vs_n.experiment_risk_vs_n_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_for_dist()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_n">Risk_vs_n</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-n">experiments.risk_vs_n</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_n.experiment_risk_vs_n_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_for_dist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.risk_vs_delta">Risk_vs_delta</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments-risk-vs-delta">experiments.risk_vs_delta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_delta_for_dist()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_delta">Risk_vs_delta</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-delta">experiments.risk_vs_delta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_delta.experiment_risk_vs_delta_for_dist"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_delta_for_dist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.risk_vs_n_with_alpha">Risk_vs_n_with_alpha</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments-risk-vs-n-with-alpha">experiments.risk_vs_n_with_alpha</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.risk_vs_n_with_alpha.experiment_risk_vs_n_multiple_alphas"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_multiple_alphas()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-experiments.risk_vs_n_with_alpha">Risk_vs_n_with_alpha</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#experiments-risk-vs-n-with-alpha">experiments.risk_vs_n_with_alpha</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experiments.risk_vs_n_with_alpha.experiment_risk_vs_n_multiple_alphas"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_n_multiple_alphas()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#results">Results</a></li>
 </ul>
 
         </div>
@@ -97,14 +96,11 @@
              
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
-<section id="this-section-presents-usage-examples-of-the-dame-bs-algorithm">
-<h2>This section presents usage examples of the DAME-BS algorithm.<a class="headerlink" href="#this-section-presents-usage-examples-of-the-dame-bs-algorithm" title="Link to this heading"></a></h2>
-</section>
-</section>
+<p>This section presents usage examples of the DAME-BS algorithm.</p>
 <section id="module-experiments.risk_vs_alpha">
-<span id="risk-vs-alpha"></span><h1>Risk_vs_alpha<a class="headerlink" href="#module-experiments.risk_vs_alpha" title="Link to this heading"></a></h1>
+<span id="risk-vs-alpha"></span><h2>Risk_vs_alpha<a class="headerlink" href="#module-experiments.risk_vs_alpha" title="Link to this heading"></a></h2>
 <section id="experiments-risk-vs-alpha">
-<h2>experiments.risk_vs_alpha<a class="headerlink" href="#experiments-risk-vs-alpha" title="Link to this heading"></a></h2>
+<h3>experiments.risk_vs_alpha<a class="headerlink" href="#experiments-risk-vs-alpha" title="Link to this heading"></a></h3>
 <p>This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. privacy parameter α.</p>
 <p>It imports core utilities from <cite>dame_bs.utils</cite> and supports multiple distributions.</p>
@@ -136,9 +132,9 @@ the mean squared error (MSE) vs. privacy parameter α.</p>
 
 </section>
 <section id="module-experiments.risk_vs_n">
-<span id="risk-vs-n"></span><h1>Risk_vs_n<a class="headerlink" href="#module-experiments.risk_vs_n" title="Link to this heading"></a></h1>
+<span id="risk-vs-n"></span><h2>Risk_vs_n<a class="headerlink" href="#module-experiments.risk_vs_n" title="Link to this heading"></a></h2>
 <section id="experiments-risk-vs-n">
-<h2>experiments.risk_vs_n<a class="headerlink" href="#experiments-risk-vs-n" title="Link to this heading"></a></h2>
+<h3>experiments.risk_vs_n<a class="headerlink" href="#experiments-risk-vs-n" title="Link to this heading"></a></h3>
 <p>This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. number of users <cite>n</cite>.</p>
 <p>It uses utility functions from <cite>dame_bs.utils</cite>.</p>
@@ -171,9 +167,9 @@ the mean squared error (MSE) vs. number of users <cite>n</cite>.</p>
 
 </section>
 <section id="module-experiments.risk_vs_delta">
-<span id="risk-vs-delta"></span><h1>Risk_vs_delta<a class="headerlink" href="#module-experiments.risk_vs_delta" title="Link to this heading"></a></h1>
+<span id="risk-vs-delta"></span><h2>Risk_vs_delta<a class="headerlink" href="#module-experiments.risk_vs_delta" title="Link to this heading"></a></h2>
 <section id="experiments-risk-vs-delta">
-<h2>experiments.risk_vs_delta<a class="headerlink" href="#experiments-risk-vs-delta" title="Link to this heading"></a></h2>
+<h3>experiments.risk_vs_delta<a class="headerlink" href="#experiments-risk-vs-delta" title="Link to this heading"></a></h3>
 <p>This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. failure probability of binary search delta.</p>
 <p>It imports core utilities from <cite>dame_bs.utils</cite> and supports multiple distributions.</p>
@@ -205,9 +201,9 @@ the mean squared error (MSE) vs. failure probability of binary search delta.</p>
 
 </section>
 <section id="module-experiments.risk_vs_n_with_alpha">
-<span id="risk-vs-n-with-alpha"></span><h1>Risk_vs_n_with_alpha<a class="headerlink" href="#module-experiments.risk_vs_n_with_alpha" title="Link to this heading"></a></h1>
+<span id="risk-vs-n-with-alpha"></span><h2>Risk_vs_n_with_alpha<a class="headerlink" href="#module-experiments.risk_vs_n_with_alpha" title="Link to this heading"></a></h2>
 <section id="experiments-risk-vs-n-with-alpha">
-<h2>experiments.risk_vs_n_with_alpha<a class="headerlink" href="#experiments-risk-vs-n-with-alpha" title="Link to this heading"></a></h2>
+<h3>experiments.risk_vs_n_with_alpha<a class="headerlink" href="#experiments-risk-vs-n-with-alpha" title="Link to this heading"></a></h3>
 <p>This script runs the DAME-BS algorithm for various distributions and plots
 the mean squared error (MSE) vs. number of users <cite>n</cite> for different values of alphas.</p>
 <p>It uses utility functions from <cite>dame_bs.utils</cite>.</p>
@@ -241,7 +237,7 @@ the mean squared error (MSE) vs. number of users <cite>n</cite> for different va
 
 </section>
 <section id="results">
-<h1>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h1>
+<h2>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h2>
 <p>Mean Squared Error vs Alpha for the different distributions.</p>
 <a class="reference internal image-reference" href="_images/risk_vs_alpha.png"><img alt="Mean Squared Error vs Alpha for the different distributions" class="align-center" src="_images/risk_vs_alpha.png" style="width: 600px;" />
 </a>
@@ -254,6 +250,7 @@ the mean squared error (MSE) vs. number of users <cite>n</cite> for different va
 <p>Mean Squared Error vs n (total number of users) for the different distributions for different values of privacy parameter alpha.</p>
 <a class="reference internal image-reference" href="_images/risk_vs_n_diff_alpha.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/risk_vs_n_diff_alpha.png" style="width: 600px;" />
 </a>
+</section>
 </section>
 
 
