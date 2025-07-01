@@ -1,10 +1,8 @@
 dame\_bs package
 ================
 
-Submodules
-----------
 
-dame\_bs.binary\_search module
+dame\_bs.binary\_search 
 ------------------------------
 
 .. automodule:: dame_bs.binary_search
@@ -12,7 +10,7 @@ dame\_bs.binary\_search module
    :show-inheritance:
    :undoc-members:
 
-dame\_bs.dame\_bs module
+dame\_bs.dame\_bs 
 ------------------------
 
 .. automodule:: dame_bs.dame_bs
@@ -20,7 +18,7 @@ dame\_bs.dame\_bs module
    :show-inheritance:
    :undoc-members:
 
-dame\_bs.utils module
+dame\_bs.utils 
 ---------------------
 
 .. automodule:: dame_bs.utils
@@ -28,10 +26,3 @@ dame\_bs.utils module
    :show-inheritance:
    :undoc-members:
 
-Module contents
----------------
-
-.. automodule:: dame_bs
-   :members:
-   :show-inheritance:
-   :undoc-members:

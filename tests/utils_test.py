@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 ########################################################################################
 
 def test_theoretical_upper_bound_valid():
+    '''Verifies that theoretical_upper_bound returns a non-negative float.'''
     alpha = 0.6
     n = 9000
     m = 20
@@ -17,33 +18,21 @@ def test_theoretical_upper_bound_valid():
 #####################################################################################
 # Tests for different distributions
 
-def test_run_dame_experiment_normal():
-    mean_err, std_err = run_dame_experiment(n=9000,
-                     alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
-    assert mean_err >= 0
-    assert std_err >= 0
+def test_run_dame_experiment_for_distributions():
+    '''Runs the experiment using each supported distribution and asserts that errors are non-negative.'''
 
-def test_run_dame_experiment_uniform():
-    mean_err, std_err = run_dame_experiment(n=9000,
-                     alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="uniform",delta=0.1)
-    assert mean_err >= 0
-    assert std_err >= 0
-
-def test_run_dame_experiment_laplace():
-    mean_err, std_err = run_dame_experiment(n=9000,
-                     alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="poisson",delta=0.1)
-    assert mean_err >= 0
-    assert std_err >= 0
-
-def test_run_dame_experiment_exponential():
-    mean_err, std_err = run_dame_experiment(n=9000,
-                     alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="exponential",delta=0.1)
-    assert mean_err >= 0
-    assert std_err >= 0
+    distributions = ["normal","exponential","uniform","poisson"]
+    for dist in distributions:
+            mean_err, std_err = run_dame_experiment(n=9000,
+                            alpha=0.6, m=20, true_mean=0.3, trials=50,distribution=dist,delta=0.1)
+            assert mean_err >= 0
+            assert std_err >= 0
 
 
 ###########################################################################################
 def test_estimate_within_error_and_bound(tol=0.1):
+    '''Ensures that the DAME-BS empirical error is less than theoretical bound.'''
+
     np.random.seed(42)
 
     true_mean = 0.3
@@ -52,16 +41,19 @@ def test_estimate_within_error_and_bound(tol=0.1):
     alpha = 0.6
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
 
-    estimated_mean = dame_with_binary_search(n, alpha, m, user_samples,delta=0.1)
-    error = abs(estimated_mean - true_mean)
+    mean_err, std_err = run_dame_experiment(n=9000,
+                            alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
 
     # Theoretical bound check
     theoretical_bound = theoretical_upper_bound(alpha, n, m,delta=0.1)  
-    assert error <= theoretical_bound, f"Error {error:.4f} exceeds theoretical bound {theoretical_bound:.4f}"
+    assert mean_err <= theoretical_bound, f"Error {mean_err:.4f} exceeds theoretical bound {theoretical_bound:.4f}"
 
 ##################################################################################################
 
 def test_plot_errorbars_and_upper_bounds_runs(monkeypatch):
+    '''Ensures the plotting function executes without crashing. 
+    Uses monkeypatch to suppress actual plot display.'''
+
     # Monkeypatch plt.show to avoid displaying the plot during test
     monkeypatch.setattr(plt, "show", lambda: None)
 
@@ -92,19 +84,12 @@ def test_plot_errorbars_and_upper_bounds_runs(monkeypatch):
 #############################################################################################
 
 def test_theoretical_bound_no_noise():
-    
+    '''Tests the edge case where alpha = ∞ (i.e., no added noise), 
+    and ensures the theoretical bound is reduced to its minimal form.'''
+
     # for no noise alpha = np.inf and pi_alpha = 1
     alpha = np.inf
     pi_alpha = 1
-    # two_pi_minus_1 = 2 * pi_alpha - 1
-
-    # if abs(two_pi_minus_1) < 1e-6:
-    #     n = np.inf  # Avoid division by near-zero
-
-    # ln_32 = np.log(3 / 2)
-    # term1 = 4 / (two_pi_minus_1 ** 4)
-    # term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))
-    # n = int(np.ceil(term1 * (term2 ** 2))+1000)
     n=9000
     m = 20
     true_mean = 0.3
@@ -113,18 +98,21 @@ def test_theoretical_bound_no_noise():
     mean_err,std_err = run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",delta=0.1)
     theoretical_bound=theoretical_upper_bound(alpha, n, m,delta=0.1)
     assert mean_err < theoretical_bound, f" Mean squared error size is greater than theoretical upper bound"
+    assert mean_err < 1e-4, f"Error is unexpectedly high without privacy: {mean_err:.6f}"
     assert theoretical_bound == (32/n) + (4*delta),f"Theoretical Upper bound still contains error due to noise"
 
-############################## NOT REQUIRED ##########################################
+#############################################################################################
 
-# def test_min_n_required_basic():
-#     alpha = 0.6
-#     n = min_n_required(alpha)
-#     assert n > 0
-#     assert isinstance(n, float)
+def test_error_decreases_with_more_users():
+    '''Ensures that emperical error reduces with more users'''
+    err_few_users,_ = run_dame_experiment(n=1000, alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
+    err_many_users,_ = run_dame_experiment(n=10000, alpha=0.6, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
+    assert err_many_users < err_few_users, f"Error did not decrease with more users: {err_few_users:.4f} vs {err_many_users:.4f}"
 
-# def test_min_n_required_edge_case():
-#     # Test very small alpha where (2pi_alpha - 1)^4 ~ 0
-#     alpha = 0.000001
-#     n = min_n_required(alpha)
-#     assert n == float("inf")
+#############################################################################################
+
+def test_error_decreases_with_higher_alpha():
+    '''Ensures that emperical error reduces with higher alpha (lesser privacy)'''
+    err_low_alpha,_ = run_dame_experiment(n=10000, alpha=0.2, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
+    err_high_alpha,_ = run_dame_experiment(n=10000, alpha=0.8, m=20, true_mean=0.3, trials=50,distribution="normal",delta=0.1)
+    assert err_high_alpha < err_low_alpha, f"Error did not decrease with higher alpha: {err_low_alpha:.4f} vs {err_high_alpha:.4f}"

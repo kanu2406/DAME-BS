@@ -92,7 +92,7 @@ def run_dame_experiment(n, alpha, m, true_mean, trials=50,distribution="normal",
             - "uniform"    : Samples from U(true_mean - 1, true_mean + 1)
             - "poisson"    : Samples from Poisson(true_mean)
             - "exponential": Samples from Exponential(1.0) shifted to have mean ≈ true_mean
-    delta : tolerated failure probability of binary search in DAME-TS
+    delta : tolerated failure probability of binary search in DAME-BS
 
     Returns
     -------
