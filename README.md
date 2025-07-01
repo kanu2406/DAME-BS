@@ -4,6 +4,13 @@
 
 This repository provides a Python implementation of the **DAME-BS** algorithm for locally differentially private mean estimation using binary search. It includes theoretical upper bounds and experiments across multiple distributions.
 
+### Documentation
+
+The documentation can be found here -
+
+https://kanu2406.github.io/DAME-BS/
+
+
 ---
 
 ### Requirements
@@ -72,12 +79,12 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ```
 
+### Results
 
-### Documentation
+This plot shows how the mean squared error of the estimator varies with the privacy parameter 𝛼. As 𝛼 increases (less privacy), the risk decreases, 
+demonstrating the privacy-utility tradeoff for the given distribution. The data was generated using normal distribution.
 
-The documentation can be found here -
-
-https://kanu2406.github.io/DAME-BS/
+![risk_vs_alpha](docs/figures/risk_vs_alpha/normal_alpha.png)
 
 
 
