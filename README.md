@@ -31,7 +31,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/kanu2406/DAME-BS.git
-cd DAME-TS
+cd DAME-BS
 ```
 
 ### Experiments
@@ -47,8 +47,8 @@ python experiments/experiment_risk_vs_n.py
 ```python
 import numpy as np
 import math
-from dame_ts.dame_ts import dame_with_binary_search
-from dame_ts.ternary_search import attempting_insertion_using_binary_search
+from dame_bs.dame_bs import dame_with_binary_search
+from dame_bs.binary_search import attempting_insertion_using_binary_search
  
 alpha = 0.6
 pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
