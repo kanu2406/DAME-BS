@@ -83,14 +83,15 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 This plot shows how the mean squared error of the estimator varies with the privacy parameter 𝛼 along with the theoretical upper bound. 
 
-<img src="docs/figures/risk_vs_alpha/normal_alpha.png" alt="risk_vs_alpha" style="width:200px;"/>
+<img src="docs/figures/risk_vs_alpha/normal_alpha.png" alt="risk_vs_alpha" style="width:400px;"/>
 
 This plot shows how the mean squared error of the estimator varies with the number of users n along with the theoretical upper bound. 
 
-<img src="docs/figures/risk_vs_n/normal_n.png" alt="risk_vs_n" style="width:200px;"/>
+<img src="docs/figures/risk_vs_n/normal_n.png" alt="risk_vs_n" style="width:400px;"/>
 
 This plot compares empirical risks for different privacy parameters 𝛼 as 𝑛 increases, along with the derived theoretical upper bound (shown as dashed lines).
-<img src="docs/figures/risk_vs_n_diff_alpha/risk_vs_n_normal_diff_alpha.png" alt="risk_vs_n_diff_alpha" style="width:200px;"/>
+
+<img src="docs/figures/risk_vs_n_diff_alpha/risk_vs_n_normal_diff_alpha.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/>
 
 In all the plots above, data was generated using normal distribution.
 
