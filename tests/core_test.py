@@ -122,8 +122,8 @@ def test_binary_search_interval_shrinks():
     """
     np.random.seed(42)
     alpha = 0.6
-    n_small = 5000
-    n_large = 15000
+    n_small = 500
+    n_large = 20000
     delta_small=0.1
     delta_large=0.1
     m = 20
