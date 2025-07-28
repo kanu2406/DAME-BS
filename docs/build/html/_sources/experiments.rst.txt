@@ -1,42 +1,25 @@
-Usage 
-=====
+Experiments
+===========
 
-This section presents usage examples of the DAME-BS algorithm.
+This section presents experiments done to compare the DAME-BS algorithm and Kent's algorithm for both univariate and multivariate cases.
 
 
-Risk\_vs\_alpha 
----------------
+Univariate Experiments
+----------------------
 
-.. automodule:: experiments.risk_vs_alpha
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Risk\_vs\_n 
------------
-
-.. automodule:: experiments.risk_vs_n
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Risk\_vs\_delta
----------------
-
-.. automodule:: experiments.risk_vs_delta
+.. automodule:: experiments.univariate_experiment
    :members:
    :show-inheritance:
    :undoc-members:
 
 
-Risk\_vs\_n\_with\_alpha
+Multivariate Experiments 
 ------------------------
 
-.. automodule:: experiments.risk_vs_n_with_alpha
+.. automodule:: experiments.multivariate_experiment
    :members:
    :show-inheritance:
    :undoc-members:
-
 
 
 Results
