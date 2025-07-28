@@ -47,8 +47,18 @@
 <li class="toctree-l1"><a class="reference internal" href="modules.html">DAME-BS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Experiments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#univariate-experiments">Univariate Experiments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#multivariate-experiments">Multivariate Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.univariate_experiment">Univariate Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.compare_univariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_univariate_algorithms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_univariate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.generate_univariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_univariate_scaled_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.multivariate_experiment">Multivariate Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.compare_multivariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_multivariate_algorithms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_multivariate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
 </ul>
 </li>
@@ -82,11 +92,243 @@
   <section id="experiments">
 <h1>Experiments<a class="headerlink" href="#experiments" title="Link to this heading"></a></h1>
 <p>This section presents experiments done to compare the DAME-BS algorithm and Kent’s algorithm for both univariate and multivariate cases.</p>
-<section id="univariate-experiments">
-<h2>Univariate Experiments<a class="headerlink" href="#univariate-experiments" title="Link to this heading"></a></h2>
+<section id="module-experiments.univariate_experiment">
+<span id="univariate-experiments"></span><h2>Univariate Experiments<a class="headerlink" href="#module-experiments.univariate_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.univariate_experiment.compare_univariate_algorithms">
+<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">compare_univariate_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#compare_univariate_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.compare_univariate_algorithms" title="Link to this definition"></a></dt>
+<dd><p>Compare DAME‑BS and Kent univariate estimators over multiple trials.</p>
+<dl class="simple">
+<dt>In each trial, this function:</dt><dd><ol class="arabic simple">
+<li><p>Generates <cite>n</cite> users × <cite>m</cite> samples from the specified <cite>distribution</cite>
+centered (in expectation) at <cite>true_mean</cite>.</p></li>
+<li><p>Scales all samples and <cite>true_mean</cite> into [-1,1].</p></li>
+<li><p>Runs both the DAME‑BS estimator and the Kent estimator under privacy
+budget <cite>alpha</cite>.</p></li>
+<li><p>Computes the squared error of each estimate vs. the scaled <cite>true_mean</cite>.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of i.i.d. samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Local differential privacy parameter.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – <dl class="simple">
+<dt>Which distribution to sample from. Supported Distributions:</dt><dd><ul>
+<li><p>”normal”</p></li>
+<li><p>”uniform”</p></li>
+<li><p>”student_t”</p></li>
+<li><p>”binomial”</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the underlying distribution.</p></li>
+<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of independent trials to average over (default: 50).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mean_err_dame</strong> (<em>float</em>) – Mean of squared errors from DAME‑BS across trials.</p></li>
+<li><p><strong>std_err_dame</strong> (<em>float</em>) – Standard deviation of those squared errors from DAME-BS.</p></li>
+<li><p><strong>mean_err_kent</strong> (<em>float</em>) – Mean of squared errors from Kent’s estimator across trials.</p></li>
+<li><p><strong>std_err_kent</strong> (<em>float</em>) – Standard deviation of those squared errors from Kent’s algorithm.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate">
+<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_param_for_dist_univariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_to_vary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alpha'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#experiment_risk_vs_param_for_dist_univariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate" title="Link to this definition"></a></dt>
+<dd><p>For the specified parameter <cite>param_to_vary</cite> (α, n, or m),
+plots MSE of two univariate LDP estimators by DAME-BS and Kent’s algorithm.</p>
+<p>For each value in <cite>param_values</cite>, this function runs
+<cite>compare_univariate_algorithms</cite> to obtain mean±std of squared error
+for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Supported Data distributions (“normal”, “uniform”, “student_t”, “binomial”).</p></li>
+<li><p><strong>param_to_vary</strong> (<em>str</em><em>, </em><em>optional</em>) – Which parameter to vary: “alpha”, “n”, or “m” (default: “alpha”).</p></li>
+<li><p><strong>param_values</strong> (<em>array-like</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Values to use for specified parameter to vary. If None, defaults are:</dt><dd><ul>
+<li><p>alpha → np.linspace(0.1, 1.0, 20)</p></li>
+<li><p>n     → range(500, 16000, 200)</p></li>
+<li><p>m     → range(7, 500, 5)</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Base number of users (used when param_to_vary ≠ “n”; default: 8000).</p></li>
+<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – Base samples per user (used when param_to_vary ≠ “m”; default: 20).</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Base privacy parameter (used when param_to_vary ≠ “alpha”; default: 0.6).</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em><em>, </em><em>optional</em>) – Ground‑truth mean (default: 0.3).</p></li>
+<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Trials per setting (default: 50).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>param_to_vary</cite> is not one of “alpha”, “n”, “m”.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Displays a plot of MSE vs. the chosen parameter for both estimators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.univariate_experiment.generate_univariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_univariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#generate_univariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.generate_univariate_scaled_data" title="Link to this definition"></a></dt>
+<dd><p>Generate and linearly scale univariate user samples into [-1,1].</p>
+<p>This function simulates <cite>n</cite> users each providing <cite>m</cite> samples drawn from a
+specified one‑dimensional distribution centered (in expectation) at
+<cite>true_mean</cite>, and then rescales <em>all</em> samples (and the true mean) to lie in
+the interval [-1, 1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – <p>Which distribution to sample from. Supported values are:
+- “normal”    : Gaussian N(true_mean, 1^2)
+- “uniform”   : Uniform U(true_mean - 1, true_mean + 1)
+- “student_t” : Student’s t distribution with degrees of freedom = 3</p>
+<blockquote>
+<div><p>and expected value shifted to true_mean</p>
+</div></blockquote>
+<ul>
+<li><p>”binomial”  : Binomial with number of trials as 50 and probability of success as true_mean/50</p></li>
+</ul>
+</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users (i.e., how many independent sample‐sets to generate).</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of i.i.d. samples per user.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – The ground‐truth mean around which samples are generated; also used
+to compute the scaled “true_mean” output.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>ndarray of shape (n, m)</em>) – The generated samples for all users, after rescaling linearly so the
+<em>minimum</em> across all samples maps to -1 and the <em>maximum</em> maps to +1.</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>float</em>) – The location of <cite>true_mean</cite> on the same linear map (i.e. the point in
+[-1,1] where the original <cite>true_mean</cite> falls).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="multivariate-experiments">
-<h2>Multivariate Experiments<a class="headerlink" href="#multivariate-experiments" title="Link to this heading"></a></h2>
+<section id="module-experiments.multivariate_experiment">
+<span id="multivariate-experiments"></span><h2>Multivariate Experiments<a class="headerlink" href="#module-experiments.multivariate_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.multivariate_experiment.compare_multivariate_algorithms">
+<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">compare_multivariate_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#compare_multivariate_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.compare_multivariate_algorithms" title="Link to this definition"></a></dt>
+<dd><p>Compare two multivariate LDP mean‐estimators (Kent vs. DAME‑BS) over multiple trials.</p>
+<dl class="simple">
+<dt>For each of <cite>trials</cite> iterations, this function:</dt><dd><ol class="arabic simple">
+<li><p>Generates an (n × m × d) dataset from <cite>distribution</cite> with expected mean <cite>true_mean</cite>.</p></li>
+<li><p>Scales every coordinate into [-1, 1] (and scales <cite>true_mean</cite> accordingly).</p></li>
+<li><p>Runs the Kent multivariate estimator under privacy budget <cite>alpha</cite>.</p></li>
+<li><p>Runs the DAME‑BS multivariate estimator under the same budget.</p></li>
+<li><p>Computes the squared ℓ₂‐error of each estimate vs. the scaled true mean.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of each sample</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Local differential privacy parameter.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Sampling distribution: one of {“normal”, “uniform”, “student_t”, “binomial”}.</p></li>
+<li><p><strong>true_mean</strong> (<em>array‐like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – The ground‐truth mean vector in R^d.</p></li>
+<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – How many independent datasets (and runs) to average over (default: 50).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mean_err_kent</strong> (<em>float</em>) – Mean of squared ℓ₂‐errors from the Kent estimator across trials.</p></li>
+<li><p><strong>std_err_kent</strong> (<em>float</em>) – Standard deviation of those errors.</p></li>
+<li><p><strong>mean_err_dame</strong> (<em>float</em>) – Mean of squared ℓ₂‐errors from the DAME‑BS estimator across trials.</p></li>
+<li><p><strong>std_err_dame</strong> (<em>float</em>) – Standard deviation of those errors.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate">
+<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_param_for_dist_multivariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_to_vary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alpha'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#experiment_risk_vs_param_for_dist_multivariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate" title="Link to this definition"></a></dt>
+<dd><p>For the specified parameter <cite>param_to_vary</cite> (α, n, m or d),
+plots ℓ₂‐errors of two univariate LDP estimators by DAME-BS and Kent’s algorithm.</p>
+<p>For each value in <cite>param_values</cite>, this function runs
+<cite>compare_multivariate_algorithms</cite> to obtain mean±std of squared ℓ₂‐error
+for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Data distribution (“normal”, “uniform”, “student_t”, “binomial”).</p></li>
+<li><p><strong>param_to_vary</strong> (<em>str</em><em>, </em><em>optional</em>) – Which parameter to vary: “alpha”, “n”, or “m” (default: “alpha”).</p></li>
+<li><p><strong>param_values</strong> (<em>array-like</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Values to use for specified parameter to vary. If None, defaults are:</dt><dd><ul>
+<li><p>alpha -&gt; np.linspace(0.1, 1.0, 20)</p></li>
+<li><p>n     -&gt; range(500, 16000, 200)</p></li>
+<li><p>m     -&gt; range(7, 500, 5)</p></li>
+<li><p>d     -&gt; list(range(2,500,10))</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Base number of users (used when param_to_vary ≠ “n”; default: 8000).</p></li>
+<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – Base samples per user (used when param_to_vary ≠ “m”; default: 20).</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Base privacy parameter (used when param_to_vary ≠ “alpha”; default: 0.6).</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em><em>, </em><em>optional</em>) – Ground‑truth mean (default: 0.3).</p></li>
+<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Trials per setting (default: 50).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>param_to_vary</cite> is not one of “alpha”, “n”, “m”,”d.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Displays a plot of mean squared ℓ₂‐error vs. the chosen parameter for both estimators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.multivariate_experiment.generate_multivariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_multivariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#generate_multivariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data" title="Link to this definition"></a></dt>
+<dd><p>Generates and scales multivariate samples into [-1,1]^d.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Supported Distributions {“normal”,”uniform”,”student_t”,”binomial”}.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users (i.e. number of independent sample‐sets).</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of each dimension.</p></li>
+<li><p><strong>true_mean</strong> (<em>array‐like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – The ground‐truth mean vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>ndarray, shape (n, m, d)</em>) – All user samples, scaled so each coordinate lies in [-1,1].</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>ndarray, shape (d,)</em>) – The true_mean vector under the same per‐coordinate scaling.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="results">
 <h2>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h2>

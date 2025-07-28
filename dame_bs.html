@@ -46,10 +46,23 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">DAME-BS</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dame_bs package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dame-bs-binary-search">dame_bs.binary_search</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dame-bs-dame-bs">dame_bs.dame_bs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dame-bs-multivariate-dame-bs">dame_bs.multivariate_dame_bs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dame-bs-utils">dame_bs.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dame_bs.binary_search">dame_bs.binary_search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dame_bs.binary_search.attempting_insertion_using_binary_search"><code class="docutils literal notranslate"><span class="pre">attempting_insertion_using_binary_search()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dame_bs.dame_bs">dame_bs.dame_bs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dame_bs.dame_bs.dame_with_binary_search"><code class="docutils literal notranslate"><span class="pre">dame_with_binary_search()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dame-bs-multivariate-dame-bs">dame_bs.multivariate_dame_bs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dame_bs.multivariate_dame_bs.multivariate_dame_bs_l_inf"><code class="docutils literal notranslate"><span class="pre">multivariate_dame_bs_l_inf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dame_bs.utils">dame_bs.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dame_bs.utils.plot_errorbars"><code class="docutils literal notranslate"><span class="pre">plot_errorbars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dame_bs.utils.theoretical_upper_bound"><code class="docutils literal notranslate"><span class="pre">theoretical_upper_bound()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -96,17 +109,163 @@ The following functions are implemented -</p>
 <li><p>This is an extension of DAME-BS algorithm to multivariate data where data points are in l_inf ball of radius 1. (<cite>dame_bs.multivariate_dame_bs</cite>).</p></li>
 <li><p>Utility functions for calculating theoretical upper bound on expected squared error and plotting errorbar. (<cite>dame_bs.utils</cite>).</p></li>
 </ul>
-<section id="dame-bs-binary-search">
-<h2>dame_bs.binary_search<a class="headerlink" href="#dame-bs-binary-search" title="Link to this heading"></a></h2>
+<section id="module-dame_bs.binary_search">
+<span id="dame-bs-binary-search"></span><h2>dame_bs.binary_search<a class="headerlink" href="#module-dame_bs.binary_search" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dame_bs.binary_search.attempting_insertion_using_binary_search">
+<span class="sig-prename descclassname"><span class="pre">dame_bs.binary_search.</span></span><span class="sig-name descname"><span class="pre">attempting_insertion_using_binary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_bs/binary_search.html#attempting_insertion_using_binary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_bs.binary_search.attempting_insertion_using_binary_search" title="Link to this definition"></a></dt>
+<dd><p>Perform the localization phase of DAME using a private binary search.</p>
+<p>This procedure partitions the interval [-1, 1] into three segments at each iteration,
+uses randomized response to privately count how many user sample-means fall into the
+left and right thirds, and discards the less-likely segment. It repeats until all groups
+are exhausted, returning the remaining interval.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>alpha<span class="classifier">float</span></dt><dd><p>Differential privacy parameter for the binary (randomized response) queries.</p>
+</dd>
+<dt>delta<span class="classifier">float</span></dt><dd><p>Failure probability tolerated in the localization phase.</p>
+</dd>
+<dt>n<span class="classifier">int</span></dt><dd><p>Number of users allocated to localization (should be n/2 of the total).</p>
+</dd>
+<dt>m<span class="classifier">int</span></dt><dd><p>Number of samples per user.</p>
+</dd>
+<dt>user_samples<span class="classifier">list of array-like</span></dt><dd><p>A list of length n, each entry an array-like of m real-valued samples for one user.</p>
+</dd>
+</dl>
 </section>
-<section id="dame-bs-dame-bs">
-<h2>dame_bs.dame_bs<a class="headerlink" href="#dame-bs-dame-bs" title="Link to this heading"></a></h2>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>List<span class="classifier">List of floats</span></dt><dd><p>[L,R] = The estimated interval that might contain true mean where L is the  lower and R is the upper bound.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-dame_bs.dame_bs">
+<span id="dame-bs-dame-bs"></span><h2>dame_bs.dame_bs<a class="headerlink" href="#module-dame_bs.dame_bs" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dame_bs.dame_bs.dame_with_binary_search">
+<span class="sig-prename descclassname"><span class="pre">dame_bs.dame_bs.</span></span><span class="sig-name descname"><span class="pre">dame_with_binary_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_bs/dame_bs.html#dame_with_binary_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_bs.dame_bs.dame_with_binary_search" title="Link to this definition"></a></dt>
+<dd><p>Implements DAME algorithm with Binary search (localization phase) and Estimation Phase.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>n<span class="classifier">int (even)</span></dt><dd><p>number of users</p>
+</dd>
+<dt>alpha<span class="classifier">float</span></dt><dd><p>privacy parameter</p>
+</dd>
+<dt>m<span class="classifier">int</span></dt><dd><p>number of samples per user</p>
+</dd>
+<dt>user_samples: list or array of shape (n, m)</dt><dd><p>User samples that will be used to estimate the mean.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>bar_theta<span class="classifier">float</span></dt><dd><p>estimated mean</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
 </section>
 <section id="dame-bs-multivariate-dame-bs">
 <h2>dame_bs.multivariate_dame_bs<a class="headerlink" href="#dame-bs-multivariate-dame-bs" title="Link to this heading"></a></h2>
+<dl class="py function" id="module-dame_bs.multivariate_dame_bs">
+<dt class="sig sig-object py" id="dame_bs.multivariate_dame_bs.multivariate_dame_bs_l_inf">
+<span class="sig-prename descclassname"><span class="pre">dame_bs.multivariate_dame_bs.</span></span><span class="sig-name descname"><span class="pre">multivariate_dame_bs_l_inf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_bs/multivariate_dame_bs.html#multivariate_dame_bs_l_inf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_bs.multivariate_dame_bs.multivariate_dame_bs_l_inf" title="Link to this definition"></a></dt>
+<dd><p>Multivariate mean estimation under LDP for support in l_inf ball
+of radius 1 i.e. all coordinates of the vector are in [-1,1].</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>user_samples<span class="classifier">array, shape (n, m, d), values in [-1,1]^d</span></dt><dd><p>User samples that will be used to estimate the mean.</p>
+</dd>
+<dt>alpha<span class="classifier">float</span></dt><dd><p>Privacy Parameter</p>
+</dd>
+<dt>m<span class="classifier">int</span></dt><dd><p>Number of samples per user</p>
+</dd>
+</dl>
+</div></blockquote>
 </section>
-<section id="dame-bs-utils">
-<h2>dame_bs.utils<a class="headerlink" href="#dame-bs-utils" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>theta_hat<span class="classifier">array, shape (d,),</span></dt><dd><p>Estimated d-dimensional mean</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-dame_bs.utils">
+<span id="dame-bs-utils"></span><h2>dame_bs.utils<a class="headerlink" href="#module-dame_bs.utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dame_bs.utils.plot_errorbars">
+<span class="sig-prename descclassname"><span class="pre">dame_bs.utils.</span></span><span class="sig-name descname"><span class="pre">plot_errorbars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_errors_kent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_errors_dame_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_errors_kent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_errors_dame_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_ub</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_bs/utils.html#plot_errorbars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_bs.utils.plot_errorbars" title="Link to this definition"></a></dt>
+<dd><p>Plots error bars for dame_bs and kent algorithms on a single graph.</p>
+<p>This function is typically used to visualize the mean squared errors for different values (e.g., alpha or n or m).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_values</strong> (<em>list</em><em> or </em><em>array-like</em>) – X-axis values (e.g., alpha values or user counts).</p></li>
+<li><p><strong>mean_errors_kent</strong> (<em>list</em><em> or </em><em>array-like</em>) – Mean squared error values corresponding to <cite>alphas</cite> for kent algorithm.</p></li>
+<li><p><strong>mean_errors_dame_bs</strong> (<em>list</em><em> or </em><em>array-like</em>) – Mean squared error values corresponding to <cite>alphas</cite> for dame_bs algorithm.</p></li>
+<li><p><strong>std_errors_kent</strong> (<em>list</em><em> or </em><em>array-like</em>) – Standard deviation of the errors for each value in <cite>alphas</cite> for kent algorithm.</p></li>
+<li><p><strong>std_errors_dame_bs</strong> (<em>list</em><em> or </em><em>array-like</em>) – Standard deviation of the errors for each value in <cite>alphas</cite> for dame_bs algorithm.</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – Label for the x-axis.</p></li>
+<li><p><strong>ylabel</strong> (<em>str</em>) – Label for the y-axis.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Title of the plot.</p></li>
+<li><p><strong>plot_ub</strong> (<em>Bool</em>) – If true then plots theoretical upper bounds for dame_bs algorithm. Default is ‘False’.</p></li>
+<li><p><strong>upper_bounds</strong> (<em>list</em><em> or </em><em>array-like</em>) – Theoretical upper bound values for dame_bs algorithm corresponding to <a href="#id5"><span class="problematic" id="id6">`</span></a>alphas’. Default is empty-list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None. Displays the plot using <cite>matplotlib.pyplot</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dame_bs.utils.theoretical_upper_bound">
+<span class="sig-prename descclassname"><span class="pre">dame_bs.utils.</span></span><span class="sig-name descname"><span class="pre">theoretical_upper_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dame_bs/utils.html#theoretical_upper_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dame_bs.utils.theoretical_upper_bound" title="Link to this definition"></a></dt>
+<dd><p>Computes a theoretical upper bound on the mean squared error (MSE) of the algorithm’s
+estimate of the true mean, under differential privacy constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em>) – Differential privacy parameter (α &gt; 0).</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Total number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A theoretical upper bound on the expected squared error:
+E[(theta_hat - theta)^2], where theta is the true mean and theta_hat is the estimate returned by DAME-BS.
+The theoretical bound is given by -</p>
+<dl class="simple">
+<dt>E[(theta_hat - theta)^2]&lt;= 389/nmα^2 * {log(2nmα^2) v 1}  +</dt><dd><p>16 max{   2nexp(-n*((2*pi_alpha-1)**2)/2),    (9/α√8) * exp(-(2*pi_alpha-1)*√n/4) }</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

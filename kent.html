@@ -52,7 +52,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#kent.kent.partition_interval"><code class="docutils literal notranslate"><span class="pre">partition_interval()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#kent-multivariate-kent-module">kent.multivariate_kent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-kent.multivariate_kent">kent.multivariate_kent module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kent.multivariate_kent.kent_multivariate_estimator"><code class="docutils literal notranslate"><span class="pre">kent_multivariate_estimator()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
@@ -148,8 +151,30 @@ This creates a list of non-overlapping intervals whose union covers [a, b]:</p>
 </dd></dl>
 
 </section>
-<section id="kent-multivariate-kent-module">
-<h2>kent.multivariate_kent module<a class="headerlink" href="#kent-multivariate-kent-module" title="Link to this heading"></a></h2>
+<section id="module-kent.multivariate_kent">
+<span id="kent-multivariate-kent-module"></span><h2>kent.multivariate_kent module<a class="headerlink" href="#module-kent.multivariate_kent" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kent.multivariate_kent.kent_multivariate_estimator">
+<span class="sig-prename descclassname"><span class="pre">kent.multivariate_kent.</span></span><span class="sig-name descname"><span class="pre">kent_multivariate_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kent/multivariate_kent.html#kent_multivariate_estimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kent.multivariate_kent.kent_multivariate_estimator" title="Link to this definition"></a></dt>
+<dd><p>Implements the Kent’s algorithm for mean estimation under user level LDP when
+the data is in l_inf ball of radius 1 i.e. all coordinates of the vector are in [-1,1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>, </em><em>T</em><em>, </em><em>d</em><em>)</em>) – User Samples in [-1,1]^d</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy Parameter</p></li>
+<li><p><strong>K</strong> (<em>float</em><em> (</em><em>&gt;=0</em><em>)</em>) – Constant (Default = 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>theta_hat</strong> – Final d-dimensional estimated mean</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
