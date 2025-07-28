@@ -56,7 +56,11 @@ def dame_with_binary_search(n, alpha, m, user_samples):
     
     # Initializing parameters
     if alpha == np.inf:
-        delta = 1e-5
+        overall = np.mean([np.mean(x) for x in user_samples])
+        return float(np.clip(overall, -1, 1))
+        # delta = 1e-5
+        # delta_prime = 0
+        # scale = 0
     else:
     
         delta_prime = np.sqrt((1 / m) * lambertw((32 * alpha**2 * n * m) / 81).real)

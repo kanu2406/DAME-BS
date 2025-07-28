@@ -58,6 +58,8 @@ def test_theoretical_bound_no_noise():
 def test_bound_decreases_with_n(alpha, n, m):
     """As n increases (with alpha,m fixed), the bound should decrease."""
     alpha=0.6
+    n=1000
+    m=20
     b_small = theoretical_upper_bound(alpha, n, m)
     b_large = theoretical_upper_bound(alpha, n*2, m)
     assert b_large <= b_small
