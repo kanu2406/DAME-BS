@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>experiments.univariate_experiment &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-BS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">experiments.univariate_experiment</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for experiments.univariate_experiment</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">)))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_errorbars</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kent.kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">kent_mean_estimator</span>
+
+<div class="viewcode-block" id="generate_univariate_scaled_data">
+<a class="viewcode-back" href="../../experiments.html#experiments.univariate_experiment.generate_univariate_scaled_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_univariate_scaled_data</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate and linearly scale univariate user samples into [-1,1].</span>
+
+<span class="sd">    This function simulates `n` users each providing `m` samples drawn from a</span>
+<span class="sd">    specified one‑dimensional distribution centered (in expectation) at</span>
+<span class="sd">    `true_mean`, and then rescales *all* samples (and the true mean) to lie in</span>
+<span class="sd">    the interval [-1, 1].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    distribution : str</span>
+<span class="sd">        Which distribution to sample from. Supported values are:</span>
+<span class="sd">        - &quot;normal&quot;    : Gaussian N(true_mean, 1^2)</span>
+<span class="sd">        - &quot;uniform&quot;   : Uniform U(true_mean - 1, true_mean + 1)</span>
+<span class="sd">        - &quot;student_t&quot; : Student&#39;s t distribution with degrees of freedom = 3 </span>
+<span class="sd">                        and expected value shifted to true_mean</span>
+<span class="sd">        - &quot;binomial&quot;  : Binomial with number of trials as 50 and probability of success as true_mean/50 </span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of users (i.e., how many independent sample‐sets to generate).</span>
+<span class="sd">    m : int</span>
+<span class="sd">        Number of i.i.d. samples per user.</span>
+<span class="sd">    true_mean : float</span>
+<span class="sd">        The ground‐truth mean around which samples are generated; also used</span>
+<span class="sd">        to compute the scaled “true_mean” output.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    user_samples_scaled : ndarray of shape (n, m)</span>
+<span class="sd">        The generated samples for all users, after rescaling linearly so the</span>
+<span class="sd">        *minimum* across all samples maps to -1 and the *maximum* maps to +1.</span>
+<span class="sd">    true_mean_scaled : float</span>
+<span class="sd">        The location of `true_mean` on the same linear map (i.e. the point in</span>
+<span class="sd">        [-1,1] where the original `true_mean` falls).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+        <span class="c1"># Generate user samples: n users × m samples, sampled from N(true_mean, 1)</span>
+        <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+        <span class="c1"># Uniform</span>
+        <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">true_mean</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">true_mean</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;standard_t&quot;</span><span class="p">:</span>
+        <span class="c1"># standard_t</span>
+        <span class="n">user_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span> <span class="o">+</span> <span class="n">true_mean</span>
+    <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;binomial&quot;</span><span class="p">:</span>
+        <span class="c1"># Binomial </span>
+        <span class="n">user_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">true_mean</span><span class="o">/</span><span class="mi">50</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+
+    
+    <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">user_samples</span><span class="p">)</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">user_samples</span><span class="p">)</span>
+    <span class="n">eps</span><span class="o">=</span><span class="mf">1e-5</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span>
+
+    <span class="c1"># if all draws are identical</span>
+    <span class="k">if</span> <span class="n">rng</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;vmax and vmin are equal. Mapping everything to zero.&quot;</span><span class="p">)</span>
+        <span class="n">user_samples_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">user_samples</span><span class="p">)</span>
+        <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">safe_rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rng</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+        <span class="c1"># scaling in [-1,1]^d</span>
+        <span class="n">user_samples_scaled</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">user_samples</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">safe_rng</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  
+        <span class="n">true_mean_scaled</span>   <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">true_mean</span>   <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">safe_rng</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">user_samples_scaled</span><span class="p">,</span> <span class="n">true_mean_scaled</span></div>
+
+
+<div class="viewcode-block" id="compare_univariate_algorithms">
+<a class="viewcode-back" href="../../experiments.html#experiments.univariate_experiment.compare_univariate_algorithms">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare DAME‑BS and Kent univariate estimators over multiple trials.</span>
+
+<span class="sd">    In each trial, this function:</span>
+<span class="sd">      1. Generates `n` users × `m` samples from the specified `distribution`</span>
+<span class="sd">         centered (in expectation) at `true_mean`.</span>
+<span class="sd">      2. Scales all samples and `true_mean` into [-1,1].</span>
+<span class="sd">      3. Runs both the DAME‑BS estimator and the Kent estimator under privacy</span>
+<span class="sd">         budget `alpha`.</span>
+<span class="sd">      4. Computes the squared error of each estimate vs. the scaled `true_mean`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of users.</span>
+<span class="sd">    m : int</span>
+<span class="sd">        Number of i.i.d. samples per user.</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        Local differential privacy parameter.</span>
+<span class="sd">    distribution : str</span>
+<span class="sd">        Which distribution to sample from. Supported Distributions:</span>
+<span class="sd">          - &quot;normal&quot;</span>
+<span class="sd">          - &quot;uniform&quot;</span>
+<span class="sd">          - &quot;student_t&quot;</span>
+<span class="sd">          - &quot;binomial&quot;</span>
+<span class="sd">    true_mean : float</span>
+<span class="sd">        Ground-truth mean of the underlying distribution.</span>
+<span class="sd">    trials : int, optional</span>
+<span class="sd">        Number of independent trials to average over (default: 50).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mean_err_dame : float</span>
+<span class="sd">        Mean of squared errors from DAME‑BS across trials.</span>
+<span class="sd">    std_err_dame : float</span>
+<span class="sd">        Standard deviation of those squared errors from DAME-BS.</span>
+<span class="sd">    mean_err_kent : float</span>
+<span class="sd">        Mean of squared errors from Kent’s estimator across trials.</span>
+<span class="sd">    std_err_kent : float</span>
+<span class="sd">        Standard deviation of those squared errors from Kent&#39;s algorithm.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">error_dame_bs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">):</span>
+        <span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">)</span>
+        
+        <span class="n">estimate</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples_scaled</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="n">err1</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">error_dame_bs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err1</span><span class="p">)</span>
+        <span class="n">estimate</span> <span class="o">=</span> <span class="n">kent_mean_estimator</span><span class="p">(</span><span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">err2</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">error_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error_kent</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error_kent</span><span class="p">)</span></div>
+
+    
+
+
+
+
+<div class="viewcode-block" id="experiment_risk_vs_param_for_dist_univariate">
+<a class="viewcode-back" href="../../experiments.html#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">experiment_risk_vs_param_for_dist_univariate</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">param_to_vary</span><span class="o">=</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span><span class="n">param_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">n</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">true_mean</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For the specified parameter `param_to_vary` (α, n, or m), </span>
+<span class="sd">    plots MSE of two univariate LDP estimators by DAME-BS and Kent&#39;s algorithm.</span>
+
+<span class="sd">    For each value in `param_values`, this function runs</span>
+<span class="sd">    `compare_univariate_algorithms` to obtain mean±std of squared error</span>
+<span class="sd">    for both DAME‑BS and Kent estimators, and then calls `plot_errorbars`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    distribution : str</span>
+<span class="sd">        Supported Data distributions (&quot;normal&quot;, &quot;uniform&quot;, &quot;student_t&quot;, &quot;binomial&quot;).</span>
+<span class="sd">    param_to_vary : str, optional</span>
+<span class="sd">        Which parameter to vary: &quot;alpha&quot;, &quot;n&quot;, or &quot;m&quot; (default: &quot;alpha&quot;).</span>
+<span class="sd">    param_values : array-like, optional</span>
+<span class="sd">        Values to use for specified parameter to vary. If None, defaults are:</span>
+<span class="sd">          - alpha → np.linspace(0.1, 1.0, 20)</span>
+<span class="sd">          - n     → range(500, 16000, 200)</span>
+<span class="sd">          - m     → range(7, 500, 5)</span>
+<span class="sd">    n : int, optional</span>
+<span class="sd">        Base number of users (used when param_to_vary ≠ &quot;n&quot;; default: 8000).</span>
+<span class="sd">    m : int, optional</span>
+<span class="sd">        Base samples per user (used when param_to_vary ≠ &quot;m&quot;; default: 20).</span>
+<span class="sd">    alpha : float, optional</span>
+<span class="sd">        Base privacy parameter (used when param_to_vary ≠ &quot;alpha&quot;; default: 0.6).</span>
+<span class="sd">    true_mean : float, optional</span>
+<span class="sd">        Ground‑truth mean (default: 0.3).</span>
+<span class="sd">    trials : int, optional</span>
+<span class="sd">        Trials per setting (default: 50).</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If `param_to_vary` is not one of &quot;alpha&quot;, &quot;n&quot;, &quot;m&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        Displays a plot of MSE vs. the chosen parameter for both estimators.</span>
+
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+   
+    <span class="k">if</span> <span class="n">param_to_vary</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;param_to_vary must be one of &#39;alpha&#39;, &#39;n&#39;, or &#39;m&#39;&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">param_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span>
+            <span class="n">param_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
+            <span class="n">param_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">16000</span>  <span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span>
+            <span class="n">param_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">mean_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">std_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">mean_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">std_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
+
+    
+    <span class="k">if</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="c1"># Running both algorithms</span>
+            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            
+            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
+            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
+            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
+            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+    
+    <span class="k">elif</span> <span class="n">param_to_vary</span><span class="o">==</span><span class="s2">&quot;n&quot;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="c1"># Running both algorithms</span>
+            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            
+            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
+            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
+            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
+            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="c1"># Running both algorithms</span>
+            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            
+            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
+            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
+            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
+            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+
+
+    <span class="c1"># Labels</span>
+    <span class="n">xlabel_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="s2">&quot;Privacy parameter α&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;Number of users n&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;Samples per user m&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Mean Squared Error vs </span><span class="si">{</span><span class="n">xlabel_map</span><span class="p">[</span><span class="n">param_to_vary</span><span class="p">]</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="n">distribution</span><span class="si">}</span><span class="s2"> distribution&quot;</span>
+   
+    
+    <span class="n">plot_errorbars</span><span class="p">(</span><span class="n">param_values</span><span class="p">,</span> <span class="n">mean_errors_kent</span><span class="p">,</span><span class="n">mean_errors_dame</span><span class="p">,</span> <span class="n">std_errors_kent</span><span class="p">,</span>
+                   <span class="n">std_errors_dame</span><span class="p">,</span> <span class="n">xlabel_map</span><span class="p">[</span><span class="n">param_to_vary</span><span class="p">],</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Squared Error&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                   <span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

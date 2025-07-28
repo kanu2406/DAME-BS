@@ -43,6 +43,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-BS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
 </ul>
 
         </div>
@@ -76,9 +77,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span> 
 
 
+
 <div class="viewcode-block" id="theoretical_upper_bound">
 <a class="viewcode-back" href="../../dame_bs.html#dame_bs.utils.theoretical_upper_bound">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Computes a theoretical upper bound on the mean squared error (MSE) of the algorithm&#39;s </span>
 <span class="sd">    estimate of the true mean, under differential privacy constraints.</span>
@@ -96,14 +98,11 @@
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
 <span class="sd">        A theoretical upper bound on the expected squared error:</span>
-<span class="sd">        E[(theta_hat - theta)^2], where theta is the true mean and 𝜃theta_hat is the estimate returned by DAME.</span>
+<span class="sd">        E[(theta_hat - theta)^2], where theta is the true mean and theta_hat is the estimate returned by DAME-BS.</span>
 <span class="sd">        The theoretical bound is given by -</span>
 
-<span class="sd">        E[(theta_hat - theta)^2]&lt;= 32/n  + </span>
-<span class="sd">                        (16/(α^2 n)) max{log((9*np.log(12)/(8*m))),(2/3)**(((2*pi_alpha-1)**2)/(np.log(n/delta_val)))}+</span>
-<span class="sd">                        4 delta</span>
-<span class="sd">                            </span>
-<span class="sd">       where π_α = e^α / (1 + e^α)</span>
+<span class="sd">        E[(theta_hat - theta)^2]&lt;= 389/nmα^2 * {log(2nmα^2) v 1}  + </span>
+<span class="sd">                        16 max{   2nexp(-n*((2*pi_alpha-1)**2)/2),    (9/α√8) * exp(-(2*pi_alpha-1)*√n/4) }</span>
 
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">alpha</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
@@ -112,174 +111,76 @@
         <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
 
 
-    <span class="c1">#### OLD BOUND ######################################################################</span>
+    <span class="c1"># First term: (389 / (nmα²)) * max{ln(2nmα²), 1}</span>
+    <span class="n">first_inner_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">first_term</span> <span class="o">=</span> <span class="p">(</span><span class="mi">389</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">first_inner_log</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># term1 = (9 * np.log(12)) / (8 * m) + 8 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)</span>
+    <span class="c1"># Second term: max{2n * exp(...), (9 / (α√8)) * exp(...)}</span>
+    <span class="n">exp_term1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi_alpha</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">exp_term2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">8</span><span class="p">)))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi_alpha</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">second_term</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">exp_term1</span><span class="p">,</span> <span class="n">exp_term2</span><span class="p">)</span>
 
-    <span class="c1"># denom = np.sqrt(2) + np.sqrt(2 + np.log(3/2) * (2 * pi_alpha - 1)**2)</span>
-    <span class="c1"># exponent = ((2 * pi_alpha - 1)**2) / denom * np.sqrt(n)</span>
-    <span class="c1"># term2 = (2/3)**exponent + 8 * n * np.exp(-np.sqrt(np.log(3/2) * (2 * pi_alpha - 1)**2 * n))</span>
-
-    <span class="c1"># return max(term1, term2)</span>
-
-    <span class="c1">######################################################################################</span>
-
-
-
-
-    <span class="c1">#### NEW BOUND #####</span>
-    <span class="n">term1</span> <span class="o">=</span> <span class="mi">32</span><span class="o">/</span><span class="n">n</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">9</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">m</span><span class="p">)))</span>
-    <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="p">(((</span><span class="mi">2</span><span class="o">*</span><span class="n">pi_alpha</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">delta</span><span class="p">)))</span>
-    <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="o">/</span><span class="p">((</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">))</span><span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
-    <span class="n">term3</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">delta</span>
-    <span class="k">return</span> <span class="n">term1</span><span class="o">+</span><span class="n">term2</span><span class="o">+</span><span class="n">term3</span></div>
+    <span class="c1"># Final result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">first_term</span> <span class="o">+</span> <span class="n">second_term</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 
 
-
-
-<div class="viewcode-block" id="run_dame_experiment">
-<a class="viewcode-back" href="../../dame_bs.html#dame_bs.utils.run_dame_experiment">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">run_dame_experiment</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="plot_errorbars">
+<a class="viewcode-back" href="../../dame_bs.html#dame_bs.utils.plot_errorbars">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_errorbars</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">mean_errors_kent</span><span class="p">,</span><span class="n">mean_errors_dame_bs</span><span class="p">,</span> <span class="n">std_errors_kent</span><span class="p">,</span>
+                   <span class="n">std_errors_dame_bs</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Runs the DAME-BS algorithm multiple times to empirically evaluate its estimation error </span>
-<span class="sd">    under different data distributions and privacy settings.</span>
+<span class="sd">    Plots error bars for dame_bs and kent algorithms on a single graph.</span>
 
-<span class="sd">    This function simulates a scenario with `n` users, each having `m` samples generated </span>
-<span class="sd">    from a specified distribution centered around a known `true_mean`. </span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    n : int</span>
-<span class="sd">        Total number of users participating in the experiment.</span>
-<span class="sd">    alpha : float</span>
-<span class="sd">        Differential privacy parameter. Higher values allow more accurate estimation</span>
-<span class="sd">        with weaker privacy guarantees.</span>
-<span class="sd">    m : int</span>
-<span class="sd">        Number of samples collected per user.</span>
-<span class="sd">    true_mean : float</span>
-<span class="sd">        The actual mean of the underlying data distribution. Used to compute estimation error.</span>
-<span class="sd">    trials : int, optional</span>
-<span class="sd">        Number of times the experiment is repeated (default is 50).</span>
-<span class="sd">    distribution : str, optional</span>
-<span class="sd">        Type of distribution to sample user data from. Supported values:</span>
-<span class="sd">            - &quot;normal&quot;     : Samples from N(true_mean, 0.5^2)</span>
-<span class="sd">            - &quot;uniform&quot;    : Samples from U(true_mean - 1, true_mean + 1)</span>
-<span class="sd">            - &quot;poisson&quot;    : Samples from Poisson(true_mean)</span>
-<span class="sd">            - &quot;exponential&quot;: Samples from Exponential(1.0) shifted to have mean ≈ true_mean</span>
-<span class="sd">    delta : tolerated failure probability of binary search in DAME-BS</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    mean_error : float</span>
-<span class="sd">        The average squared error between the DAME estimate and the true mean over all trials.</span>
-<span class="sd">    std_error : float</span>
-<span class="sd">        The standard deviation of the squared error over all trials.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
-
-    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">):</span>
-        
-        <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;normal&quot;</span><span class="p">:</span>
-            <span class="c1"># Generate user samples: n users × m samples, sampled from N(true_mean, 0.5^2)</span>
-            <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
-            <span class="c1"># Uniform</span>
-            <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">true_mean</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">true_mean</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;poisson&quot;</span><span class="p">:</span>
-            <span class="c1"># Poisson</span>
-            <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">distribution</span><span class="o">==</span><span class="s2">&quot;exponential&quot;</span><span class="p">:</span>
-            <span class="c1"># Exponential </span>
-            <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">true_mean</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-
-            
-        <span class="c1"># Run algorithm</span>
-        <span class="n">estimate</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span>
-        
-        <span class="c1"># Measure error</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="plot_errorbars_and_upper_bounds">
-<a class="viewcode-back" href="../../dame_bs.html#dame_bs.utils.plot_errorbars_and_upper_bounds">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_errorbars_and_upper_bounds</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">mean_errors</span><span class="p">,</span> <span class="n">std_errors</span><span class="p">,</span><span class="n">upper_bounds</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Plots error bars and theoretical upper bounds on a single graph.</span>
-
-<span class="sd">    This function is typically used to visualize the mean squared errors</span>
-<span class="sd">    alongside their corresponding theoretical upper bounds for different values (e.g., alpha or n or delta).</span>
+<span class="sd">    This function is typically used to visualize the mean squared errors for different values (e.g., alpha or n or m).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        x_values (list or array-like): X-axis values (e.g., alpha values or user counts).</span>
-<span class="sd">        mean_errors (list or array-like): Mean squared error values corresponding to `alphas`.</span>
-<span class="sd">        std_errors (list or array-like): Standard deviation of the errors for each value in `alphas`.</span>
-<span class="sd">        upper_bounds (list or array-like): Theoretical upper bounds to be plotted as a dashed line.</span>
+<span class="sd">        mean_errors_kent (list or array-like): Mean squared error values corresponding to `alphas` for kent algorithm.</span>
+<span class="sd">        mean_errors_dame_bs (list or array-like): Mean squared error values corresponding to `alphas` for dame_bs algorithm.</span>
+<span class="sd">        std_errors_kent (list or array-like): Standard deviation of the errors for each value in `alphas` for kent algorithm.</span>
+<span class="sd">        std_errors_dame_bs (list or array-like): Standard deviation of the errors for each value in `alphas` for dame_bs algorithm.</span>
 <span class="sd">        xlabel (str): Label for the x-axis.</span>
 <span class="sd">        ylabel (str): Label for the y-axis.</span>
 <span class="sd">        title (str): Title of the plot.</span>
+<span class="sd">        plot_ub (Bool) : If true then plots theoretical upper bounds for dame_bs algorithm. Default is &#39;False&#39;.</span>
+<span class="sd">        upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas&#39;. Default is empty-list.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        None. Displays the plot using `matplotlib.pyplot`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">upper_bounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">upper_bounds</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">mean_errors</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std_errors</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Theoretical Upper Bound&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">mean_errors_kent</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std_errors_kent</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Kent&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">mean_errors_dame_bs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std_errors_dame_bs</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;DAME-BS&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot_ub</span> <span class="ow">and</span> <span class="n">upper_bounds</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Theoretical Upper Bound&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">log_scale</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span> 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
 
 
-<span class="c1">##################################### NOT REQUIRED ###########################################</span>
 
-<span class="c1"># def min_n_required(alpha):</span>
-<span class="c1">#     &#39;&#39;&#39;</span>
-<span class="c1">#     Computes the minimum number of users (n) required to satisfy a privacy and accuracy condition </span>
-<span class="c1">#     for the DAME-TS algorithm, based on the given differential privacy parameter α.</span>
 
-<span class="c1">#         n ≥ (4 / (2π_α - 1)^4) * (√2 + √(2 + ln(3/2)(2π_α - 1)^2))^2</span>
 
-<span class="c1">#     where π_α = e^α / (1 + e^α)</span>
 
-<span class="c1">#     Parameters</span>
-<span class="c1">#     ----------</span>
-<span class="c1">#     alpha : float</span>
-<span class="c1">#         The differential privacy parameter (α &gt; 0). Higher α means less privacy.</span>
 
-<span class="c1">#     Returns</span>
-<span class="c1">#     -------</span>
-<span class="c1">#     float</span>
-<span class="c1">#         The minimum required number of users `n` to ensure the localization step satisfies </span>
-<span class="c1">#         the theoretical guarantees. Returns `np.inf` if α is too small, making the denominator </span>
-<span class="c1">#         near zero and the bound undefined.</span>
-<span class="c1">#     &#39;&#39;&#39;</span>
-    
-<span class="c1">#     if alpha == np.inf:</span>
-<span class="c1">#         pi_alpha=1</span>
-<span class="c1">#     else:</span>
-<span class="c1">#         pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))</span>
 
-<span class="c1">#     two_pi_minus_1 = 2 * pi_alpha - 1</span>
 
-<span class="c1">#     if abs(two_pi_minus_1) &lt; 1e-6:</span>
-<span class="c1">#         return np.inf  # Avoid division by near-zero</span>
 
-<span class="c1">#     ln_32 = np.log(3 / 2)</span>
-<span class="c1">#     term1 = 4 / (two_pi_minus_1 ** 4)</span>
-<span class="c1">#     term2 = np.sqrt(2) + np.sqrt(2 + ln_32 * (two_pi_minus_1 ** 2))</span>
-<span class="c1">#     return term1 * (term2 ** 2)</span>
+
+
 
 </pre></div>
 

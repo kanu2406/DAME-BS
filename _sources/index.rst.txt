@@ -12,6 +12,7 @@ Welcome to dame_bs documentation
    :caption: Contents:
 
    modules
+   kent
    experiments
    tests
 
