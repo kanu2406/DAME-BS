@@ -35,10 +35,16 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
     n, m, d = user_samples.shape
     
     # --- Input validation ---
+    if n < (2*d):
+        warnings.warn(
+            f"n = {n} is less than 2*d = {2*d}. Not enough data for localization or estimation of all coordinates; returning zero vector."
+        )
+        return np.zeros(d)
     
     # check n is a multiple of 2d
-    if n%2*d != 0:
-        n_new = ((n + 2*d - 1) // (2*d)) * (2*d)
+    if n%(2*d) != 0:
+        # n_new = ((n + 2*d - 1) // (2*d)) * (2*d)
+        n_new=n-(n%(2*d))
         user_samples = user_samples[:n_new]
         n = n_new
         warnings.warn(f"n = {n} was not a multiple of 2d = {2*d}. Adjusting number of users to the nearest lower multiple of 2d = {n_new}.")
@@ -54,47 +60,44 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
     if m< 7:
         warnings.warn(f"m = {m} is below the recommended minimum 7; result may be unreliable.")
     
-    if n < 2*d:
-        warnings.warn(
-            f"n = {n} is less than 2*d = {2*d}. "
-            "Not enough data for localization or estimation of all coordinates; returning zero vector."
-        )
-        return np.zeros(d)
-
-
     
-
-    # Computing δ, δ' and scale
-    delta_prime = np.sqrt((1/m) * lambertw(32*alpha*alpha*n*m/(81*d)).real)
-
 
     if alpha==np.inf:
         pi_alpha=1
     else:
         pi_alpha=np.exp(alpha)/(1+np.exp(alpha))
     
+    if alpha == np.inf:
+        delta_prime = np.sqrt((1/m) * lambertw(32*alpha*alpha*n*m/(81*d)).real)
+        delta = max(2 * (n/d) * np.exp(-(n/d) * (2 * pi_alpha - 1)**2 / 2),1e-7)
+        scale = 0
+        
     
-    term1 = 2 * (n/d) * np.exp(-(n/d) * (2 * pi_alpha - 1)**2 / 2)
-    logA = np.log(81 / (8 * alpha**2))
-    logB = np.log(n/d)
-    logC = np.log((81*d) / (8 * n * alpha**2))
-    term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
-    term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
-    delta = min(max(term1, term2),1)
+    else:
+        delta_prime = np.sqrt((1/m) * lambertw(32*alpha*alpha*n*m/(81*d)).real)
+
+
+        term1 = 2 * (n/d) * np.exp(-(n/d) * (2 * pi_alpha - 1)**2 / 2)
+        logA = np.log(81 / (8 * alpha**2))
+        logB = np.log(n/d)
+        logC = np.log((81*d) / (8 * n * alpha**2))
+        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+        term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
+        delta = min(max(term1, term2),1)
 
 
 
-    inner_log_A = np.log(np.sqrt((9 * np.log(12)) / (8 * m)))
-    floor_A = np.floor(inner_log_A / np.log(2/3))
-    termA = (2/3)**floor_A
-    numerator_B = n * (2 * pi_alpha - 1)**2
-    denominator_B = 2 * np.log(2 * n / (d*delta))*d
-    floor_B = np.floor(numerator_B / denominator_B)
-    termB = (2/3)**floor_B
-    max_term = max(termA, termB)
-    scale = (2 / alpha) * max_term + (2 * delta_prime / alpha)
+        inner_log_A = np.log(np.sqrt((9 * np.log(12)) / (8 * m)))
+        floor_A = np.floor(inner_log_A / np.log(2/3))
+        termA = (2/3)**floor_A
+        numerator_B = n * (2 * pi_alpha - 1)**2
+        denominator_B = 2 * np.log(2 * n / (d*delta))*d
+        floor_B = np.floor(numerator_B / denominator_B)
+        termB = (2/3)**floor_B
+        max_term = max(termA, termB)
+        scale = (2 / alpha) * max_term + (2 * delta_prime / alpha)
 
-    
+
 
 
     theta_hat = np.zeros(d)

@@ -1,4 +1,6 @@
 import pytest
+import matplotlib
+matplotlib.use("Agg")
 from dame_bs.utils import theoretical_upper_bound,plot_errorbars
 import numpy as np
 from dame_bs.dame_bs import dame_with_binary_search

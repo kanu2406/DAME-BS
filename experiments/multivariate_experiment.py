@@ -33,7 +33,7 @@ def generate_multivariate_scaled_data(distribution, n, m,d, true_mean):
         The true_mean vector under the same per‐coordinate scaling.
     """
     true_mean = np.asarray(true_mean, dtype=float)
-    d = true_mean.shape[0]
+    
 
     # Generating raw samples of shape (n, m, d)
     if distribution == "normal":
