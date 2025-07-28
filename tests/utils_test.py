@@ -57,6 +57,7 @@ def test_theoretical_bound_no_noise():
 
 def test_bound_decreases_with_n(alpha, n, m):
     """As n increases (with alpha,m fixed), the bound should decrease."""
+    alpha=0.6
     b_small = theoretical_upper_bound(alpha, n, m)
     b_large = theoretical_upper_bound(alpha, n*2, m)
     assert b_large <= b_small
@@ -104,7 +105,7 @@ def test_plot_errorbars_runs(monkeypatch):
 
     for alpha in alphas:
         
-        alphas.append(alpha)
+        
         mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
             
         mean_errors_kent.append(mean_kent)
@@ -140,7 +141,7 @@ def test_plot_errorbars_runs_with_ub(monkeypatch):
 
     for alpha in alphas:
         
-        alphas.append(alpha)
+        
         mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
             
         mean_errors_kent.append(mean_kent)

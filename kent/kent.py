@@ -46,6 +46,10 @@ def kent_mean_estimator(X, alpha, K=1.0):
     arg = n * alpha**2 / (K )
     arg_safe=min(LOG_MAX,arg)
     T_star = min(T, int(np.exp(arg_safe)) + 1)
+
+    if alpha==np.inf:
+        overall = np.mean([np.mean(x) for x in X])
+        return float(np.clip(overall, -1, 1))
     
     delta = np.sqrt(2 * np.log(n * T_star * alpha**2) / T_star)
     
