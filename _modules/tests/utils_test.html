@@ -142,6 +142,7 @@
 <a class="viewcode-back" href="../../tests.html#tests.utils_test.test_bound_decreases_with_n">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_bound_decreases_with_n</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;As n increases (with alpha,m fixed), the bound should decrease.&quot;&quot;&quot;</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span>
     <span class="n">b_small</span> <span class="o">=</span> <span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
     <span class="n">b_large</span> <span class="o">=</span> <span class="n">theoretical_upper_bound</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">b_large</span> <span class="o">&lt;=</span> <span class="n">b_small</span></div>
@@ -198,7 +199,7 @@
 
     <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
         
-        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        
         <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
             
         <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
@@ -237,7 +238,7 @@
 
     <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
         
-        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        
         <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
             
         <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
