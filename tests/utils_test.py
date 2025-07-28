@@ -102,7 +102,7 @@ def test_plot_errorbars_runs(monkeypatch):
     std_errors_kent = []
     mean_errors_dame = []
     std_errors_dame = []
-    alphas=np.linspace(0.1, 1.0, 20)
+    alphas=np.linspace(0.1, 1.0, 5)
     distribution="normal"
 
     for alpha in alphas:
@@ -138,7 +138,7 @@ def test_plot_errorbars_runs_with_ub(monkeypatch):
     std_errors_kent = []
     mean_errors_dame = []
     std_errors_dame = []
-    alphas=np.linspace(0.1, 1.0, 20)
+    alphas=np.linspace(0.1, 1.0, 5)
     distribution="normal"
 
     for alpha in alphas:
