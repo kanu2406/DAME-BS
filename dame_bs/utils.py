@@ -41,7 +41,7 @@ def theoretical_upper_bound(alpha, n, m):
     else:
         pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 
-    if pi_alpha == np.inf:
+    if alpha == np.inf:
         return 16*2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
 
     # First term: (389 / (nmα²)) * max{ln(2nmα²), 1}

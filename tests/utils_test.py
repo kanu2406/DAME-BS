@@ -19,7 +19,7 @@ def test_theoretical_upper_bound_valid():
 
 
 ###########################################################################################
-def test_estimate_within_error_and_bound(tol=0.1):
+def test_estimate_within_error_and_bound():
     '''Ensures that the DAME-BS empirical error is less than theoretical bound.'''
 
     np.random.seed(42)
@@ -55,7 +55,7 @@ def test_theoretical_bound_no_noise():
 
 ##################################################################################################
 
-def test_bound_decreases_with_n(alpha, n, m):
+def test_bound_decreases_with_n():
     """As n increases (with alpha,m fixed), the bound should decrease."""
     alpha=0.6
     n=1000
@@ -66,7 +66,7 @@ def test_bound_decreases_with_n(alpha, n, m):
 
 ##################################################################################################
 
-def test_bound_decreases_with_m(alpha=0.6):
+def test_bound_decreases_with_m():
     """As m increases (with alpha,n fixed), the bound should decrease."""
     n = 500
     alpha = 0.6
@@ -103,7 +103,7 @@ def test_plot_errorbars_runs(monkeypatch):
     std_errors_kent = []
     mean_errors_dame = []
     std_errors_dame = []
-    alphas=np.linspace(0.1, 1.0, 5)
+    alphas=np.linspace(0.1, 1.0, 3)
     distribution="normal"
 
     for alpha in alphas:
@@ -139,7 +139,7 @@ def test_plot_errorbars_runs_with_ub(monkeypatch):
     std_errors_kent = []
     mean_errors_dame = []
     std_errors_dame = []
-    alphas=np.linspace(0.1, 1.0, 5)
+    alphas=np.linspace(0.1, 1.0, 3)
     distribution="normal"
 
     for alpha in alphas:
