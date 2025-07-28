@@ -48,17 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">tests package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tests-core-test-module">tests.core_test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-tests.utils_test">tests.utils_test module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_m"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_m()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_n"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_n()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_estimate_within_error_and_bound"><code class="docutils literal notranslate"><span class="pre">test_estimate_within_error_and_bound()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_invalid_parameters"><code class="docutils literal notranslate"><span class="pre">test_invalid_parameters()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_plot_errorbars_runs"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_plot_errorbars_runs_with_ub"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs_with_ub()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_theoretical_bound_no_noise"><code class="docutils literal notranslate"><span class="pre">test_theoretical_bound_no_noise()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tests.utils_test.test_theoretical_upper_bound_valid"><code class="docutils literal notranslate"><span class="pre">test_theoretical_upper_bound_valid()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tests.utils_test">tests.utils_test module</a></li>
 </ul>
 </li>
 </ul>
@@ -95,57 +85,6 @@
 </section>
 <section id="module-tests.utils_test">
 <span id="tests-utils-test-module"></span><h2>tests.utils_test module<a class="headerlink" href="#module-tests.utils_test" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_bound_decreases_with_m">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_bound_decreases_with_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_bound_decreases_with_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_bound_decreases_with_m" title="Link to this definition"></a></dt>
-<dd><p>As m increases (with alpha,n fixed), the bound should decrease.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_bound_decreases_with_n">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_bound_decreases_with_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_bound_decreases_with_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_bound_decreases_with_n" title="Link to this definition"></a></dt>
-<dd><p>As n increases (with alpha,m fixed), the bound should decrease.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_estimate_within_error_and_bound">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_estimate_within_error_and_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_estimate_within_error_and_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_estimate_within_error_and_bound" title="Link to this definition"></a></dt>
-<dd><p>Ensures that the DAME-BS empirical error is less than theoretical bound.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_invalid_parameters">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_invalid_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_invalid_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_invalid_parameters" title="Link to this definition"></a></dt>
-<dd><p>Negative or zero alpha should still produce a float or raise as appropriate.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_plot_errorbars_runs">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_plot_errorbars_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_plot_errorbars_runs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_plot_errorbars_runs" title="Link to this definition"></a></dt>
-<dd><p>Ensures the plotting function executes without crashing.
-Uses monkeypatch to suppress actual plot display.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_plot_errorbars_runs_with_ub">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_plot_errorbars_runs_with_ub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_plot_errorbars_runs_with_ub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_plot_errorbars_runs_with_ub" title="Link to this definition"></a></dt>
-<dd><p>Ensures the plotting function executes with upper bounds as well.
-Uses monkeypatch to suppress actual plot display.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_theoretical_bound_no_noise">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_theoretical_bound_no_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_theoretical_bound_no_noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_theoretical_bound_no_noise" title="Link to this definition"></a></dt>
-<dd><p>Tests the edge case where alpha = ∞ (i.e., no added noise),
-and ensures the theoretical bound is reduced to its minimal form.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.utils_test.test_theoretical_upper_bound_valid">
-<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_theoretical_upper_bound_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_theoretical_upper_bound_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_theoretical_upper_bound_valid" title="Link to this definition"></a></dt>
-<dd><p>Verifies that theoretical_upper_bound returns a non-negative float.</p>
-</dd></dl>
-
 </section>
 </section>
 
