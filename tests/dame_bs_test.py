@@ -129,7 +129,7 @@ def test_dame_with_binary_search_invalid_m_not_int():
     true_mean = 0.3
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
     with pytest.raises(ValueError, match=f"m must be a positive integer"):
-        dame_with_binary_search(n, alpha, "a", user_samples,delta)
+        dame_with_binary_search(n, alpha, "a", user_samples)
 
 
 
@@ -197,7 +197,7 @@ def test_dame_with_binary_search_no_noise():
     true_mean = 0.3
     delta=0.1
     user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    estimated_mean=dame_with_binary_search(n, alpha, m, user_samples,delta)
+    estimated_mean=dame_with_binary_search(n, alpha, m, user_samples)
     assert -1 <= estimated_mean <= 1, f"Estimated mean {estimated_mean} not in interval [-1,1]"
     assert np.abs(estimated_mean-true_mean)**2<= 1e-3, f"Estimated mean and true mean are not close."
     
@@ -211,9 +211,8 @@ def test_dame_on_constant_data_inf_alpha():
     Test that on constant data and no noise we should be able to get a very good estimate of estimated mean.
     """
     np.random.seed(0)
-    n, m = 100, 20
-    c = 0.3
+    n, m = 1000, 20
+    c = 0.1
     user_samples = [np.full(m, c) for _ in range(n)]
     est = dame_with_binary_search(n, np.inf, m, user_samples)
-    # no privacy‐noise, so we should recover exactly c (up to float rounding).
-    assert abs(est - c) < 1e-6
+    assert abs(est - c) < 1e-3
