@@ -55,29 +55,35 @@ def dame_with_binary_search(n, alpha, m, user_samples):
         pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
     
     # Initializing parameters
+    if alpha == np.inf:
+        # No privacy noise, we treat delta as a tiny positive number
+        delta = 1e-4
+        delta_prime = 0.0
+        scale = 0.0
+    else:
     
-    delta_prime = np.sqrt((1 / m) * lambertw((32 * alpha**2 * n * m) / 81).real)
+        delta_prime = np.sqrt((1 / m) * lambertw((32 * alpha**2 * n * m) / 81).real)
 
 
-    term1 = 2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
-    logA = np.log(81 / (8 * alpha**2))
-    logB = np.log(n)
-    logC = np.log(81 / (8 * n * alpha**2))
-    term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
-    term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
-    delta = min(max(term1, term2),1)
+        term1 = 2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+        logA = np.log(81 / (8 * alpha**2))
+        logB = np.log(n)
+        logC = np.log(81 / (8 * n * alpha**2))
+        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+        term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
+        delta = min(max(term1, term2),1)
 
 
-    
-    inner_log_A = np.log(np.sqrt((9 * np.log(12)) / (8 * m)))
-    floor_A = np.floor(inner_log_A / np.log(2/3))
-    termA = (2/3)**floor_A
-    numerator_B = n * (2 * pi_alpha - 1)**2
-    denominator_B = 2 * np.log(2 * n / delta)
-    floor_B = np.floor(numerator_B / denominator_B)
-    termB = (2/3)**floor_B
-    max_term = max(termA, termB)
-    scale = (2 / alpha) * max_term + (2 * delta_prime / alpha)
+        
+        inner_log_A = np.log(np.sqrt((9 * np.log(12)) / (8 * m)))
+        floor_A = np.floor(inner_log_A / np.log(2/3))
+        termA = (2/3)**floor_A
+        numerator_B = n * (2 * pi_alpha - 1)**2
+        denominator_B = 2 * np.log(2 * n / delta)
+        floor_B = np.floor(numerator_B / denominator_B)
+        termB = (2/3)**floor_B
+        max_term = max(termA, termB)
+        scale = (2 / alpha) * max_term + (2 * delta_prime / alpha)
 
 
     # Localization phase
