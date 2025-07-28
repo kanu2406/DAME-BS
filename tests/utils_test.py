@@ -69,6 +69,7 @@ def test_bound_decreases_with_n(alpha, n, m):
 def test_bound_decreases_with_m(alpha=0.6):
     """As m increases (with alpha,n fixed), the bound should decrease."""
     n = 500
+    alpha = 0.6
     b_small = theoretical_upper_bound(alpha, n, 5)
     b_large = theoretical_upper_bound(alpha, n, 200)
     assert b_large <= b_small
