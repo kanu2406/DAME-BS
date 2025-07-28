@@ -6,7 +6,8 @@ orbs:
 jobs:
   test:
     docker:
-      - image: circleci/python:3.8 
+      # - image: circleci/python:3.8 
+      - image: cimg/python:3.8.4
     steps:
       - checkout
 
