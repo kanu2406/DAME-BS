@@ -52,8 +52,7 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
         raise ValueError("All entries must lie in [-1, 1]")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
         raise ValueError("alpha must be a positive number")
-    if not isinstance(user_samples, (list, tuple,np.ndarray)) or len(user_samples) != n:
-        raise ValueError(f"user_samples must be a list of length {n}")
+   
 
         
     # check m is greater than or equal to 7

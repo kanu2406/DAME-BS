@@ -55,17 +55,23 @@ def attempting_insertion_using_binary_search(alpha,delta,n,m,user_samples):
     if m< 7:
         warnings.warn(f"m = {m} is below the recommended minimum 7; result may be unreliable.")
 
-    if isinstance(user_samples, np.ndarray):
-        # fast path for arrays
-        if not np.all((user_samples >= -1) & (user_samples <= 1)):
-            raise ValueError("All entries must lie in [-1, 1]")
-    else:
-        # if it is a list
-        for i, row in enumerate(user_samples):
+    # if isinstance(user_samples, np.ndarray):
+        
+    #     if not np.all((user_samples >= -1) & (user_samples <= 1)):
+    #         raise ValueError("All entries must lie in [-1, 1]")
+    # else:
+    #     # if it is a list
+    #     for i, row in enumerate(user_samples):
+    #         # converting each row to array for convenience
+    #         arr = np.asarray(row)
+    #         if arr.size == 0:
+    #             continue
+    #         if arr.min() < -1 or arr.max() > 1:
+    #             raise ValueError(f"All entries must lie in [-1, 1].Entry at index {i} contains values outside [-1,1]")
+        
+    for i, row in enumerate(user_samples):
             # converting each row to array for convenience
             arr = np.asarray(row)
-            if arr.size == 0:
-                continue
             if arr.min() < -1 or arr.max() > 1:
                 raise ValueError(f"All entries must lie in [-1, 1].Entry at index {i} contains values outside [-1,1]")
         
