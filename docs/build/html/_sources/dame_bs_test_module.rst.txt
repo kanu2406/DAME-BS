@@ -1,0 +1,37 @@
+Unit tests for dame_bs Algorithm
+================================
+
+It contains all the unit tests for dame_bs estimator for both univariate and multivariate cases.
+
+tests.binary\_search\_test module
+---------------------------------
+
+.. automodule:: tests.binary_search_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+tests.dame\_bs\_test module
+---------------------------
+
+.. automodule:: tests.dame_bs_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+tests.multivariate\_dame\_bs\_test module
+-----------------------------------------
+
+.. automodule:: tests.multivariate_dame_bs_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+tests.utils\_test module
+------------------------
+
+.. automodule:: tests.utils_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
+

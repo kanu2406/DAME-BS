@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit tests for dame_bs Algorithm &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unit tests for Kent’s Algorithm" href="kent_test_module.html" />
+    <link rel="prev" title="Tests" href="tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tests.html">Tests</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Unit tests for dame_bs Algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.binary_search_test">tests.binary_search_test module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_constant_data_inf_alpha"><code class="docutils literal notranslate"><span class="pre">test_binary_search_constant_data_inf_alpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_interval_bounds"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_interval_no_noise"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_no_noise()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_interval_shrinks"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_shrinks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_alpha_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_delta_range"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_delta_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_m_negative"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_m_negative()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_m_not_int"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_m_not_int()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_n_type1"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_n_type1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_invalid_n_type2"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_n_type2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_mismatch_samples"><code class="docutils literal notranslate"><span class="pre">test_binary_search_mismatch_samples()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_negative_delta"><code class="docutils literal notranslate"><span class="pre">test_binary_search_negative_delta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_no_iterations"><code class="docutils literal notranslate"><span class="pre">test_binary_search_no_iterations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_no_nan_inf"><code class="docutils literal notranslate"><span class="pre">test_binary_search_no_nan_inf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_output_format"><code class="docutils literal notranslate"><span class="pre">test_binary_search_output_format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_warns_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_about_smaller_m()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_binary_search_wrong_sample_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.dame_bs_test">tests.dame_bs_test module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_binary_search_warns_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_about_smaller_m()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_on_constant_data_inf_alpha"><code class="docutils literal notranslate"><span class="pre">test_dame_on_constant_data_inf_alpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_alpha_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_negative"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_m_negative()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_not_int"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_m_not_int()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type1"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_n_type1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type2"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_n_type2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_mismatch_samples"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_mismatch_samples()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_no_noise"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_no_noise()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_output_range"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_output_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_wrong_sample_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_output_range_and_type"><code class="docutils literal notranslate"><span class="pre">test_output_range_and_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.multivariate_dame_bs_test">tests.multivariate_dame_bs_test module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_about_small_n"><code class="docutils literal notranslate"><span class="pre">test_about_small_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_about_smaller_m()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_constant_data_exact_recovery"><code class="docutils literal notranslate"><span class="pre">test_constant_data_exact_recovery()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_exact_multiple_of_2d"><code class="docutils literal notranslate"><span class="pre">test_exact_multiple_of_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_invalid_alpha_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_invalid_n"><code class="docutils literal notranslate"><span class="pre">test_invalid_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_invalid_user_samples_wrong_dim"><code class="docutils literal notranslate"><span class="pre">test_invalid_user_samples_wrong_dim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_negative_alpha"><code class="docutils literal notranslate"><span class="pre">test_negative_alpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_no_noise"><code class="docutils literal notranslate"><span class="pre">test_no_noise()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_output_range"><code class="docutils literal notranslate"><span class="pre">test_output_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.multivariate_dame_bs_test.test_values_out_of_range"><code class="docutils literal notranslate"><span class="pre">test_values_out_of_range()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.utils_test">tests.utils_test module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_m"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_m()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_n"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_estimate_within_error_and_bound"><code class="docutils literal notranslate"><span class="pre">test_estimate_within_error_and_bound()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_invalid_parameters"><code class="docutils literal notranslate"><span class="pre">test_invalid_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_plot_errorbars_runs"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_plot_errorbars_runs_with_ub"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs_with_ub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_theoretical_bound_no_noise"><code class="docutils literal notranslate"><span class="pre">test_theoretical_bound_no_noise()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_theoretical_upper_bound_valid"><code class="docutils literal notranslate"><span class="pre">test_theoretical_upper_bound_valid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kent_test_module.html">Unit tests for Kent’s Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tests.html">Tests</a></li>
+      <li class="breadcrumb-item active">Unit tests for dame_bs Algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dame_bs_test_module.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="unit-tests-for-dame-bs-algorithm">
+<h1>Unit tests for dame_bs Algorithm<a class="headerlink" href="#unit-tests-for-dame-bs-algorithm" title="Link to this heading"></a></h1>
+<p>It contains all the unit tests for dame_bs estimator for both univariate and multivariate cases.</p>
+<section id="module-tests.binary_search_test">
+<span id="tests-binary-search-test-module"></span><h2>tests.binary_search_test module<a class="headerlink" href="#module-tests.binary_search_test" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_constant_data_inf_alpha">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_constant_data_inf_alpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_constant_data_inf_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_constant_data_inf_alpha" title="Link to this definition"></a></dt>
+<dd><p>Tests the case when the we have constant data and there is no noise.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_interval_bounds">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_interval_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_interval_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_interval_bounds" title="Link to this definition"></a></dt>
+<dd><p>Confirm that the interval returned by binary search lies within [-1, 1].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_interval_no_noise">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_interval_no_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_interval_no_noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_interval_no_noise" title="Link to this definition"></a></dt>
+<dd><p>Test binary search interval estimation with no noise (alpha = infinity).
+Checks that true mean lies within the estimated interval and the interval length has decreased.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_interval_shrinks">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_interval_shrinks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_interval_shrinks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_interval_shrinks" title="Link to this definition"></a></dt>
+<dd><p>Test that the binary search confidence interval shrinks when number of users increases.
+Compares interval widths for smaller and larger n.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_alpha_type">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_alpha_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_alpha_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_alpha_type" title="Link to this definition"></a></dt>
+<dd><p>Check that attempting_insertion_using_binary_search raises ValueError for negative alpha.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_delta_range">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_delta_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_delta_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_delta_range" title="Link to this definition"></a></dt>
+<dd><p>Check that attempting_insertion_using_binary_search raises ValueError for negative delta.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_m_negative">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_m_negative</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_m_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_m_negative" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised if m is negative.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_m_not_int">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_m_not_int</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_m_not_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_m_not_int" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised when m is not a positive integer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_n_type1">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_n_type1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_n_type1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_n_type1" title="Link to this definition"></a></dt>
+<dd><p>Check that attempting_insertion_using_binary_search raises ValueError for negative n.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_invalid_n_type2">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_invalid_n_type2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_invalid_n_type2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_invalid_n_type2" title="Link to this definition"></a></dt>
+<dd><p>Check that attempting_insertion_using_binary_search raises ValueError for n not int.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_mismatch_samples">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_mismatch_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_mismatch_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_mismatch_samples" title="Link to this definition"></a></dt>
+<dd><p>Check that an error is raised if user_samples length does not match n.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_negative_delta">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_negative_delta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_negative_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_negative_delta" title="Link to this definition"></a></dt>
+<dd><p>Check that attempting_insertion_using_binary_search raises ValueError for negative delta.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_no_iterations">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_no_iterations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_no_iterations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_no_iterations" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_no_nan_inf">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_no_nan_inf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_no_nan_inf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_no_nan_inf" title="Link to this definition"></a></dt>
+<dd><p>Test that the binary search interval does not contain NaN or infinite values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_output_format">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_output_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_output_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_output_format" title="Link to this definition"></a></dt>
+<dd><p>Test that attempting_insertion_using_binary_search returns an interval as a list of two floats.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_warns_about_smaller_m">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_warns_about_smaller_m</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_warns_about_smaller_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_warns_about_smaller_m" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when m&lt;7.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_warns_and_corrects_odd_n">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_warns_and_corrects_odd_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_warns_and_corrects_odd_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_warns_and_corrects_odd_n" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when n is odd and corrected internally.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_wrong_sample_length">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_wrong_sample_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_wrong_sample_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_wrong_sample_length" title="Link to this definition"></a></dt>
+<dd><p>Check that an error is raised if individual user samples do not have length m.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.binary_search_test.test_incorrect_input_rng">
+<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_incorrect_input_rng</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_incorrect_input_rng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_incorrect_input_rng" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised if data is not in [-1,1].</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.dame_bs_test">
+<span id="tests-dame-bs-test-module"></span><h2>tests.dame_bs_test module<a class="headerlink" href="#module-tests.dame_bs_test" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_binary_search_warns_about_smaller_m">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_warns_about_smaller_m</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_binary_search_warns_about_smaller_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_binary_search_warns_about_smaller_m" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when n is odd and corrected internally.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_on_constant_data_inf_alpha">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_on_constant_data_inf_alpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_on_constant_data_inf_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_on_constant_data_inf_alpha" title="Link to this definition"></a></dt>
+<dd><p>Test that on constant data and no noise we should be able to get a very good estimate of estimated mean.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_invalid_alpha_type">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_invalid_alpha_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_invalid_alpha_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_alpha_type" title="Link to this definition"></a></dt>
+<dd><p>Check that dame_with_binary_search raises ValueError for negative alpha.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_invalid_m_negative">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_invalid_m_negative</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_invalid_m_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_negative" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised if m is negative.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_invalid_m_not_int">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_invalid_m_not_int</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_invalid_m_not_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_not_int" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised if m (number of samples per user) is not a positive inetger.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type1">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_invalid_n_type1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_invalid_n_type1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type1" title="Link to this definition"></a></dt>
+<dd><p>Check that dame_with_binary_search raises ValueError for negative n.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type2">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_invalid_n_type2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_invalid_n_type2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type2" title="Link to this definition"></a></dt>
+<dd><p>Check that dame_with_binary_search raises ValueError for n non-integer value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_mismatch_samples">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_mismatch_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_mismatch_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_mismatch_samples" title="Link to this definition"></a></dt>
+<dd><p>Check that an error is raised if user_samples length does not match n.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_no_noise">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_no_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_no_noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_no_noise" title="Link to this definition"></a></dt>
+<dd><p>Test dame_with_binary_search output when noise is absent (alpha = infinity).
+Checks that estimated mean is within valid range and close to the true mean.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_output_range">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_output_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_output_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_output_range" title="Link to this definition"></a></dt>
+<dd><p>Test that dame_with_binary_search returns a float estimate within the valid range [-1, 1].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_warns_and_corrects_odd_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_warns_and_corrects_odd_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when n is odd and corrected internally.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_wrong_sample_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_wrong_sample_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length" title="Link to this definition"></a></dt>
+<dd><p>Check that an error is raised if individual user samples do not have length m.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_incorrect_input_rng">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_incorrect_input_rng</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_incorrect_input_rng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_incorrect_input_rng" title="Link to this definition"></a></dt>
+<dd><p>Check that ValueError is raised if data is not in [-1,1].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.dame_bs_test.test_output_range_and_type">
+<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_output_range_and_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_output_range_and_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_output_range_and_type" title="Link to this definition"></a></dt>
+<dd><p>Estimated mean should lie in [-1,1]</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.multivariate_dame_bs_test">
+<span id="tests-multivariate-dame-bs-test-module"></span><h2>tests.multivariate_dame_bs_test module<a class="headerlink" href="#module-tests.multivariate_dame_bs_test" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_about_small_n">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_about_small_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_about_small_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_about_small_n" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when n&lt;2d.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_about_smaller_m">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_about_smaller_m</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_about_smaller_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_about_smaller_m" title="Link to this definition"></a></dt>
+<dd><p>Check that a warning is issued when m is smaller than 7.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_constant_data_exact_recovery">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_constant_data_exact_recovery</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_constant_data_exact_recovery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_constant_data_exact_recovery" title="Link to this definition"></a></dt>
+<dd><p>Testing the case when data is constant and alpha = inf. We should get a very good estimate of mean.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_exact_multiple_of_2d">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_exact_multiple_of_2d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_exact_multiple_of_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_exact_multiple_of_2d" title="Link to this definition"></a></dt>
+<dd><p>Testing the case when data is exact multiple of 2d then there should be no warnings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_invalid_alpha_type">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_invalid_alpha_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_invalid_alpha_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_invalid_alpha_type" title="Link to this definition"></a></dt>
+<dd><p>Check ValueError is raised if alpha is not float or int.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_invalid_n">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_invalid_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_invalid_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_invalid_n" title="Link to this definition"></a></dt>
+<dd><p>Check warning is raised if n is not a multiple of 2d.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_invalid_user_samples_wrong_dim">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_invalid_user_samples_wrong_dim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_invalid_user_samples_wrong_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_invalid_user_samples_wrong_dim" title="Link to this definition"></a></dt>
+<dd><p>Check ValueError is raised for wrong dim of user_samples.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_negative_alpha">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_negative_alpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_negative_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_negative_alpha" title="Link to this definition"></a></dt>
+<dd><p>Check ValueError is raised for negative alpha.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_no_noise">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_no_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_no_noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_no_noise" title="Link to this definition"></a></dt>
+<dd><p>Test output when noise is absent (alpha = infinity).
+Checks that estimated mean is within valid range and close to the true mean.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_output_range">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_output_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_output_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_output_range" title="Link to this definition"></a></dt>
+<dd><p>Test that multivariate_dame_bs_l_inf returns a d-dimensional array with each coordinate within the valid range [-1, 1].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.multivariate_dame_bs_test.test_values_out_of_range">
+<span class="sig-prename descclassname"><span class="pre">tests.multivariate_dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_values_out_of_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/multivariate_dame_bs_test.html#test_values_out_of_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.multivariate_dame_bs_test.test_values_out_of_range" title="Link to this definition"></a></dt>
+<dd><p>Check ValueError is raised coordinates of user_samples are outside the range [-1,1].</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.utils_test">
+<span id="tests-utils-test-module"></span><h2>tests.utils_test module<a class="headerlink" href="#module-tests.utils_test" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_bound_decreases_with_m">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_bound_decreases_with_m</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_bound_decreases_with_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_bound_decreases_with_m" title="Link to this definition"></a></dt>
+<dd><p>As m increases (with alpha,n fixed), the bound should decrease.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_bound_decreases_with_n">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_bound_decreases_with_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_bound_decreases_with_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_bound_decreases_with_n" title="Link to this definition"></a></dt>
+<dd><p>As n increases (with alpha,m fixed), the bound should decrease.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_estimate_within_error_and_bound">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_estimate_within_error_and_bound</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_estimate_within_error_and_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_estimate_within_error_and_bound" title="Link to this definition"></a></dt>
+<dd><p>Ensures that the DAME-BS empirical error is less than theoretical bound.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_invalid_parameters">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_invalid_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_invalid_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_invalid_parameters" title="Link to this definition"></a></dt>
+<dd><p>Negative or zero alpha should still produce a float or raise as appropriate.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_plot_errorbars_runs">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_plot_errorbars_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_plot_errorbars_runs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_plot_errorbars_runs" title="Link to this definition"></a></dt>
+<dd><p>Ensures the plotting function executes without crashing.
+Uses monkeypatch to suppress actual plot display.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_plot_errorbars_runs_with_ub">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_plot_errorbars_runs_with_ub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_plot_errorbars_runs_with_ub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_plot_errorbars_runs_with_ub" title="Link to this definition"></a></dt>
+<dd><p>Ensures the plotting function executes with upper bounds as well.
+Uses monkeypatch to suppress actual plot display.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_theoretical_bound_no_noise">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_theoretical_bound_no_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_theoretical_bound_no_noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_theoretical_bound_no_noise" title="Link to this definition"></a></dt>
+<dd><p>Tests the edge case where alpha = ∞ (i.e., no added noise),
+and ensures the theoretical bound is reduced to its minimal form.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.test_theoretical_upper_bound_valid">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_theoretical_upper_bound_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_theoretical_upper_bound_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_theoretical_upper_bound_valid" title="Link to this definition"></a></dt>
+<dd><p>Verifies that theoretical_upper_bound returns a non-negative float.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tests.html" class="btn btn-neutral float-left" title="Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kent_test_module.html" class="btn btn-neutral float-right" title="Unit tests for Kent’s Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

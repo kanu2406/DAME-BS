@@ -1,5 +1,3 @@
-'''Unit Tests for dame_with_binary_search()'''
-
 import pytest 
 from dame_bs.binary_search import attempting_insertion_using_binary_search
 from dame_bs.dame_bs import dame_with_binary_search

@@ -8,10 +8,10 @@ Welcome to dame_bs documentation
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
-   modules
+   dame_bs
    kent
    experiments
    tests

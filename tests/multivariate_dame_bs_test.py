@@ -1,5 +1,3 @@
-'''Unit Tests for multivariate_dame_bs_l_inf()'''
-
 import pytest 
 from dame_bs.multivariate_dame_bs import multivariate_dame_bs_l_inf
 import numpy as np
