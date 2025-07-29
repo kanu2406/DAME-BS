@@ -8,9 +8,9 @@ from dame_bs.dame_bs import dame_with_binary_search
 from kent.kent import kent_mean_estimator
 
 def generate_univariate_scaled_data(distribution,n,m, true_mean):
+
     """
     Generate and linearly scale univariate user samples into [-1,1].
-
     This function simulates `n` users each providing `m` samples drawn from a
     specified one‑dimensional distribution centered (in expectation) at
     `true_mean`, and then rescales *all* samples (and the true mean) to lie in
@@ -20,11 +20,13 @@ def generate_univariate_scaled_data(distribution,n,m, true_mean):
     ----------
     distribution : str
         Which distribution to sample from. Supported values are:
+        
         - "normal"    : Gaussian N(true_mean, 1^2)
         - "uniform"   : Uniform U(true_mean - 1, true_mean + 1)
         - "student_t" : Student's t distribution with degrees of freedom = 3 
                         and expected value shifted to true_mean
-        - "binomial"  : Binomial with number of trials as 50 and probability of success as true_mean/50 
+        - "binomial"  : Binomial with number of trials as 50 and probability of success as true_mean/50
+
     n : int
         Number of users (i.e., how many independent sample‐sets to generate).
     m : int

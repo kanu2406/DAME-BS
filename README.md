@@ -42,11 +42,10 @@ cd DAME-BS
 ```
 
 ### Experiments
-You can run the included experiments to replicate results:
+You can run the included experiments to replicate results by directly running the file named `run_experiments.py`:
 
 ```python
-python experiments/experiment_risk_vs_alpha.py
-python experiments/experiment_risk_vs_n.py
+python experiments/run_experiments.py
 ```
 
 ### Basic Example
@@ -56,16 +55,17 @@ import numpy as np
 import math
 from dame_bs.dame_bs import dame_with_binary_search
 from dame_bs.binary_search import attempting_insertion_using_binary_search
+from experiments.univariate_experiment import generate_univariate_scaled_data
  
 alpha = 0.6
-pi_alpha = np.exp(alpha) / (1 + np.exp(alpha))
 n = 20000
 m = 20
 true_mean = 0.3
-delta = 2 * n * math.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+delta = 0.1
 
-# Generate fake data
-user_samples= [np.random.normal(loc=true_mean, scale=0.6, size=m) for _ in range(n)]
+# Generate univariate scaled data from a supported distribution with a given mean
+distribution = "normal"
+user_samples, true_mean_scaled= generate_univariate_scaled_data(distribution,n,m, true_mean)
 
 # Estimated Interval
 L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
@@ -81,19 +81,30 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ### Results
 
-This plot shows how the mean squared error of the estimator varies with the privacy parameter 𝛼 along with the theoretical upper bound. 
+#### Univariate Case
 
-<img src="docs/figures/risk_vs_alpha/normal_alpha.png" alt="risk_vs_alpha" style="width:400px;"/>
+Following plots compares of dame_bs and Kent's algorithm by displaying mean squared error changes with different parameters like 𝛼,n or m for univariate case.
 
-This plot shows how the mean squared error of the estimator varies with the number of users n along with the theoretical upper bound. 
+Mean squared error vs alpha (privacy parameter)
+-----------------------------------------------
 
-<img src="docs/figures/risk_vs_n/normal_n.png" alt="risk_vs_n" style="width:400px;"/>
+<img src="docs/figures/mse_vs_alpha_univariate.png" alt="risk_vs_alpha" style="width:400px;"/>
 
-This plot compares empirical risks for different privacy parameters 𝛼 as 𝑛 increases, along with the derived theoretical upper bound (shown as dashed lines).
 
-<img src="docs/figures/risk_vs_n_diff_alpha/risk_vs_n_normal_diff_alpha.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/>
 
-In all the plots above, data was generated using normal distribution.
+Mean squared error vs n (number of users)
+-----------------------------------------
+
+<img src="docs/figures/mse_vs_n_univariate.png" alt="risk_vs_n" style="width:400px;"/>
+
+
+
+Mean squared error vs m (number of samples per user)
+----------------------------------------------------
+
+<img src="docs/figures/mse_vs_m_univariate.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/>
+
+
 
 ### License
 

@@ -13,7 +13,7 @@ The following functions are implemented -
 
 
 dame\_bs.binary\_search 
-------------------------------
+-----------------------
 
 .. automodule:: dame_bs.binary_search
    :members:
@@ -21,7 +21,7 @@ dame\_bs.binary\_search
    :undoc-members:
 
 dame\_bs.dame\_bs 
-------------------------
+-----------------
 
 .. automodule:: dame_bs.dame_bs
    :members:
@@ -29,7 +29,7 @@ dame\_bs.dame\_bs
    :undoc-members:
 
 dame\_bs.multivariate\_dame\_bs
-------------------------
+-------------------------------
 
 .. automodule:: dame_bs.multivariate_dame_bs
    :members:
@@ -37,7 +37,7 @@ dame\_bs.multivariate\_dame\_bs
    :undoc-members:
 
 dame\_bs.utils 
----------------------
+--------------
 
 .. automodule:: dame_bs.utils
    :members:

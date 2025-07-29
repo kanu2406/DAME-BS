@@ -73,14 +73,14 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
         
     
     else:
-        delta_prime = np.sqrt((1/m) * lambertw(32*alpha*alpha*n*m/(81*d)).real)
+        delta_prime = np.sqrt((1/m) * lambertw(32*alpha*alpha*n*m/(81*2*d)).real)
 
 
-        term1 = 2 * (n/d) * np.exp(-(n/d) * (2 * pi_alpha - 1)**2 / 2)
+        term1 = 2 * (n/(2*d)) * np.exp(-(n/(2*d)) * (2 * pi_alpha - 1)**2 / 2)
         logA = np.log(81 / (8 * alpha**2))
-        logB = np.log(n/d)
-        logC = np.log((81*d) / (8 * n * alpha**2))
-        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+        logB = np.log(n/2*d)
+        logC = np.log((81*2*d) / (8 * n * alpha**2))
+        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * (n/(2*d)) * (2 * pi_alpha - 1)**2 * np.log(3/2)
         term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
         delta = min(max(term1, term2),1)
 
@@ -90,7 +90,7 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
         floor_A = np.floor(inner_log_A / np.log(2/3))
         termA = (2/3)**floor_A
         numerator_B = n * (2 * pi_alpha - 1)**2
-        denominator_B = 2 * np.log(2 * n / (d*delta))*d
+        denominator_B = 2 * np.log(2 * n / (2*d*delta))*d
         floor_B = np.floor(numerator_B / denominator_B)
         termB = (2/3)**floor_B
         max_term = max(termA, termB)
@@ -116,12 +116,13 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
         L_tilde, R_tilde = L_j - delta_prime, R_j + delta_prime
         X_est_j = user_samples[idx_est, :, j]  # samples for estimation phase
         means = X_est_j.mean(axis=1)        # per-user mean
+        # adding Laplace noise with scale = scale
+        noisy = means + laplace.rvs(scale=scale, size=block)
 
         # clipping into [L_tilde, R_tilde]
-        clipped = np.minimum(np.maximum(means, L_tilde), R_tilde)
-        # adding Laplace noise with scale = scale
-        noisy = clipped + laplace.rvs(scale=scale, size=block)
+        clipped = np.minimum(np.maximum(noisy, L_tilde), R_tilde)
+        
         # aggregation to get coordinate estimate
-        theta_hat[j] = (2*d/n) * np.sum(noisy)
+        theta_hat[j] = (2*d/n) * np.sum(clipped)
 
     return theta_hat

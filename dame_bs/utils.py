@@ -79,14 +79,14 @@ def plot_errorbars(x_values, mean_errors_kent,mean_errors_dame_bs, std_errors_ke
         upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas'. Default is empty-list.
 
     Returns:
-        None. Displays the plot using `matplotlib.pyplot`.
+        None. Displays the plot using `matplotlib.pyplot`
     """
 
     if upper_bounds is None:
         upper_bounds=[]
     plt.figure(figsize=(8, 5))
-    plt.errorbar(x_values, mean_errors_kent, yerr=std_errors_kent, fmt='o-', capsize=5,label="Kent")
-    plt.errorbar(x_values, mean_errors_dame_bs, yerr=std_errors_dame_bs, fmt='o-', capsize=5,label="DAME-BS")
+    plt.errorbar(x_values, mean_errors_kent, fmt='o-', capsize=5,label="Kent")
+    plt.errorbar(x_values, mean_errors_dame_bs, fmt='o-', capsize=5,label="DAME-BS")
     if plot_ub and upper_bounds:
         plt.plot(x_values, upper_bounds, 'r--', label='Theoretical Upper Bound')
     plt.title(title)
