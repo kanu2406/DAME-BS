@@ -41,10 +41,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">DAME-BS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
 </ul>
 
         </div>
@@ -84,7 +84,7 @@
 <span class="c1">########################################################################################</span>
 
 <div class="viewcode-block" id="test_theoretical_upper_bound_valid">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_theoretical_upper_bound_valid">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_theoretical_upper_bound_valid">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_theoretical_upper_bound_valid</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Verifies that theoretical_upper_bound returns a non-negative float.&#39;&#39;&#39;</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
@@ -99,7 +99,7 @@
 
 <span class="c1">###########################################################################################</span>
 <div class="viewcode-block" id="test_estimate_within_error_and_bound">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_estimate_within_error_and_bound">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_estimate_within_error_and_bound">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_estimate_within_error_and_bound</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures that the DAME-BS empirical error is less than theoretical bound.&#39;&#39;&#39;</span>
 
@@ -119,7 +119,7 @@
 <span class="c1">#############################################################################################</span>
 
 <div class="viewcode-block" id="test_theoretical_bound_no_noise">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_theoretical_bound_no_noise">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_theoretical_bound_no_noise">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_theoretical_bound_no_noise</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Tests the edge case where alpha = ∞ (i.e., no added noise), </span>
 <span class="sd">    and ensures the theoretical bound is reduced to its minimal form.&#39;&#39;&#39;</span>
@@ -141,7 +141,7 @@
 <span class="c1">##################################################################################################</span>
 
 <div class="viewcode-block" id="test_bound_decreases_with_n">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_bound_decreases_with_n">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_bound_decreases_with_n">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_bound_decreases_with_n</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;As n increases (with alpha,m fixed), the bound should decrease.&quot;&quot;&quot;</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span>
@@ -155,7 +155,7 @@
 <span class="c1">##################################################################################################</span>
 
 <div class="viewcode-block" id="test_bound_decreases_with_m">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_bound_decreases_with_m">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_bound_decreases_with_m">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_bound_decreases_with_m</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;As m increases (with alpha,n fixed), the bound should decrease.&quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
@@ -169,7 +169,7 @@
 
 <span class="c1">##################################################################################################</span>
 <div class="viewcode-block" id="test_invalid_parameters">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_invalid_parameters">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_invalid_parameters">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_parameters</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Negative or zero alpha should still produce a float or raise as appropriate.&quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
@@ -184,7 +184,7 @@
 <span class="c1">##################################################################################################</span>
 
 <div class="viewcode-block" id="test_plot_errorbars_runs">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_plot_errorbars_runs">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_plot_errorbars_runs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_plot_errorbars_runs</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures the plotting function executes without crashing. </span>
 <span class="sd">    Uses monkeypatch to suppress actual plot display.&#39;&#39;&#39;</span>
@@ -223,7 +223,7 @@
 <span class="c1">##################################################################################################</span>
 
 <div class="viewcode-block" id="test_plot_errorbars_runs_with_ub">
-<a class="viewcode-back" href="../../tests.html#tests.utils_test.test_plot_errorbars_runs_with_ub">[docs]</a>
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.test_plot_errorbars_runs_with_ub">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_plot_errorbars_runs_with_ub</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Ensures the plotting function executes with upper bounds as well. </span>
 <span class="sd">    Uses monkeypatch to suppress actual plot display.&#39;&#39;&#39;</span>

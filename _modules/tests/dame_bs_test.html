@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.dame_bs_test &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.dame_bs_test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.dame_bs_test</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.binary_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">attempting_insertion_using_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">theoretical_upper_bound</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.univariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_univariate_scaled_data</span>
+
+
+<span class="c1">##################################################################################################</span>
+<span class="c1"># Invalid Input Check for dame_bs</span>
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_n_type1">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type1">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_n_type1</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that dame_with_binary_search raises ValueError for negative n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;n must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_n_type2">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type2">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_n_type2</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that dame_with_binary_search raises ValueError for n non-integer value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;n must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_alpha_type">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_alpha_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_alpha_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that dame_with_binary_search raises ValueError for negative alpha.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;alpha must be a positive number&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_mismatch_samples">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_mismatch_samples">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_mismatch_samples</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if user_samples length does not match n.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;user_samples must be a list of length </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_wrong_sample_length">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_wrong_sample_length</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that an error is raised if individual user samples do not have length m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Each user sample must be an array-like of length </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_warns_and_corrects_odd_n">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_warns_and_corrects_odd_n</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that a warning is issued when n is odd and corrected internally.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="mi">5001</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples1</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n1</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="n">user_samples2</span> <span class="o">=</span> <span class="n">user_samples1</span><span class="p">[:</span><span class="n">n2</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">)</span>
+        <span class="n">result1</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples1</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>  
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;is odd&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">warning</span><span class="o">.</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span></div>
+
+
+
+
+
+    
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_m_not_int">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_not_int">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_m_not_int</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if m (number of samples per user) is not a positive inetger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_invalid_m_negative">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_negative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_invalid_m_negative</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if m is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">pi_alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;m must be a positive integer&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="o">-</span><span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="test_binary_search_warns_about_smaller_m">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_binary_search_warns_about_smaller_m">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_binary_search_warns_about_smaller_m</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that a warning is issued when n is odd and corrected internally.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>  
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;is below the recommended minimum 7&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">warning</span><span class="o">.</span><span class="n">message</span><span class="p">)</span> <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">w</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="test_incorrect_input_rng">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_incorrect_input_rng">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_incorrect_input_rng</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that ValueError is raised if data is not in [-1,1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">user_samples</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;All entries must lie in&quot;</span><span class="p">):</span>
+        <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+
+
+
+<span class="c1">###########################################################################################</span>
+<span class="c1"># Tests for output ranges</span>
+<div class="viewcode-block" id="test_dame_with_binary_search_output_range">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_output_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_output_range</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that dame_with_binary_search returns a float estimate within the valid range [-1, 1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="n">estimate</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">estimate</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">estimate</span> <span class="o">&lt;=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_dame_with_binary_search_no_noise">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_no_noise">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_with_binary_search_no_noise</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test dame_with_binary_search output when noise is absent (alpha = infinity).</span>
+<span class="sd">    Checks that estimated mean is within valid range and close to the true mean.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="c1"># for no noise alpha = np.inf and pi_alpha = 1</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">9000</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">true_mean</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">user_samples</span> <span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="n">estimated_mean</span><span class="o">=</span><span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">estimated_mean</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Estimated mean </span><span class="si">{</span><span class="n">estimated_mean</span><span class="si">}</span><span class="s2"> not in interval [-1,1]&quot;</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">estimated_mean</span><span class="o">-</span><span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">&lt;=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Estimated mean and true mean are not close.&quot;</span></div>
+
+    
+
+
+
+
+
+<div class="viewcode-block" id="test_dame_on_constant_data_inf_alpha">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_dame_on_constant_data_inf_alpha">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_dame_on_constant_data_inf_alpha</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test that on constant data and no noise we should be able to get a very good estimate of estimated mean.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">20</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">est</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">est</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span></div>
+
+
+<div class="viewcode-block" id="test_output_range_and_type">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.dame_bs_test.test_output_range_and_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_output_range_and_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimated mean should lie in [-1,1]&quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">theta_hat</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">theta_hat</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">theta_hat</span> <span class="o">&lt;=</span> <span class="mi">1</span></div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

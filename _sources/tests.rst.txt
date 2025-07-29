@@ -1,21 +1,12 @@
-tests package
-=============
+Tests
+=====
 
-It contains all the unit tests for core and utils functions.
+This section contains unit tests for dame_bs and kent's algorithm.
 
-tests.core\_test module
------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: tests.core_test
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-tests.utils\_test module
-------------------------
-
-.. automodule:: tests.utils_test
-   :members:
-   :show-inheritance:
-   :undoc-members:
+   dame_bs_test_module
+   kent_test_module
+   
 

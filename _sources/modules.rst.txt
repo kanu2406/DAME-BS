@@ -1,9 +1,12 @@
-DAME-BS
-=======
+Tests
+=====
+
+This section contains unit tests for dame_bs and kent's algorithm.
 
 .. toctree::
    :maxdepth: 4
 
-   dame_bs
+   dame_bs_test
+   kent_test
    
 

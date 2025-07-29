@@ -1,0 +1,21 @@
+Unit tests for Kent's Algorithm
+===============================
+
+It contains all the unit tests for kent estimator for both univariate and multivariate cases.
+
+tests.kent\_test module
+-----------------------
+
+.. automodule:: tests.kent_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+
+tests.ken\_multivariate\_test module
+-----------------------
+
+.. automodule:: tests.kent_multivariate_test
+   :members:
+   :show-inheritance:
+   :undoc-members:
