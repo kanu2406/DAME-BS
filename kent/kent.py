@@ -22,10 +22,29 @@ def kent_mean_estimator(X, alpha, K=1.0):
     """
 
     # --- Input validation ---
-    n, T = X.shape
+
+
+    if isinstance(X, np.ndarray):
+        if X.ndim != 2:
+            raise ValueError("X must be a 2D numpy array of shape (n, T)")
+        n, T = X.shape
+    elif isinstance(X, (list, tuple)):
+        n = len(X)
+        if n == 0:
+            raise ValueError("X must contain at least one user sample")
+        # ensure every element has the same length T
+        try:
+            T = len(X[0])
+        except Exception:
+            raise ValueError("Each entry in X must be array-like")
+        for i, row in enumerate(X):
+            if len(row) != T:
+                raise ValueError(f"All user samples must have length {T}, but sample {i} has length {len(row)}")
+        X = np.vstack(X)
+    else:
+        raise ValueError("X must be either a 2D numpy array or a list of 1D samples")
     
-    if not isinstance(n, int) or n <= 0:
-        raise ValueError("n must be a positive integer") 
+    
     if not isinstance(K, (int, float)) or K <= 0:
         raise ValueError("K must be a positive number")
     if not isinstance(T, int) or T <= 0:
@@ -36,9 +55,6 @@ def kent_mean_estimator(X, alpha, K=1.0):
         raise ValueError(f"user_samples must be a list of length {n}")
     if not np.all((X >= -1) & (X <= 1)):
         raise ValueError("All entries of X must lie in [-1, 1]")
-    for i, sample in enumerate(X):
-        if not hasattr(sample, '__len__') or len(sample) != T:
-            raise ValueError(f"Each user sample must be an array-like of length {T}")
     
     
     # to prevent overflow, checking if arg is very high
@@ -51,7 +67,11 @@ def kent_mean_estimator(X, alpha, K=1.0):
         overall = np.mean([np.mean(x) for x in X])
         return float(np.clip(overall, -1, 1))
     
-    delta = np.sqrt(2 * np.log(n * T_star * alpha**2) / T_star)
+    z = np.log(n * T_star * alpha**2)
+    if z<0:
+        delta = 0
+    else:
+        delta = np.sqrt(2 * z / T_star)
     
     # Partition [−1,1] into intervals of width 2δ
     intervals = partition_interval(-1.0, 1.0, delta)  
@@ -84,6 +104,7 @@ def kent_mean_estimator(X, alpha, K=1.0):
         clipped = in_interval(X[i,:T_star].mean())
         noise = np.random.laplace( scale=(14*delta/alpha))
         theta_i = clipped + noise
+        theta_i = max(-1, min(1, theta_i))
         theta_refined.append(theta_i)
     
     # Final estimate: average of the refined n/2 users
@@ -121,6 +142,9 @@ def partition_interval(a, b, delta):
             - U_j - L_j = 2·delta for all j < N,
             - The last interval may be shorter so that U_N = b
     """
+    if delta==0:
+        print("delta is equal to 0; Returning orignal interval")
+        return [(a,b)]
     N = int(np.ceil((b - a) / (2*delta)))
     intervals = []
     for j in range(N):

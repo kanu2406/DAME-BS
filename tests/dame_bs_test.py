@@ -7,6 +7,7 @@ from dame_bs.utils import theoretical_upper_bound
 import numpy as np
 import math
 import warnings
+from experiments.univariate_experiment import generate_univariate_scaled_data
 
 
 ##################################################################################################
@@ -21,10 +22,10 @@ def test_dame_with_binary_search_invalid_n_type1():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     
     with pytest.raises(ValueError, match="n must be a positive integer"):
-        dame_with_binary_search(-n, alpha, m, user_samples)
+        dame_with_binary_search(-n, alpha, m, user_samples.tolist())
 
 
 def test_dame_with_binary_search_invalid_n_type2():
@@ -36,10 +37,10 @@ def test_dame_with_binary_search_invalid_n_type2():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     
     with pytest.raises(ValueError, match="n must be a positive integer"):
-        dame_with_binary_search(n+0.5, alpha, m, user_samples)
+        dame_with_binary_search(n+0.5, alpha, m, user_samples.tolist())
 
 
 def test_dame_with_binary_search_invalid_alpha_type():
@@ -51,10 +52,10 @@ def test_dame_with_binary_search_invalid_alpha_type():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     
     with pytest.raises(ValueError, match="alpha must be a positive number"):
-        dame_with_binary_search(n, -alpha, m, user_samples)
+        dame_with_binary_search(n, -alpha, m, user_samples.tolist())
 
 
 
@@ -68,10 +69,10 @@ def test_dame_with_binary_search_mismatch_samples():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n-1)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n-1,m,true_mean)
     
     with pytest.raises(ValueError, match=f"user_samples must be a list of length {n}"):
-        dame_with_binary_search(n, alpha, m, user_samples)
+        dame_with_binary_search(n, alpha, m, user_samples.tolist())
 
 
 
@@ -87,9 +88,9 @@ def test_dame_with_binary_search_wrong_sample_length():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m-1) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m-1,true_mean)
     with pytest.raises(ValueError, match=f"Each user sample must be an array-like of length {m}"):
-        dame_with_binary_search(n, alpha, m, user_samples)
+        dame_with_binary_search(n, alpha, m, user_samples.tolist())
 
 
 
@@ -105,11 +106,11 @@ def test_dame_with_binary_search_warns_and_corrects_odd_n():
     n2 = 5000
     m = 20
     true_mean = 0.3
-    user_samples1 = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n1)]
+    user_samples1 ,true_mean_scaled = generate_univariate_scaled_data("normal",n1,m,true_mean)
     user_samples2 = user_samples1[:n2]
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        result1 = dame_with_binary_search(n1, alpha, m, user_samples1)  
+        result1 = dame_with_binary_search(n1, alpha, m, user_samples1.tolist())  
         assert any("is odd" in str(warning.message) for warning in w)
 
 
@@ -127,9 +128,9 @@ def test_dame_with_binary_search_invalid_m_not_int():
     delta = 0.1
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     with pytest.raises(ValueError, match=f"m must be a positive integer"):
-        dame_with_binary_search(n, alpha, "a", user_samples)
+        dame_with_binary_search(n, alpha, "a", user_samples.tolist())
 
 
 
@@ -143,9 +144,9 @@ def test_dame_with_binary_search_invalid_m_negative():
     n = 5000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     with pytest.raises(ValueError, match="m must be a positive integer"):
-        dame_with_binary_search(n, alpha, -m, user_samples)
+        dame_with_binary_search(n, alpha, -m, user_samples.tolist())
 
 
 
@@ -159,12 +160,26 @@ def test_binary_search_warns_about_smaller_m():
     n = 5000
     m = 6
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        result = dame_with_binary_search(n, alpha, m, user_samples)  
+        result = dame_with_binary_search(n, alpha, m, user_samples.tolist())  
         assert any("is below the recommended minimum 7" in str(warning.message) for warning in w)
     
+
+def test_incorrect_input_rng():
+    """
+    Check that ValueError is raised if data is not in [-1,1].
+    """
+    np.random.seed(42)
+    alpha = 0.6
+    n = 5000
+    m = 20
+    true_mean = 0.3
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
+    samples = 2*user_samples
+    with pytest.raises(ValueError, match=f"All entries must lie in"):
+        dame_with_binary_search(n, alpha, m, samples.tolist())
 
 
 ###########################################################################################
@@ -178,8 +193,8 @@ def test_dame_with_binary_search_output_range():
     n = 5000
     m = 20
     true_mean = 0.5
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    estimate = dame_with_binary_search(n, alpha, m, user_samples)
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
+    estimate = dame_with_binary_search(n, alpha, m, user_samples.tolist())
     assert isinstance(estimate, float)
     assert -1 <= estimate <= 1
 
@@ -195,10 +210,10 @@ def test_dame_with_binary_search_no_noise():
     n=9000
     m = 20
     true_mean = 0.3
-    user_samples = [np.random.normal(loc=true_mean, scale=0.5, size=m) for _ in range(n)]
-    estimated_mean=dame_with_binary_search(n, alpha, m, user_samples)
+    user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
+    estimated_mean=dame_with_binary_search(n, alpha, m, user_samples.tolist())
     assert -1 <= estimated_mean <= 1, f"Estimated mean {estimated_mean} not in interval [-1,1]"
-    assert np.abs(estimated_mean-true_mean)**2<= 1e-3, f"Estimated mean and true mean are not close."
+    assert np.abs(estimated_mean-true_mean_scaled)**2<= 1e-3, f"Estimated mean and true mean are not close."
     
 
 
@@ -215,3 +230,13 @@ def test_dame_on_constant_data_inf_alpha():
     user_samples = [np.full(m, c) for _ in range(n)]
     est = dame_with_binary_search(n, np.inf, m, user_samples)
     assert abs(est - c) < 1e-3
+
+def test_output_range_and_type():
+    """Estimated mean should lie in [-1,1]"""
+    np.random.seed(42)
+    X,_ = generate_univariate_scaled_data("normal",1000,10,0.1)
+    theta_hat = dame_with_binary_search(1000, 0.5, 10, X.tolist())
+    assert isinstance(theta_hat, float)
+    assert -1 <= theta_hat <= 1
+
+

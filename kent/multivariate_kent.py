@@ -28,30 +28,40 @@ def kent_multivariate_estimator(X, alpha, K=1.0):
     if not isinstance(X, np.ndarray) or X.ndim != 3:
         raise ValueError("X must be a 3D numpy array of shape (n, T, d)")
     n, T, d = X.shape
+
+    if n < (2*d):
+        warnings.warn(
+            f"n = {n} is less than 2*d = {2*d}. Not enough data for localization or estimation of all coordinates; returning zero vector."
+        )
+        return np.zeros(d)
     
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
     # check n is a multiple of 2d
-    if n%2*d != 0:
-        n_new = ((n + 2*d - 1) // (2*d)) * (2*d)
+    if n%(2*d) != 0:
+        n_new=n-(n%(2*d))
         X = X[:n_new]
         n = n_new
         warnings.warn(f"n = {n} was not a multiple of 2d = {2*d}. Adjusting number of users to the nearest lower multiple of 2d = {n_new}.")
     if not isinstance(K, (int, float)) or K <= 0:
         raise ValueError("K must be a positive number")
-    if not isinstance(T, int) or T <= 0:
-        raise ValueError("Number of samples must be a positive integer")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
         raise ValueError("alpha must be a positive number")
     if not isinstance(X, (list, tuple,np.ndarray)) or len(X) != n:
         raise ValueError(f"user_samples must be a list of length {n}")
     if not np.all((X >= -1) & (X <= 1)):
         raise ValueError("All entries of X must lie in [-1, 1]")
+    
 
 
     for i, sample in enumerate(X):
         if not hasattr(sample, '__len__') or len(sample) != T:
             raise ValueError(f"Each user sample must be an array-like of length {T}")
+
+    if alpha == np.inf: 
+        mu = X.mean(axis=(0, 1))  # shape (d,)
+        # clip to [-1,1] in each coordinate
+        return np.clip(mu, -1, 1)
 
     # to prevent overflow, checking if arg is very high
     LOG_MAX = np.log(np.finfo(float).max)  
@@ -113,6 +123,7 @@ def kent_multivariate_estimator(X, alpha, K=1.0):
             theta_proj = np.clip(theta_i_j, Lj_tilde, Uj_tilde)
             noise = (14 * delta / alpha) * laplace.rvs()
             theta_hat_i_j = theta_proj + noise
+            theta_hat_i_j = max(-1, min(1, theta_hat_i_j))
             theta_hat_j_refined.append(theta_hat_i_j)
 
         theta_hat_final[j] = np.mean(theta_hat_j_refined)

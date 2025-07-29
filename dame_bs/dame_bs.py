@@ -42,6 +42,20 @@ def dame_with_binary_search(n, alpha, m, user_samples):
     for i, sample in enumerate(user_samples):
         if not hasattr(sample, '__len__') or len(sample) != m:
             raise ValueError(f"Each user sample must be an array-like of length {m}")
+    
+    if isinstance(user_samples, np.ndarray):
+        # fast path for arrays
+        if not np.all((user_samples >= -1) & (user_samples <= 1)):
+            raise ValueError("All entries must lie in [-1, 1]")
+    else:
+        # if it is a list
+        for i, row in enumerate(user_samples):
+            # converting each row to array for convenience
+            arr = np.asarray(row)
+            if arr.size == 0:
+                continue
+            if arr.min() < -1 or arr.max() > 1:
+                raise ValueError(f"All entries must lie in [-1, 1].Entry at index {i} contains values outside [-1,1]")
         
     # check m is greater than or equal to 7
     if m< 7:
