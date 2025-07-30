@@ -289,6 +289,7 @@
 
     <span class="k">if</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for alpha = </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1"># Running both algorithms</span>
             <span class="n">mean_kent</span><span class="p">,</span> <span class="n">std_kent</span><span class="p">,</span> <span class="n">mean_dame</span><span class="p">,</span> <span class="n">std_dame</span> <span class="o">=</span> <span class="n">compare_multivariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 
@@ -299,6 +300,7 @@
         
     <span class="k">elif</span> <span class="n">param_to_vary</span><span class="o">==</span><span class="s2">&quot;n&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1"># Running both algorithms</span>
             <span class="n">mean_kent</span><span class="p">,</span> <span class="n">std_kent</span><span class="p">,</span> <span class="n">mean_dame</span><span class="p">,</span> <span class="n">std_dame</span> <span class="o">=</span> <span class="n">compare_multivariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 
@@ -310,6 +312,7 @@
     <span class="k">elif</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
             <span class="c1"># Running both algorithms</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for d = </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">true_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span><span class="o">*</span><span class="n">d</span> <span class="c1"># each time dimension changes, true mean&#39;s dimension will also change </span>
             <span class="n">mean_kent</span><span class="p">,</span> <span class="n">std_kent</span><span class="p">,</span> <span class="n">mean_dame</span><span class="p">,</span> <span class="n">std_dame</span> <span class="o">=</span> <span class="n">compare_multivariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 
@@ -320,7 +323,9 @@
     
     <span class="k">elif</span> <span class="n">param_to_vary</span><span class="o">==</span><span class="s2">&quot;m&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1"># Running both algorithms</span>
+            
             <span class="n">mean_kent</span><span class="p">,</span> <span class="n">std_kent</span><span class="p">,</span> <span class="n">mean_dame</span><span class="p">,</span> <span class="n">std_dame</span> <span class="o">=</span> <span class="n">compare_multivariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 
             <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>

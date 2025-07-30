@@ -63,6 +63,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#univariate-case">Univariate case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multivariate-case">Multivariate case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-world-data">Real World Data</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
@@ -351,7 +353,27 @@ estimated mean and the scaled true mean across 50 trials.</p>
 <a class="reference internal image-reference" href="_images/mse_vs_n_univariate.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/mse_vs_n_univariate.png" style="width: 600px;" />
 </a>
 <p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_m_univariate.png"><img alt="Mean Squared Error vs delta (tolerated failure probability of Binary Search) for the different distributions" class="align-center" src="_images/mse_vs_m_univariate.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/mse_vs_m_univariate.png"><img alt="MSE vs m for the different distributions" class="align-center" src="_images/mse_vs_m_univariate.png" style="width: 600px;" />
+</a>
+</section>
+<section id="multivariate-case">
+<h2>Multivariate case<a class="headerlink" href="#multivariate-case" title="Link to this heading"></a></h2>
+<p>Mean Squared Error vs privacy parameter alpha for the different distributions.</p>
+<a class="reference internal image-reference" href="_images/mse_vs_alpha_multivariate.png"><img alt="Mean Squared Error vs Alpha for the different distributions" class="align-center" src="_images/mse_vs_alpha_multivariate.png" style="width: 600px;" />
+</a>
+<p>Mean Squared Error vs n (total number of users) for the different distributions.</p>
+<a class="reference internal image-reference" href="_images/mse_vs_n_multivariate.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/mse_vs_n_multivariate.png" style="width: 600px;" />
+</a>
+<p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
+<a class="reference internal image-reference" href="_images/mse_vs_m_multivariate.png"><img alt="MSE vs m for the different distributions" class="align-center" src="_images/mse_vs_m_multivariate.png" style="width: 600px;" />
+</a>
+</section>
+<section id="real-world-data">
+<h2>Real World Data<a class="headerlink" href="#real-world-data" title="Link to this heading"></a></h2>
+<p>We experimented mean estimation algorithm for estimating mean price of stocks data. We treated each stock as a user and used stocks price history
+as samples. We used 249 per stock and compared Kent’s algorithm and DAME-BS. Following are the time taken and mean squared errors between
+scaled values in range [-1,1] and on the true scale of prices.</p>
+<a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
 </a>
 </section>
 </section>
