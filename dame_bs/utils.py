@@ -76,7 +76,7 @@ def plot_errorbars(x_values, mean_errors_kent,mean_errors_dame_bs, std_errors_ke
         ylabel (str): Label for the y-axis.
         title (str): Title of the plot.
         plot_ub (Bool) : If true then plots theoretical upper bounds for dame_bs algorithm. Default is 'False'.
-        upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas'. Default is empty-list.
+        upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas`. Default is empty-list.
 
     Returns:
         None. Displays the plot using `matplotlib.pyplot`

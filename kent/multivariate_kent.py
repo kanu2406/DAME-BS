@@ -1,6 +1,5 @@
 import numpy as np
-from scipy.stats import laplace
-from kent.kent import partition_interval
+from kent.kent import kent_mean_estimator
 import warnings
 
 def kent_multivariate_estimator(X, alpha, K=1.0):
@@ -58,75 +57,21 @@ def kent_multivariate_estimator(X, alpha, K=1.0):
         if not hasattr(sample, '__len__') or len(sample) != T:
             raise ValueError(f"Each user sample must be an array-like of length {T}")
 
-    if alpha == np.inf: 
-        mu = X.mean(axis=(0, 1))  # shape (d,)
-        # clip to [-1,1] in each coordinate
-        return np.clip(mu, -1, 1)
-
-    # to prevent overflow, checking if arg is very high
-    LOG_MAX = np.log(np.finfo(float).max)  
-    arg = n * alpha**2 / (K * d)
-    arg_safe=min(LOG_MAX,arg)
-    T_star = min(T, int(np.exp(arg_safe)) + 1)
-    
-
-
-    delta = np.sqrt(2 * np.log(n * T_star * alpha**2 / d) / T_star)
-    
     half = n//2
     block = n//(2*d) # number of users per coordinate per phase
     
-    # Partition [-1, 1] into intervals of length ~2*delta
-    intervals = partition_interval(-1.0, 1.0, delta)
-   
-    # Dictionaries to store the estimated interval for each coordinate
-    k_star = {} 
-    Ik_bounds = {}
-
+    theta_hat = np.zeros(d)
     for j in range(d):
-        idx_loc = slice(j*block, (j+1)*block)      # first half of the block for localization
-        
-        V = np.zeros((len(X[idx_loc, :T_star, j]), len(intervals)), dtype=int)
-        for i in range(len(X[idx_loc, :T_star, j])):
+        idx_loc = slice(j * block, (j + 1) * block)
+        idx_est = slice(half + j * block, half + (j + 1) * block)
+        idx_loc_arr = np.arange(*idx_loc.indices(X.shape[0]))
+        idx_est_arr = np.arange(*idx_est.indices(X.shape[0]))
+        union_indices = np.concatenate([idx_loc_arr, idx_est_arr])
+        X_union_j = X[union_indices, :, j]
+        # Running Univariate Kent for each coordinate
+        theta_hat[j]=kent_mean_estimator(X_union_j, alpha, K=1.0)
 
-            # jth coordinate of empirical mean of T_star samples of ith user of the block
-            theta_hat_i_j = np.mean(X[idx_loc, :T_star, j][i]) 
-           
-            for k in range(len(intervals)):
-                # union of neighbor intervals
-                neigh = intervals[max(k-1,0):min(k+2,len(intervals))]
-                if any(L_i <= theta_hat_i_j < U_i for (L_i, U_i) in neigh):
-                    V[i,k] = 1
-        
-        p = np.exp(alpha/6)/(1 + np.exp(alpha/6))
-        U_rand = np.random.rand(len(X[idx_loc, :T_star, j]), len(intervals))
-        Ve = np.where(U_rand <= p, V, 1 - V)
-        
-        k_star[j] = np.argmax(Ve.sum(axis=0)) # index of interval with the most votes
-        Lj, Uj = intervals[k_star[j]]
-        Lj_tilde = Lj - 6 * delta
-        Uj_tilde = Uj + 6 * delta
-        Ik_bounds[j] = (Lj_tilde, Uj_tilde)
-    
 
-    theta_hat_final = np.zeros(d)
-    for j in range(d):
-        Lj_tilde, Uj_tilde = Ik_bounds[j]
-        idx_est = slice(half + j*block, half + (j+1)*block)  # second half for estimation
-
-        theta_hat_j_refined = []
-
-        for i in range(len(X[idx_est, :T_star, j])):
-            theta_i_j = np.mean(X[idx_est, :T_star, j][i])
-            
-            # Project onto extended interval and add Laplace noise
-            theta_proj = np.clip(theta_i_j, Lj_tilde, Uj_tilde)
-            noise = (14 * delta / alpha) * laplace.rvs()
-            theta_hat_i_j = theta_proj + noise
-            theta_hat_i_j = max(-1, min(1, theta_hat_i_j))
-            theta_hat_j_refined.append(theta_hat_i_j)
-
-        theta_hat_final[j] = np.mean(theta_hat_j_refined)
-
-    return theta_hat_final
+    # return theta_hat_final
+    return theta_hat
     

@@ -44,7 +44,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
 </ul>
 
         </div>
@@ -73,8 +74,7 @@
              
   <h1>Source code for kent.multivariate_kent</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">laplace</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kent.kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">partition_interval</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kent.kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">kent_mean_estimator</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <div class="viewcode-block" id="kent_multivariate_estimator">
@@ -134,77 +134,23 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;__len__&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">!=</span> <span class="n">T</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Each user sample must be an array-like of length </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">alpha</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span> 
-        <span class="n">mu</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># shape (d,)</span>
-        <span class="c1"># clip to [-1,1] in each coordinate</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># to prevent overflow, checking if arg is very high</span>
-    <span class="n">LOG_MAX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>  
-    <span class="n">arg</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
-    <span class="n">arg_safe</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">LOG_MAX</span><span class="p">,</span><span class="n">arg</span><span class="p">)</span>
-    <span class="n">T_star</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">arg_safe</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    
-
-
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">T_star</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">T_star</span><span class="p">)</span>
-    
     <span class="n">half</span> <span class="o">=</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span>
     <span class="n">block</span> <span class="o">=</span> <span class="n">n</span><span class="o">//</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="c1"># number of users per coordinate per phase</span>
     
-    <span class="c1"># Partition [-1, 1] into intervals of length ~2*delta</span>
-    <span class="n">intervals</span> <span class="o">=</span> <span class="n">partition_interval</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
-   
-    <span class="c1"># Dictionaries to store the estimated interval for each coordinate</span>
-    <span class="n">k_star</span> <span class="o">=</span> <span class="p">{}</span> 
-    <span class="n">Ik_bounds</span> <span class="o">=</span> <span class="p">{}</span>
-
+    <span class="n">theta_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="n">idx_loc</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block</span><span class="p">)</span>      <span class="c1"># first half of the block for localization</span>
-        
-        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_loc</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_loc</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">])):</span>
+        <span class="n">idx_loc</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">block</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">block</span><span class="p">)</span>
+        <span class="n">idx_est</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">half</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">block</span><span class="p">,</span> <span class="n">half</span> <span class="o">+</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">block</span><span class="p">)</span>
+        <span class="n">idx_loc_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">idx_loc</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">idx_est_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">idx_est</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">union_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">idx_loc_arr</span><span class="p">,</span> <span class="n">idx_est_arr</span><span class="p">])</span>
+        <span class="n">X_union_j</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">union_indices</span><span class="p">,</span> <span class="p">:,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="c1"># Running Univariate Kent for each coordinate</span>
+        <span class="n">theta_hat</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">kent_mean_estimator</span><span class="p">(</span><span class="n">X_union_j</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
-            <span class="c1"># jth coordinate of empirical mean of T_star samples of ith user of the block</span>
-            <span class="n">theta_hat_i_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_loc</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> 
-           
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)):</span>
-                <span class="c1"># union of neighbor intervals</span>
-                <span class="n">neigh</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="nb">min</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">))]</span>
-                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">L_i</span> <span class="o">&lt;=</span> <span class="n">theta_hat_i_j</span> <span class="o">&lt;</span> <span class="n">U_i</span> <span class="k">for</span> <span class="p">(</span><span class="n">L_i</span><span class="p">,</span> <span class="n">U_i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">neigh</span><span class="p">):</span>
-                    <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        
-        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">6</span><span class="p">))</span>
-        <span class="n">U_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_loc</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">))</span>
-        <span class="n">Ve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">U_rand</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">V</span><span class="p">)</span>
-        
-        <span class="n">k_star</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">Ve</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="c1"># index of interval with the most votes</span>
-        <span class="n">Lj</span><span class="p">,</span> <span class="n">Uj</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="n">k_star</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
-        <span class="n">Lj_tilde</span> <span class="o">=</span> <span class="n">Lj</span> <span class="o">-</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">delta</span>
-        <span class="n">Uj_tilde</span> <span class="o">=</span> <span class="n">Uj</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">delta</span>
-        <span class="n">Ik_bounds</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Lj_tilde</span><span class="p">,</span> <span class="n">Uj_tilde</span><span class="p">)</span>
-    
 
-    <span class="n">theta_hat_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="n">Lj_tilde</span><span class="p">,</span> <span class="n">Uj_tilde</span> <span class="o">=</span> <span class="n">Ik_bounds</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-        <span class="n">idx_est</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">half</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="p">,</span> <span class="n">half</span> <span class="o">+</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">block</span><span class="p">)</span>  <span class="c1"># second half for estimation</span>
-
-        <span class="n">theta_hat_j_refined</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_est</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">])):</span>
-            <span class="n">theta_i_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx_est</span><span class="p">,</span> <span class="p">:</span><span class="n">T_star</span><span class="p">,</span> <span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
-            
-            <span class="c1"># Project onto extended interval and add Laplace noise</span>
-            <span class="n">theta_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">theta_i_j</span><span class="p">,</span> <span class="n">Lj_tilde</span><span class="p">,</span> <span class="n">Uj_tilde</span><span class="p">)</span>
-            <span class="n">noise</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">laplace</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
-            <span class="n">theta_hat_i_j</span> <span class="o">=</span> <span class="n">theta_proj</span> <span class="o">+</span> <span class="n">noise</span>
-            <span class="n">theta_hat_i_j</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta_hat_i_j</span><span class="p">))</span>
-            <span class="n">theta_hat_j_refined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta_hat_i_j</span><span class="p">)</span>
-
-        <span class="n">theta_hat_final</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">theta_hat_j_refined</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">theta_hat_final</span></div>
+    <span class="c1"># return theta_hat_final</span>
+    <span class="k">return</span> <span class="n">theta_hat</span></div>
 
     
 </pre></div>

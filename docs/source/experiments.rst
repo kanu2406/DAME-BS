@@ -51,7 +51,42 @@ Mean Squared Error vs n (total number of users) for the different distributions.
 Mean Squared Error vs m (number of samples per user) for the different distributions.
 
 .. image:: ../figures/mse_vs_m_univariate.png
-   :alt: Mean Squared Error vs delta (tolerated failure probability of Binary Search) for the different distributions
+   :alt: MSE vs m for the different distributions
    :align: center
    :width: 600px
 
+Multivariate case
+-----------------
+
+Mean Squared Error vs privacy parameter alpha for the different distributions.
+
+.. image:: ../figures/mse_vs_alpha_multivariate.png
+   :alt: Mean Squared Error vs Alpha for the different distributions
+   :align: center
+   :width: 600px
+
+Mean Squared Error vs n (total number of users) for the different distributions.
+
+.. image:: ../figures/mse_vs_n_multivariate.png
+   :alt: Mean Squared Error vs n (total number of users) for the different distributions
+   :align: center
+   :width: 600px
+
+Mean Squared Error vs m (number of samples per user) for the different distributions.
+
+.. image:: ../figures/mse_vs_m_multivariate.png
+   :alt: MSE vs m for the different distributions
+   :align: center
+   :width: 600px
+
+Real World Data 
+---------------
+
+We experimented mean estimation algorithm for estimating mean price of stocks data. We treated each stock as a user and used stocks price history 
+as samples. We used 249 per stock and compared Kent's algorithm and DAME-BS. Following are the time taken and mean squared errors between 
+scaled values in range [-1,1] and on the true scale of prices.
+
+.. image:: ../figures/Stocks_Data_Result.png
+   :alt: MSE for DAME-BS and Kent
+   :align: center
+   :width: 600px

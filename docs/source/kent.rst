@@ -1,5 +1,5 @@
 Kent's Algorithm 
-============
+================
 
 - The **kent** package implements Kent's locally differentially private mean estimation algorithms,including both univariate and multivariate variants. 
 - The **`kent.kent`** module provides the univariate LDP mean estimator based on interval partitioning and private voting. 

@@ -206,6 +206,7 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
 
     if param_to_vary == "alpha":
         for alpha in param_values:
+            print(f"Running algorithms for alpha = {alpha}")
             # Running both algorithms
             mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
@@ -216,6 +217,7 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
         
     elif param_to_vary=="n":
         for n in param_values:
+            print(f"Running algorithms for n = {n}")
             # Running both algorithms
             mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
@@ -227,6 +229,7 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
     elif param_to_vary == "d":
         for d in param_values:
             # Running both algorithms
+            print(f"Running algorithms for d = {d}")
             true_mean = [0.1]*d # each time dimension changes, true mean's dimension will also change 
             mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
@@ -237,7 +240,9 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
     
     elif param_to_vary=="m":
         for m in param_values:
+            print(f"Running algorithms for m = {m}")
             # Running both algorithms
+            
             mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
             mean_errors_kent.append(mean_kent)
