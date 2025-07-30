@@ -4,7 +4,7 @@
 
 This repository provides a Python implementation of the **DAME-BS** algorithm for locally differentially private mean estimation using binary search. It includes theoretical upper bounds and experiments across multiple distributions.
 
-### Documentation
+## Documentation
 
 The documentation can be found here -
 
@@ -13,7 +13,7 @@ https://kanu2406.github.io/DAME-BS/
 
 ---
 
-### Requirements
+## Requirements
 
 ```python
 numpy>=1.12
@@ -33,7 +33,7 @@ All dependencies are listed in requirements.txt.
 pip install -r requirements.txt
 ```
 
-### Installation
+## Installation
 Clone the repository:
 
 ```bash
@@ -41,14 +41,14 @@ git clone https://github.com/kanu2406/DAME-BS.git
 cd DAME-BS
 ```
 
-### Experiments
+## Experiments
 You can run the included experiments to replicate results by directly running the file named `run_experiments.py`:
 
 ```python
 python experiments/run_experiments.py
 ```
 
-### Basic Example
+## Basic Example
 
 ```python
 import numpy as np
@@ -79,44 +79,41 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ```
 
-### Results
+## Results
 
-#### Univariate Case
+### Univariate Case
 
 Following plots compares of dame_bs and Kent's algorithm by displaying mean squared error changes with different parameters like 𝛼,n or m for univariate case.
 
-Mean squared error vs alpha (privacy parameter)
------------------------------------------------
+#### Mean squared error vs alpha (privacy parameter)
 
 <p align="center"><img src="docs/figures/mse_vs_alpha_univariate.png" alt="risk_vs_alpha" style="width:400px;"/></p>
 
 
 
-Mean squared error vs n (number of users)
------------------------------------------
+#### Mean squared error vs n (number of users)
 
 <p align="center"><img src="docs/figures/mse_vs_n_univariate.png" alt="risk_vs_n" style="width:400px;"/></p>
 
 
 
-Mean squared error vs m (number of samples per user)
-----------------------------------------------------
+#### Mean squared error vs m (number of samples per user)
 
 <p align="center"><img src="docs/figures/mse_vs_m_univariate.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/></p>
 
-#### Multivariate Case
+### Multivariate Case
 
 Following plots compares of dame_bs and Kent's algorithm by displaying mean squared error changes with different parameters like 𝛼,n or m for multivariate case.
 
-Mean squared error vs alpha (privacy parameter)
------------------------------------------------
+#### Mean squared error vs alpha (privacy parameter)
+
 
 <p align="center"><img src="docs/figures/mse_vs_alpha_multivariate.png" alt="risk_vs_alpha" style="width:400px;"/></p>
 
 
 
-Mean squared error vs n (number of users)
------------------------------------------
+#### Mean squared error vs n (number of users)
+
 
 <p align="center"><img src="docs/figures/mse_vs_n_multivariate.png" alt="risk_vs_n" style="width:400px;"/></p>
 
@@ -128,7 +125,7 @@ Mean squared error vs m (number of samples per user)
 <p align="center"><img src="docs/figures/mse_vs_m_multivariate.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/></p>
 
 
-### License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 
