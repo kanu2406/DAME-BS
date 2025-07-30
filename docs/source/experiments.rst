@@ -82,9 +82,11 @@ Mean Squared Error vs m (number of samples per user) for the different distribut
 Real World Data 
 ---------------
 
-We experimented mean estimation algorithm for estimating mean price of stocks data. We treated each stock as a user and used stocks price history 
-as samples. We used 249 per stock and compared Kent's algorithm and DAME-BS. Following are the time taken and mean squared errors between 
-scaled values in range [-1,1] and on the true scale of prices.
+We conducted experiments using a mean estimation algorithm to estimate the average price of stock data. 
+In our setup, each stock was considered as a separate user, and its price history served as the sample data. 
+For each stock, we used 249 data points and compared the performance of Kent's algorithm with DAME-BS. 
+The results below show the computation time and mean squared errors, both for scaled prices within the 
+range [-1, 1] and for the actual price scale.
 
 .. image:: ../figures/Stocks_Data_Result.png
    :alt: MSE for DAME-BS and Kent

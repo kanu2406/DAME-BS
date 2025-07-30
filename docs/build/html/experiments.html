@@ -370,9 +370,11 @@ estimated mean and the scaled true mean across 50 trials.</p>
 </section>
 <section id="real-world-data">
 <h2>Real World Data<a class="headerlink" href="#real-world-data" title="Link to this heading"></a></h2>
-<p>We experimented mean estimation algorithm for estimating mean price of stocks data. We treated each stock as a user and used stocks price history
-as samples. We used 249 per stock and compared Kent’s algorithm and DAME-BS. Following are the time taken and mean squared errors between
-scaled values in range [-1,1] and on the true scale of prices.</p>
+<p>We conducted experiments using a mean estimation algorithm to estimate the average price of stock data.
+In our setup, each stock was considered as a separate user, and its price history served as the sample data.
+For each stock, we used 249 data points and compared the performance of Kent’s algorithm with DAME-BS.
+The results below show the computation time and mean squared errors, both for scaled prices within the
+range [-1, 1] and for the actual price scale.</p>
 <a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
 </a>
 </section>
