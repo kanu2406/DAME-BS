@@ -83,7 +83,7 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ### Univariate Case
 
-Following plots compares of dame_bs and Kent's algorithm by displaying mean squared error changes with different parameters like 𝛼,n or m for univariate case.
+Following plots compares of dame_bs and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for univariate case.
 
 #### Mean squared error vs alpha (privacy parameter)
 
@@ -103,7 +103,7 @@ Following plots compares of dame_bs and Kent's algorithm by displaying mean squa
 
 ### Multivariate Case
 
-Following plots compares of dame_bs and Kent's algorithm by displaying mean squared error changes with different parameters like 𝛼,n or m for multivariate case.
+Following plots compares of dame_bs and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for multivariate case.
 
 #### Mean squared error vs alpha (privacy parameter)
 
