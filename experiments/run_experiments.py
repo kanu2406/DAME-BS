@@ -17,55 +17,55 @@ def main():
     d_values = list(range(2,200,20))
     true_mean = 0.3
     
-    # print("Running univariate experiments for different distributions for various alpha values.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="alpha",param_values=alpha_values,
-    #                                   n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
-    
-    # print("Running univariate experiments for different distributions for various values of n.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="n",param_values=n_values,
-    #                                   n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
-    
-    # print("Running univariate experiments for different distributions for various values of m.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="m",param_values=m_values,
-    #                                   n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
-        
-    
-    # print("Running multivariate experiments for different distributions for various alpha values.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="alpha",param_values=alpha_values,
-    #                                   n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
-        
-    # print("Running multivariate experiments for different distributions for various values of n.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="n",param_values=n_values,
-    #                                   n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
-    
-    # print("Running multivariate experiments for different distributions for various values of m.")
-    # print("------------------------------------------------------------------------------------")
-    # for dist in distributions:
-    #     print(f"\n Running experiment for distribution: {dist}")
-    #     experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="m",param_values=m_values,
-    #                                   n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
-    
-    print("Running univariate experiments for different distributions for various values of d.")
+    print("Running univariate experiments for different distributions for various alpha values.")
     print("------------------------------------------------------------------------------------")
     for dist in distributions:
         print(f"\n Running experiment for distribution: {dist}")
-        experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="d",param_values=d_values,
-                                      n=80000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
+        experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="alpha",param_values=alpha_values,
+                                      n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
+    
+    print("Running univariate experiments for different distributions for various values of n.")
+    print("------------------------------------------------------------------------------------")
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="n",param_values=n_values,
+                                      n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
+    
+    print("Running univariate experiments for different distributions for various values of m.")
+    print("------------------------------------------------------------------------------------")
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_param_for_dist_univariate(dist,param_to_vary="m",param_values=m_values,
+                                      n=8000,m=20,alpha=0.6,true_mean=true_mean,trials=50)
+        
+    
+    print("Running multivariate experiments for different distributions for various alpha values.")
+    print("------------------------------------------------------------------------------------")
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="alpha",param_values=alpha_values,
+                                      n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
+        
+    print("Running multivariate experiments for different distributions for various values of n.")
+    print("------------------------------------------------------------------------------------")
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="n",param_values=n_values,
+                                      n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
+    
+    print("Running multivariate experiments for different distributions for various values of m.")
+    print("------------------------------------------------------------------------------------")
+    for dist in distributions:
+        print(f"\n Running experiment for distribution: {dist}")
+        experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="m",param_values=m_values,
+                                      n=8000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
+    
+    # print("Running univariate experiments for different distributions for various values of d.")
+    # print("------------------------------------------------------------------------------------")
+    # for dist in distributions:
+    #     print(f"\n Running experiment for distribution: {dist}")
+    #     experiment_risk_vs_param_for_dist_multivariate(dist,param_to_vary="d",param_values=d_values,
+    #                                   n=80000,m=20,d=4,alpha=0.6,true_mean=[0.1]*4,trials=50)
     
 
 if __name__ == "__main__":
