@@ -87,7 +87,7 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 
 #### Mean squared error vs alpha (privacy parameter)
 
-<p align="center"><img src="docs/figures/mse_vs_alpha_univariate.png" alt="risk_vs_alpha" style="width:400px;"/></p>
+<p align="center"><img src="docs/figures/mse_vs_alpha_univariate.png" alt="risk_vs_alpha" style="width:800px;"/></p>
 
 
 
@@ -115,14 +115,13 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 #### Mean squared error vs n (number of users)
 
 
-<p align="center"><img src="docs/figures/mse_vs_n_multivariate.png" alt="risk_vs_n" style="width:400px;"/></p>
+<p align="center"><img src="docs/figures/mse_vs_n_multivariate.png" alt="risk_vs_n" style="width:800px;"/></p>
 
 
 
-Mean squared error vs m (number of samples per user)
-----------------------------------------------------
+#### Mean squared error vs m (number of samples per user)
 
-<p align="center"><img src="docs/figures/mse_vs_m_multivariate.png" alt="risk_vs_n_diff_alpha" style="width:400px;"/></p>
+<p align="center"><img src="docs/figures/mse_vs_m_multivariate.png" alt="risk_vs_n_diff_alpha" style="width:800px;"/></p>
 
 
 ## License
