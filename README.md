@@ -119,8 +119,7 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 
 
 
-Mean squared error vs m (number of samples per user)
-----------------------------------------------------
+#### Mean squared error vs m (number of samples per user)
 
 <p align="center"><img src="docs/figures/mse_vs_m_multivariate.png" alt="risk_vs_n_diff_alpha" style="width:800px;"/></p>
 
