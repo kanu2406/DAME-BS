@@ -31,10 +31,10 @@ def test_estimate_within_error_and_bound():
     m = 20
     alpha = 0.6
 
-    mean_dame,_,_,_= compare_univariate_algorithms(n,m,alpha,"normal",true_mean,trials=50)
+    median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,"normal",true_mean,trials=50)
     # Theoretical bound check
     theoretical_bound = theoretical_upper_bound(alpha, n, m)  
-    assert mean_dame <= theoretical_bound, f"Error {mean_dame:.4f} exceeds theoretical bound {theoretical_bound:.4f}"
+    assert median_dame <= theoretical_bound, f"Error {median_dame:.4f} exceeds theoretical bound {theoretical_bound:.4f}"
 
 #############################################################################################
 
@@ -49,10 +49,10 @@ def test_theoretical_bound_no_noise():
     m = 20
     true_mean = 0.3
     
-    mean_dame,_,_,_= compare_univariate_algorithms(n,m,alpha,"normal",true_mean,trials=50)
+    median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,"normal",true_mean,trials=50)
     theoretical_bound=theoretical_upper_bound(alpha, n, m)
     print(theoretical_bound)
-    assert mean_dame < 1e-4, f"Error is unexpectedly high without privacy: {mean_dame:.6f}"
+    assert median_dame < 1e-4, f"Error is unexpectedly high without privacy: {median_dame:.6f}"
     assert theoretical_bound == 32*n*np.exp(-n/2),f"Theoretical Upper bound still contains error due to noise"
 
 ##################################################################################################
@@ -101,27 +101,33 @@ def test_plot_errorbars_runs(monkeypatch):
     true_mean = 0.3
     n = 9000
     m = 20
-    mean_errors_kent = []
-    std_errors_kent = []
-    mean_errors_dame = []
-    std_errors_dame = []
+    median_errors_dame = []
+    lower_errors_dame = []
+    upper_errors_dame = []
+    median_errors_kent = []
+    lower_errors_kent = []
+    upper_errors_kent = []
     alphas=np.linspace(0.1, 1.0, 3)
     distribution="normal"
 
     for alpha in alphas:
         
         
-        mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
+        median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=10)
             
-        mean_errors_kent.append(mean_kent)
-        std_errors_kent.append(std_kent)
-        mean_errors_dame.append(mean_dame)
-        std_errors_dame.append(std_dame)
+        median_errors_dame.append(median_dame)
+        lower_errors_dame.append(lower_dame)
+        upper_errors_dame.append(upper_dame)
+        median_errors_kent.append(median_kent)
+        lower_errors_kent.append(lower_kent)
+        upper_errors_kent.append(upper_kent)
 
-    plot_errorbars(alphas, mean_errors_kent,mean_errors_dame, std_errors_kent,
-                   std_errors_dame, "Privacy parameter α", ylabel="Mean Squared Error", 
-                   title=f"Mean Squared Error vs Alpha for the {distribution} distribution",
+    
+    plot_errorbars(alphas, median_errors_kent,median_errors_dame, lower_errors_kent,
+                   lower_errors_dame,upper_errors_kent, upper_errors_dame, "Privacy parameter α", 
+                   ylabel="Mean Squared Error", title=f"Mean Squared Error vs Alpha for the {distribution} distribution",
                    log_scale=True,plot_ub=False,upper_bounds=None)
+    
 
 
 
@@ -137,28 +143,35 @@ def test_plot_errorbars_runs_with_ub(monkeypatch):
     true_mean = 0.3
     n = 9000
     m = 20
-    mean_errors_kent = []
-    std_errors_kent = []
-    mean_errors_dame = []
-    std_errors_dame = []
+    median_errors_dame = []
+    lower_errors_dame = []
+    upper_errors_dame = []
+    median_errors_kent = []
+    lower_errors_kent = []
+    upper_errors_kent = []
     alphas=np.linspace(0.1, 1.0, 3)
     distribution="normal"
 
     for alpha in alphas:
         
         
-        mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
+        median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=10)
             
-        mean_errors_kent.append(mean_kent)
-        std_errors_kent.append(std_kent)
-        mean_errors_dame.append(mean_dame)
-        std_errors_dame.append(std_dame)
+        median_errors_dame.append(median_dame)
+        lower_errors_dame.append(lower_dame)
+        upper_errors_dame.append(upper_dame)
+        median_errors_kent.append(median_kent)
+        lower_errors_kent.append(lower_kent)
+        upper_errors_kent.append(upper_kent)
+
+    
     
     upper_bounds = [theoretical_upper_bound(alpha, n, m) for alpha in alphas]
 
-    plot_errorbars(alphas, mean_errors_kent,mean_errors_dame, std_errors_kent,
-                   std_errors_dame, "Privacy parameter α", ylabel="Mean Squared Error", 
-                   title=f"Mean Squared Error vs Alpha for the {distribution} distribution",
-                   log_scale=True,plot_ub=True,upper_bounds=upper_bounds)
+    plot_errorbars(alphas, median_errors_kent,median_errors_dame, lower_errors_kent,
+                   lower_errors_dame,upper_errors_kent, upper_errors_dame, "Privacy parameter α", 
+                   ylabel="Mean Squared Error", title=f"Mean Squared Error vs Alpha for the {distribution} distribution",
+                   log_scale=True,plot_ub=False,upper_bounds=upper_bounds)
+    
 
 
