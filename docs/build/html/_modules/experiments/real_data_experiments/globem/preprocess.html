@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>experiments.real_data_experiments.globem.preprocess &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">experiments.real_data_experiments.globem.preprocess</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for experiments.real_data_experiments.globem.preprocess</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<div class="viewcode-block" id="load_and_select_steps">
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_steps">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_and_select_steps</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load and preprocess step count data from a CSV file containing steps data of users.</span>
+<span class="sd">    This function reads the Fitbit intraday step data and selects only relevant columns: </span>
+<span class="sd">    participant ID (`pid`), date, and the sum of steps for each time segment of the day</span>
+<span class="sd">    (morning, afternoon, evening, night). It then renames those columns for readability.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to the CSV file containing the step data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        A DataFrame with columns: &#39;pid&#39;, &#39;date&#39;, &#39;steps_morning&#39;, </span>
+<span class="sd">        &#39;steps_afternoon&#39;, &#39;steps_evening&#39;, and &#39;steps_night&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+    <span class="c1"># picking the columns that end with one of our segments</span>
+    <span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;morning&#39;</span><span class="p">,</span> <span class="s1">&#39;afternoon&#39;</span><span class="p">,</span> <span class="s1">&#39;evening&#39;</span><span class="p">,</span> <span class="s1">&#39;night&#39;</span><span class="p">]</span>
+    <span class="n">seg_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;f_steps:fitbit_steps_intraday_rapids_sumsteps:</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">)]</span>
+
+    <span class="c1"># keep pid, date, + those columns</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;pid&#39;</span><span class="p">,</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">seg_cols</span><span class="p">]</span>
+
+    <span class="c1"># rename each sum‑col to something like &#39;steps_morning&#39;</span>
+    <span class="n">rename_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">c</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;steps_</span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">seg_cols</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">rename_map</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="truncating_data">
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.truncating_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">truncating_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Truncates each user&#39;s data to the same number of samples (minimum length among all users),</span>
+<span class="sd">    after shuffling their individual sample lists.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : dict</span>
+<span class="sd">        Dictionary where keys are user IDs and values are lists of numeric samples.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    </span>
+<span class="sd">        - dict: Truncated dictionary of user samples with uniform length.</span>
+<span class="sd">        - int: Number of samples per user after truncation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Counting minimum number of samples for all users</span>
+    <span class="n">pid_counts</span> <span class="o">=</span> <span class="p">{</span> <span class="n">pid</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">}</span>
+    <span class="n">desired_length</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">pid_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Each user will have a sample length of : &quot;</span><span class="p">,</span><span class="n">desired_length</span><span class="p">)</span>
+    <span class="n">data_final</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">desired_length</span><span class="p">:</span>
+            <span class="n">vals_copy</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">vals_copy</span><span class="p">)</span>
+            <span class="n">data_final</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals_copy</span><span class="p">[:</span><span class="n">desired_length</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">data_final</span><span class="p">,</span><span class="n">desired_length</span></div>
+
+
+
+<div class="viewcode-block" id="scaling">
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.scaling">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scaling</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scales user sample data to the range [-1, 1] and computes the mean before and after scaling.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : dict</span>
+<span class="sd">        Dictionary where keys are user IDs and values are lists of numeric samples.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    </span>
+<span class="sd">        - user_samples_scaled : list of list </span>
+<span class="sd">                Scaled user samples.</span>
+<span class="sd">        - min_val : float </span>
+<span class="sd">                Minimum value before scaling.</span>
+<span class="sd">        - max_val : float </span>
+<span class="sd">                Maximum value before scaling.</span>
+<span class="sd">        - true_mean : float </span>
+<span class="sd">                True mean before scaling.</span>
+<span class="sd">        - true_mean_scaled : float</span>
+<span class="sd">                True mean after scaling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">user_samples_scaled</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+    <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
+    <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
+    <span class="n">true_mean</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean: &quot;</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">vals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vals</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">user_samples_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scaled</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    
+    <span class="n">all_vals_scaled</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">user_samples_scaled</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
+    <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_vals_scaled</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">user_samples_scaled</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span><span class="n">max_val</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">true_mean_scaled</span></div>
+
+
+
+<div class="viewcode-block" id="load_and_select_sleep">
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_and_select_sleep</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load and preprocess sleep duration data from a CSV file.</span>
+<span class="sd">    This function reads Fitbit sleep data and selects only the participant ID (`pid`),</span>
+<span class="sd">    date, and total duration of sleep (main sleep) for the day.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to the CSV file containing the sleep data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        A DataFrame with columns: &#39;pid&#39;, &#39;date&#39;, and &#39;sleep_duration&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;pid&#39;</span><span class="p">,</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;f_slp:fitbit_sleep_summary_rapids_sumdurationasleepmain:allday&#39;</span><span class="p">]]</span>
+    <span class="n">rename_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;f_slp:fitbit_sleep_summary_rapids_sumdurationasleepmain:allday&#39;</span><span class="p">:</span> <span class="s1">&#39;sleep_duration&#39;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">rename_map</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

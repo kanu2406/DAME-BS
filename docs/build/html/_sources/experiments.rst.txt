@@ -40,13 +40,31 @@ Real Data : Stock Prices
 ------------------------
 
 
-.. automodule:: experiments.real_data_experiments.Stocks_Data.preprocess
+.. automodule:: experiments.real_data_experiments.stocks_data.preprocess
    :members:
    :show-inheritance:
    :undoc-members:
 
 
-.. automodule:: experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices
+.. automodule:: experiments.real_data_experiments.stocks_data.run_experiment_stock_prices
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Real Data : GLOBEM
+------------------
+
+.. automodule:: experiments.real_data_experiments.globem.preprocess
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+.. automodule:: experiments.real_data_experiments.globem.run_experiment_sleep
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+.. automodule:: experiments.real_data_experiments.globem.run_experiment_steps
    :members:
    :show-inheritance:
    :undoc-members:
@@ -109,6 +127,13 @@ Mean Squared Error vs m (number of samples per user) for the different distribut
    :align: center
    :width: 600px
 
+Mean Squared Error vs d (dimensionality of each sample) for the different distributions.
+
+.. image:: ../figures/mse_vs_d.png
+   :alt: MSE vs d for the different distributions
+   :align: center
+   :width: 600px
+
 Real World Data 
 ---------------
 
@@ -142,6 +167,38 @@ and average time taken by both algorithms. The results were limited in quality d
 and low number of samples per user.
 
 .. image:: ../figures/Stocks_Data_Result.png
+   :alt: MSE for DAME-BS and Kent
+   :align: center
+   :width: 600px
+
+
+GLOBEM Dataset
+--------------
+
+We conducted this experiment using GLOBEM Dataset which consists of data from a mobile phone and 
+a wearable fitness tracker 24×7, including Location, PhoneUsage, Call, Bluetooth, PhysicalActivity, 
+and Sleep behavior. The datasets capture various aspects of participants' life experiences, 
+such as general behavior patterns, the weekly routine cycle, the impact of COVID (Year3, 2020), and 
+the gradual recovery after COVID (Year4, 2021) (Dataset : `<https://github.com/UW-EXP/GLOBEM/tree/main/data_raw>`_).
+We used steps from four segments of the day and total sleep duration per day for each user.
+For both cases, we conducted mean estimation using DAME-BS and Kent's algorithm 500 times and report MSE (for both scaled and unscaled values)
+and average time taken by both algorithms. The results were limited in quality due to the small nummber of users 
+and low number of samples per user.
+
+
+For steps data, we had a total of 40 user with 88 samples per user. Here are the results for steps data - 
+
+
+.. image:: ../figures/steps_result.png
+   :alt: MSE for DAME-BS and Kent
+   :align: center
+   :width: 600px
+
+
+For sleep data, we had a total of 40 user with 15 samples per user. Here are the results for sleep data - 
+
+
+.. image:: ../figures/sleep_result.png
    :alt: MSE for DAME-BS and Kent
    :align: center
    :width: 600px

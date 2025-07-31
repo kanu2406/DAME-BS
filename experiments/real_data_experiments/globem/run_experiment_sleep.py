@@ -1,65 +1,81 @@
-import time
 import numpy as np
 import pandas as pd
-import sys,os
+import sys,os,random,time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..","..", "..")))
-from experiments.real_data_experiments.stocks_data.preprocess import load_and_clean_tickers,check_stationarity
-from experiments.real_data_experiments.stocks_data.preprocess import batch_download_close_prices,compute_log_returns
-from experiments.real_data_experiments.stocks_data.preprocess import filter_and_truncate,scale_series
-from experiments.real_data_experiments.stocks_data.preprocess import save_dict, load_dict
-from dame_bs.dame_bs import dame_with_binary_search
 from kent.kent import kent_mean_estimator
-np.random.seed(42)
-
+from dame_bs.dame_bs import dame_with_binary_search
+from experiments.real_data_experiments.globem.preprocess import load_and_select_sleep,truncating_data,scaling
 
 def main():
     """
-    This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
-    on real stock prives data from the yfinance.
+    Main experiment function for evaluating Kent's algorithm and DAME-BS 
+    on GLOBEM sleep duration data.
 
     Steps:
-        - Loads ticker symbols.
-        - Download available close prices of 1000 stocks using loaded tickers over the period of 1 year for each day.
-        - Computes the log returns and check for stationarity of time series.
-        - Filter out all the time series with Nan values and truncate them so each of them have same number of sample.
-        - Scaled the data in range [-1,1].
-        - Runs both algorithms across 500 trials.
-        - Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
-
+    -------
+        - Loads and concatenates multiple CSV files containing Fitbit-derived sleep duration.
+        - Handles missing data and prepares a uniform sample length across users.
+        - Scales the sleep duration values to the range [-1, 1].
+        - Runs both algorithms 500 times to estimate the mean and records time and accuracy.
+        - Reports mean squared error (MSE) in both scaled and original ranges, along with timing stats.
     """
-    print("Starting...")
-    # Fetching tickers symbols
-    tickers = load_and_clean_tickers(n=2000)
-    print("Loaded Tickers")
-    # downloading close prices of each ticker
-    prices = batch_download_close_prices(tickers)
-    print("Downloaded Stock Prices")
 
-    save_dict(prices, "experiments/Datasets/stock_data.pkl") #saving the data
-    # prices = load_dict("experiments/Datasets/stock_data.pkl")
+    # Loading Data
+    feature_dir = "experiments/Datasets/GLOBEM_Sleep"
+    files = [os.path.join(feature_dir, 'sleep_sample_1.csv'),os.path.join(feature_dir, 'sleep_sample_2.csv'),
+         os.path.join(feature_dir, 'sleep_sample_3.csv'),os.path.join(feature_dir, 'sleep_sample_4.csv')]
 
+    dfs = []
+    for path in files:
+        dfs.append(load_and_select_sleep(path))
+    # concatinating data from different files into one dataframe
+    df_all = pd.concat(dfs, axis=0, ignore_index=True)
+    df_all = df_all.sort_values(['pid','date']).reset_index(drop=True)
+    print("Loaded Data.")
+    print(df_all.shape)
+    print(df_all.head())
 
-    # Computing log returns to have stationarity
-    returns = compute_log_returns(prices)
-    print("Computed log returns")
-    # Checking stationarity
-    stat = check_stationarity(returns)
-    if stat==False:
-        print("Since all seires are not stationary, results might not be good.")
+    # count NaNs per column
+    nan_per_col = df_all.isna().sum()
+    print("Number of missing value per column : ",nan_per_col)
 
-    # Filtering series with Nan and truncating to have equal number of samples per  stock
-    truncated,min_length = filter_and_truncate(returns, min_samples=249)
+    # count NaNs per row
+    n_nan_rows = df_all.isna().any(axis=1).sum()
+    print("Rows with ≥1 NaN:", n_nan_rows)
+
+    # Grouping by pid
+    pid_and_sleep = {}
+    for pid, group in df_all.groupby('pid'):
+        arr = group['sleep_duration'].values
+        flat = arr.flatten().tolist()
+        pid_and_sleep[pid] = flat
+
+    # Removing NaNs from each user's list
+    pid_and_sleep_new = {
+        pid: [v for v in vals if not pd.isna(v)]
+        for pid, vals in pid_and_sleep.items()
+    }
+
+    # Truncating samples so that each user has same number of samples
+    pid_and_sleep_final,desired_length = truncating_data(pid_and_sleep_new)
     print("Truncation Done.")
-    # scaling all values to [-1,1]
-    scaled_returns,true_mean, true_mean_scaled,min_val,max_val = scale_series(truncated)
-    print("Scaling of returns in the range [-1,1] done.")
 
+    # Scaling data in the range [-1,1]
+    user_samples_scaled, min_val,max_val,true_mean,true_mean_scaled = scaling(pid_and_sleep_final)
+    print("Scaling Done.")
 
+    print("Total number of users", len(user_samples_scaled))
+    print("Number of samples per user : ",desired_length)
+    print(f"True mean : {true_mean:.3f}" )
+    print(f"True mean scaled : {true_mean_scaled:.3f}" )
+
+    random.shuffle(user_samples_scaled)
+    
     print("Running both algorithms 500 times")
-    n = len(scaled_returns)
-    m = min_length
+    n = len(user_samples_scaled)
+    m = desired_length
     alpha = 0.6
-    X=np.array(scaled_returns)
+    X=np.array(user_samples_scaled)
 
     num_exp = 500
     errors_kent = []
@@ -83,7 +99,7 @@ def main():
         ests_kent.append(est_kent)
 
         start_time_dame_bs = time.time()
-        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, scaled_returns)
+        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, user_samples_scaled)
         time_dame_bs.append(time.time() - start_time_dame_bs)
         est_dame_bs = 0.5 * (theta_hat_dame_bs + 1) * (max_val - min_val) + min_val #estimated mean in the orignal range
         theta_hats_dame_bs.append(theta_hat_dame_bs)
@@ -105,7 +121,7 @@ def main():
     print(f"MSE (in original range) = {np.mean(true_err_kent):.6f}")
     print("--------------------------------------------------------------------------------")
 
-
+    
     print("----------------------------STATS FOR DAME-BS ----------------------------------")
     print(f"Time taken: {np.mean(time_dame_bs):.5f}s")
     print(f"Estimated Mean in the range [-1,1]= {np.mean(theta_hats_dame_bs):.4f}, true mean scaled = {true_mean_scaled:.4f}")
@@ -117,3 +133,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+
+

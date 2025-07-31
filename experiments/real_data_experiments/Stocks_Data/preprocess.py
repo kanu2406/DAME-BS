@@ -12,8 +12,19 @@ from statsmodels.stats.diagnostic import acorr_ljungbox
 
 
 def load_and_clean_tickers(n=4996):
-    """This function fetches and cleans the dataframe of 4998 tickers from nasdaq url
-     and returns a clean list containing Symbols of tickers required to extract data from yfinance. """
+    """
+    Loads and filters NASDAQ-listed stock tickers.
+
+    Parameters
+    ----------
+    n : int
+        Number of tickers to return after shuffling.
+
+    Returns
+    -------
+    list of str
+        A list of clean ticker symbols ready for data download.
+    """
     
 
     # Loading from the official NASDAQ-listed tickers (includes symbols, ETF flags, etc.)
@@ -42,7 +53,24 @@ def load_and_clean_tickers(n=4996):
 def batch_download_close_prices(tickers, period="1y", interval="1d",batch_size=100):
     """This function downloads stock prices in batches using tikcers over period 
     of 1 year with and interval of 1 day. It returns a dictionary with available 
-    close prices of stocks over a year present in the tickers list. """
+    close prices of stocks over a year present in the tickers list. 
+
+    Parameters
+    ----------
+    tickers : list of str
+        List of stock symbols to fetch.
+    period : str
+        Time window for data retrieval (default is '1y').
+    interval : str
+        Interval between observations (default is '1d').
+    batch_size : int
+        Number of tickers per download batch.
+
+    Returns
+    -------
+    dict
+        Dictionary mapping tickers to their daily close price lists.
+    """
 
     
     result = {}
@@ -62,7 +90,19 @@ def batch_download_close_prices(tickers, period="1y", interval="1d",batch_size=1
     return result
 
 def compute_log_returns(prices_dict):
-    """Returns log of returns of stock prices."""
+    """
+    Computes log returns from stock price series.
+
+    Parameters
+    ----------
+    prices_dict : dict
+        Dictionary mapping tickers to their price time series.
+
+    Returns
+    -------
+    dict
+        Dictionary mapping tickers to their log return time series.
+    """
     returns = {
         t: np.diff(np.log(p)).tolist()
         for t, p in prices_dict.items()
@@ -71,7 +111,19 @@ def compute_log_returns(prices_dict):
 
 
 def check_stationarity(returns_dict):
-    """Checks stationarity of time series of returns of stocks"""
+    """
+    Checks stationarity of return series using Augmented Dickey-Fuller test.
+
+    Parameters
+    ----------
+    returns_dict : dict
+        Dictionary of stocks mapped to their log return time series.
+
+    Returns
+    -------
+    bool
+        True if all series are stationary (p-value < 0.05), False otherwise.
+    """
     for t in returns_dict.keys():
         series = np.array(returns_dict[t])
         stat=True
@@ -87,7 +139,23 @@ def check_stationarity(returns_dict):
         return stat
     
 def filter_and_truncate(returns_dict, min_samples=230):
-    """Keep the time series with no Nans and having enough samples ."""
+    """
+    Filters out time series with NaNs or insufficient length,
+    and truncates all remaining series to the minimum length.
+
+    Parameters
+    ----------
+    returns_dict : dict
+        Dictionary of log return time series.
+    min_samples : int
+        Minimum required number of samples for each time series.
+
+    Returns
+    -------
+    tuple
+        - dict: Truncated time series of equal length.
+        - int: The truncation length used.
+    """
     
     clean_dict = {ticker: prices
     for ticker, prices in returns_dict.items()
@@ -108,7 +176,28 @@ def filter_and_truncate(returns_dict, min_samples=230):
     return truncated_dict,min_length
 
 def scale_series(series_dict):
-    """Scale all values of series to the range [-1,1]."""
+    """
+    Scales all time series to the range [-1, 1] using min-max normalization.
+
+    Parameters
+    ----------
+    series_dict : dict
+        Dictionary of unscaled time series.
+
+    Returns
+    -------
+    tuple
+        - scaled_returns : list of list 
+                Scaled and shuffled time series.
+        - true_mean : float 
+                Mean of original values.
+        - true_mean_scaled : float 
+                Scaled mean.
+        - min_val : float 
+                Minimum value in the original data.
+        - max_val : float 
+                Maximum value in the original data.
+    """
     
     all_vals = [v for values in series_dict.values() for v in values]
     min_val = min(all_vals)
@@ -125,12 +214,33 @@ def scale_series(series_dict):
 
 
 def save_dict(d, path):
-    """Saves the downloaded dictionary data in .pkl file"""
+    """
+    Saves a Python dictionary to a pickle file.
+
+    Parameters
+    ----------
+    d : dict
+        The dictionary to save.
+    path : str
+        File path to save the dictionary.
+    """
     with open(path, "wb") as f:
         pickle.dump(d, f)
 
 def load_dict(path):
-    """Loads the dictionary data from .pkl file"""
+    """
+    Loads a Python dictionary from a pickle file.
+
+    Parameters
+    ----------
+    path : str
+        File path to load the dictionary from.
+
+    Returns
+    -------
+    dict
+        The loaded dictionary object.
+    """
     with open(path, "rb") as f:
         return pickle.load(f)
     
