@@ -1,21 +1,3 @@
-"""
-run_stock_experiment.py
-
-This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
-on real stock prives data from the yfinance.
-
-Steps:
-- Loads ticker symbols.
-- Download available close prices of 1000 stocks using loaded tickers over the period of 1 year for each day.
-- Computes the log returns and check for stationarity of time series.
-- Filter out all the time series with Nan values and truncate them so each of them have same number of sample.
-- Scaled the data in range [-1,1].
-- Runs both algorithms across 500 trials.
-- Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
-
-"""
-
-
 import time
 import numpy as np
 import pandas as pd
@@ -28,7 +10,23 @@ from experiments.real_data_experiments.Stocks_Data.preprocess import save_dict, 
 from dame_bs.dame_bs import dame_with_binary_search
 from kent.kent import kent_mean_estimator
 np.random.seed(42)
+
+
 def main():
+    """
+    This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
+    on real stock prives data from the yfinance.
+
+    Steps:
+        - Loads ticker symbols.
+        - Download available close prices of 1000 stocks using loaded tickers over the period of 1 year for each day.
+        - Computes the log returns and check for stationarity of time series.
+        - Filter out all the time series with Nan values and truncate them so each of them have same number of sample.
+        - Scaled the data in range [-1,1].
+        - Runs both algorithms across 500 trials.
+        - Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
+
+    """
     print("Starting...")
     # Fetching tickers symbols
     tickers = load_and_clean_tickers(n=2000)

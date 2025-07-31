@@ -1,19 +1,3 @@
-"""
-real_data_mimic_experiment.py
-
-This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
-on real heart rate data from the MIMIC-III dataset.
-
-Steps:
-- Loads and filters MIMIC-III CHARTEVENTS for heart rate data.
-- Scales all values to [-1, 1] and truncates samples so each user have same number of samples.
-- Runs both algorithms across 500 trials.
-- Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
-
-"""
-
-
-
 import pandas as pd
 import numpy as np
 import time,random
@@ -27,10 +11,15 @@ from collections import defaultdict
 np.random.seed(42)
 def main():
     """
-    Executes the experiment comparing Kent and DAME-BS on real-world data.
+    This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
+    on real heart rate data from the MIMIC-III dataset.
 
-    Loads heart rate data from MIMIC-III, scales it to [-1, 1], 
-    then runs 500 trials for each estimator and performance statistics.
+    Steps:
+        - Loads and filters MIMIC-III CHARTEVENTS for heart rate data.
+        - Scales all values to [-1, 1] and truncates samples so each user have same number of samples.
+        - Runs both algorithms across 500 trials.
+        - Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
+
     """
 
     # Load patients data 

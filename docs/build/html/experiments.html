@@ -59,6 +59,24 @@
 <li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.mimic.preprocess">Real Data : MIMIC-III</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data"><code class="docutils literal notranslate"><span class="pre">scaling_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle"><code class="docutils literal notranslate"><span class="pre">truncate_and_shuffle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.run_experiment_mimic.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.Stocks_Data.preprocess">Real Data : Stock Prices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.batch_download_close_prices"><code class="docutils literal notranslate"><span class="pre">batch_download_close_prices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.check_stationarity"><code class="docutils literal notranslate"><span class="pre">check_stationarity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.compute_log_returns"><code class="docutils literal notranslate"><span class="pre">compute_log_returns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.filter_and_truncate"><code class="docutils literal notranslate"><span class="pre">filter_and_truncate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.load_and_clean_tickers"><code class="docutils literal notranslate"><span class="pre">load_and_clean_tickers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.load_dict"><code class="docutils literal notranslate"><span class="pre">load_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.save_dict"><code class="docutils literal notranslate"><span class="pre">save_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.preprocess.scale_series"><code class="docutils literal notranslate"><span class="pre">scale_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a><ul>
@@ -337,6 +355,148 @@ for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cit
 <li><p><strong>true_mean_scaled</strong> (<em>ndarray, shape (d,)</em>) – The true_mean vector under the same per‐coordinate scaling.</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.real_data_experiments.mimic.preprocess">
+<span id="real-data-mimic-iii"></span><h2>Real Data : MIMIC-III<a class="headerlink" href="#module-experiments.real_data_experiments.mimic.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.scaling_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">scaling_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#scaling_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data" title="Link to this definition"></a></dt>
+<dd><p>Scales user data into the range [-1, 1] and computes relevant statistics.</p>
+<p>This function flattens all user data into a single list, finds the global
+minimum and maximum values, and then linearly scales all values for each user
+into the range [-1, 1] using the transformation:</p>
+<blockquote>
+<div><p>scaled_value = (2 * (value - vmin) / (vmax - vmin)) - 1</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_samples</strong> (<em>dict</em>) – A dictionary mapping users (keys) to lists of numeric samples (values),</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>dict</em>) – Dictionary with the same keys as <cite>user_samples</cite>, where each user’s values
+are scaled to the range [-1, 1].</p></li>
+<li><p><strong>desired_length</strong> (<em>int</em>) – The minimum number of samples across all users.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – The mean of all unscaled sample values.</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>float</em>) – The mean of all scaled sample values.</p></li>
+<li><p><strong>vmin</strong> (<em>float</em>) – Minimum value among all unscaled sample values.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em>) – Maximum value among all unscaled sample values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">truncate_and_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#truncate_and_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle" title="Link to this definition"></a></dt>
+<dd><p>Truncates each user’s sample list to a fixed length and shuffles it randomly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_samples</strong> (<em>dict</em>) – Dictionary mapping users to lists of samples.</p></li>
+<li><p><strong>desired_length</strong> (<em>int</em>) – The number of samples to retain per user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>final</strong> – Dictionary containing users with <cite>desired_length</cite> samples,
+where each user’s samples are truncated and shuffled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-experiments.real_data_experiments.mimic.run_experiment_mimic">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.run_experiment_mimic.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.run_experiment_mimic.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/run_experiment_mimic.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.run_experiment_mimic.main" title="Link to this definition"></a></dt>
+<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
+on real heart rate data from the MIMIC-III dataset.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ul class="simple">
+<li><p>Loads and filters MIMIC-III CHARTEVENTS for heart rate data.</p></li>
+<li><p>Scales all values to [-1, 1] and truncates samples so each user have same number of samples.</p></li>
+<li><p>Runs both algorithms across 500 trials.</p></li>
+<li><p>Reports runtime, mean estimates, and MSE (in both scaled and original ranges).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.real_data_experiments.Stocks_Data.preprocess">
+<span id="real-data-stock-prices"></span><h2>Real Data : Stock Prices<a class="headerlink" href="#module-experiments.real_data_experiments.Stocks_Data.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.batch_download_close_prices">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">batch_download_close_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#batch_download_close_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.batch_download_close_prices" title="Link to this definition"></a></dt>
+<dd><p>This function downloads stock prices in batches using tikcers over period
+of 1 year with and interval of 1 day. It returns a dictionary with available
+close prices of stocks over a year present in the tickers list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.check_stationarity">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">check_stationarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#check_stationarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.check_stationarity" title="Link to this definition"></a></dt>
+<dd><p>Checks stationarity of time series of returns of stocks</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.compute_log_returns">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">compute_log_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prices_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#compute_log_returns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.compute_log_returns" title="Link to this definition"></a></dt>
+<dd><p>Returns log of returns of stock prices.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.filter_and_truncate">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">filter_and_truncate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">230</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#filter_and_truncate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.filter_and_truncate" title="Link to this definition"></a></dt>
+<dd><p>Keep the time series with no Nans and having enough samples .</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.load_and_clean_tickers">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_and_clean_tickers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4996</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#load_and_clean_tickers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.load_and_clean_tickers" title="Link to this definition"></a></dt>
+<dd><p>This function fetches and cleans the dataframe of 4998 tickers from nasdaq url
+and returns a clean list containing Symbols of tickers required to extract data from yfinance.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.load_dict">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#load_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.load_dict" title="Link to this definition"></a></dt>
+<dd><p>Loads the dictionary data from .pkl file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.save_dict">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">save_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#save_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.save_dict" title="Link to this definition"></a></dt>
+<dd><p>Saves the downloaded dictionary data in .pkl file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.preprocess.scale_series">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.preprocess.</span></span><span class="sig-name descname"><span class="pre">scale_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/preprocess.html#scale_series"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.preprocess.scale_series" title="Link to this definition"></a></dt>
+<dd><p>Scale all values of series to the range [-1,1].</p>
+</dd></dl>
+
+<dl class="py function" id="module-experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/Stocks_Data/run_experiment_stock_prices.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices.main" title="Link to this definition"></a></dt>
+<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
+on real stock prives data from the yfinance.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ul class="simple">
+<li><p>Loads ticker symbols.</p></li>
+<li><p>Download available close prices of 1000 stocks using loaded tickers over the period of 1 year for each day.</p></li>
+<li><p>Computes the log returns and check for stationarity of time series.</p></li>
+<li><p>Filter out all the time series with Nan values and truncate them so each of them have same number of sample.</p></li>
+<li><p>Scaled the data in range [-1,1].</p></li>
+<li><p>Runs both algorithms across 500 trials.</p></li>
+<li><p>Reports runtime, mean estimates, and MSE (in both scaled and original ranges).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
