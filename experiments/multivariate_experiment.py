@@ -15,7 +15,7 @@ def generate_multivariate_scaled_data(distribution, n, m,d, true_mean):
     Parameters
     ----------
     distribution : str
-        Supported Distributions {"normal","uniform","student_t","binomial"}.
+        Supported Distributions {"normal","uniform","standard_t","binomial"}.
     n : int
         Number of users (i.e. number of independent sample‐sets).
     m : int
@@ -40,7 +40,7 @@ def generate_multivariate_scaled_data(distribution, n, m,d, true_mean):
         user_samples = np.random.normal(loc=true_mean, scale=1.0, size=(n, m, d))
     elif distribution == "uniform":
         user_samples = np.random.uniform(low=true_mean - 1, high=true_mean + 1, size=(n, m, d))
-    elif distribution == "student_t":
+    elif distribution == "standard_t":
         user_samples = np.random.standard_t(df=3, size=(n, m, d)) + true_mean
     elif distribution == "binomial":
         user_samples = np.random.binomial(n=50,p=true_mean/50,size=(n, m,d)).astype(float)
@@ -107,14 +107,18 @@ def compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=50
 
     Returns
     -------
-    mean_err_kent : float
-        Mean of squared ℓ₂‐errors from the Kent estimator across trials.
-    std_err_kent : float
-        Standard deviation of those errors.
-    mean_err_dame : float
-        Mean of squared ℓ₂‐errors from the DAME‑BS estimator across trials.
-    std_err_dame : float
-        Standard deviation of those errors.
+    median_err_dame : float
+        Median of squared ℓ₂‐errors from the DAME-BS estimator across trials.
+    lower_err_dame : float
+        First decile of ℓ₂‐errors from the DAME-BS estimator across trials.
+    upper_err_dame : float
+        Last decile of ℓ₂‐errors from the DAME-BS estimator across trials.
+    median_err_kent : float
+        Median of squared ℓ₂‐errors from the Kent estimator across trials.
+    lower_err_kent : float
+        First decile of ℓ₂‐errors from the Kent estimator across trials.
+    upper_err_kent : float
+        Last decile of ℓ₂‐errors from the Kent estimator across trials.
 
     """
     true_mean = np.asarray(true_mean, dtype=float)
@@ -134,7 +138,9 @@ def compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=50
         err_dame   = np.linalg.norm(theta_dame - mu_scaled)**2
         errors_dame.append(err_dame)
 
-    return np.mean(errors_kent),np.std(errors_kent),np.mean(errors_dame),np.std(errors_dame)
+    # return np.mean(errors_kent),np.std(errors_kent),np.mean(errors_dame),np.std(errors_dame)
+    return np.median(errors_dame),np.percentile(errors_dame, 10, axis=0),np.percentile(errors_dame, 90, axis=0),np.median(errors_kent),np.percentile(errors_kent, 10, axis=0),np.percentile(errors_kent, 90, axis=0)
+    
     
 
 
@@ -199,56 +205,69 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
         elif param_to_vary == "d":
             param_values = list(range(2,500,10))
 
-    mean_errors_dame = []
-    std_errors_dame = []
-    mean_errors_kent = []
-    std_errors_kent = []
+    median_errors_dame = []
+    lower_errors_dame = []
+    upper_errors_dame = []
+    median_errors_kent = []
+    lower_errors_kent = []
+    upper_errors_kent = []
 
     if param_to_vary == "alpha":
         for alpha in param_values:
             print(f"Running algorithms for alpha = {alpha}")
             # Running both algorithms
-            mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
         
     elif param_to_vary=="n":
         for n in param_values:
             print(f"Running algorithms for n = {n}")
             # Running both algorithms
-            mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
+        
 
     elif param_to_vary == "d":
         for d in param_values:
             # Running both algorithms
             print(f"Running algorithms for d = {d}")
             true_mean = [0.1]*d # each time dimension changes, true mean's dimension will also change 
-            mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
+        
     
     elif param_to_vary=="m":
         for m in param_values:
             print(f"Running algorithms for m = {m}")
             # Running both algorithms
             
-            mean_kent, std_kent, mean_dame, std_dame = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent = compare_multivariate_algorithms(n,m,d,alpha,distribution,true_mean,trials=trials)
 
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
+        
 
 
     # Labels
@@ -259,10 +278,11 @@ def experiment_risk_vs_param_for_dist_multivariate(distribution,param_to_vary="a
         "d": "Dimension of each sample d"
     }
 
-    title = f"Mean Squared Error vs {xlabel_map[param_to_vary]} for {distribution} distribution"
+    title = f"Squared l_2 Error vs {xlabel_map[param_to_vary]} for {distribution} distribution"
 
     
-    plot_errorbars(param_values, mean_errors_kent,mean_errors_dame, std_errors_kent,
-                   std_errors_dame, xlabel_map[param_to_vary], ylabel="Squared l_2 Error", title=title,
-                   log_scale=True,plot_ub=False,upper_bounds=None)
+    plot_errorbars(param_values, median_errors_kent,median_errors_dame, lower_errors_kent,
+                   lower_errors_dame,upper_errors_kent, upper_errors_dame, xlabel_map[param_to_vary], 
+                   ylabel="Squared l_2 Error", title=title,log_scale=True,plot_ub=False,upper_bounds=None)
+    
 

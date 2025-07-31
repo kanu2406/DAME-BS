@@ -125,10 +125,12 @@ def scale_series(series_dict):
 
 
 def save_dict(d, path):
+    """Saves the downloaded dictionary data in .pkl file"""
     with open(path, "wb") as f:
         pickle.dump(d, f)
 
 def load_dict(path):
+    """Loads the dictionary data from .pkl file"""
     with open(path, "rb") as f:
         return pickle.load(f)
     

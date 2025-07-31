@@ -193,14 +193,18 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    mean_err_dame : float</span>
-<span class="sd">        Mean of squared errors from DAME‑BS across trials.</span>
-<span class="sd">    std_err_dame : float</span>
-<span class="sd">        Standard deviation of those squared errors from DAME-BS.</span>
-<span class="sd">    mean_err_kent : float</span>
-<span class="sd">        Mean of squared errors from Kent’s estimator across trials.</span>
-<span class="sd">    std_err_kent : float</span>
-<span class="sd">        Standard deviation of those squared errors from Kent&#39;s algorithm.</span>
+<span class="sd">    median_err_dame : float</span>
+<span class="sd">        Median of squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    lower_err_dame : float</span>
+<span class="sd">        First decile of  squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    upper_err_dame : float</span>
+<span class="sd">        Last decile of squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    median_err_kent : float</span>
+<span class="sd">        Median of squared errors from the Kent estimator across trials.</span>
+<span class="sd">    lower_err_kent : float</span>
+<span class="sd">        First decile of squared errors from the Kent estimator across trials.</span>
+<span class="sd">    upper_err_kent : float</span>
+<span class="sd">        Last decile of squared errors from the Kent estimator across trials.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -215,7 +219,8 @@
         <span class="n">estimate</span> <span class="o">=</span> <span class="n">kent_mean_estimator</span><span class="p">(</span><span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">err2</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">error_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error_kent</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error_kent</span><span class="p">)</span></div>
+    <span class="c1"># return np.mean(error_dame_bs),np.std(error_dame_bs),np.mean(error_kent),np.std(error_kent)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error_kent</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_kent</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_kent</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
     
 
@@ -281,41 +286,54 @@
         <span class="k">elif</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span>
             <span class="n">param_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
-    <span class="n">mean_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">std_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">mean_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">std_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">median_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lower_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">upper_errors_dame</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">median_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lower_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">upper_errors_kent</span> <span class="o">=</span> <span class="p">[]</span>
 
     
     <span class="k">if</span> <span class="n">param_to_vary</span> <span class="o">==</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span>
+       
         <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
             <span class="c1"># Running both algorithms</span>
-            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for alpha = </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">median_dame</span><span class="p">,</span><span class="n">lower_dame</span><span class="p">,</span><span class="n">upper_dame</span><span class="p">,</span><span class="n">median_kent</span><span class="p">,</span><span class="n">lower_kent</span><span class="p">,</span><span class="n">upper_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
             
-            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
-            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
-            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
-            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+            <span class="n">median_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_dame</span><span class="p">)</span>
+            <span class="n">lower_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_dame</span><span class="p">)</span>
+            <span class="n">upper_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_dame</span><span class="p">)</span>
+            <span class="n">median_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_kent</span><span class="p">)</span>
+            <span class="n">lower_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_kent</span><span class="p">)</span>
+            <span class="n">upper_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_kent</span><span class="p">)</span>
     
     <span class="k">elif</span> <span class="n">param_to_vary</span><span class="o">==</span><span class="s2">&quot;n&quot;</span><span class="p">:</span>
+        
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
             <span class="c1"># Running both algorithms</span>
-            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">median_dame</span><span class="p">,</span><span class="n">lower_dame</span><span class="p">,</span><span class="n">upper_dame</span><span class="p">,</span><span class="n">median_kent</span><span class="p">,</span><span class="n">lower_kent</span><span class="p">,</span><span class="n">upper_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
             
-            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
-            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
-            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
-            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+            <span class="n">median_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_dame</span><span class="p">)</span>
+            <span class="n">lower_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_dame</span><span class="p">)</span>
+            <span class="n">upper_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_dame</span><span class="p">)</span>
+            <span class="n">median_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_kent</span><span class="p">)</span>
+            <span class="n">lower_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_kent</span><span class="p">)</span>
+            <span class="n">upper_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_kent</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running algorithms for m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1"># Running both algorithms</span>
-            <span class="n">mean_dame</span><span class="p">,</span><span class="n">std_dame</span><span class="p">,</span><span class="n">mean_kent</span><span class="p">,</span><span class="n">std_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            <span class="n">median_dame</span><span class="p">,</span><span class="n">lower_dame</span><span class="p">,</span><span class="n">upper_dame</span><span class="p">,</span><span class="n">median_kent</span><span class="p">,</span><span class="n">lower_kent</span><span class="p">,</span><span class="n">upper_kent</span><span class="o">=</span> <span class="n">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
             
-            <span class="n">mean_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_kent</span><span class="p">)</span>
-            <span class="n">std_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_kent</span><span class="p">)</span>
-            <span class="n">mean_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_dame</span><span class="p">)</span>
-            <span class="n">std_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_dame</span><span class="p">)</span>
+            <span class="n">median_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_dame</span><span class="p">)</span>
+            <span class="n">lower_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_dame</span><span class="p">)</span>
+            <span class="n">upper_errors_dame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_dame</span><span class="p">)</span>
+            <span class="n">median_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">median_kent</span><span class="p">)</span>
+            <span class="n">lower_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lower_kent</span><span class="p">)</span>
+            <span class="n">upper_errors_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upper_kent</span><span class="p">)</span>
 
 
     <span class="c1"># Labels</span>
@@ -328,10 +346,11 @@
     <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Mean Squared Error vs </span><span class="si">{</span><span class="n">xlabel_map</span><span class="p">[</span><span class="n">param_to_vary</span><span class="p">]</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="n">distribution</span><span class="si">}</span><span class="s2"> distribution&quot;</span>
    
     
-    <span class="n">plot_errorbars</span><span class="p">(</span><span class="n">param_values</span><span class="p">,</span> <span class="n">mean_errors_kent</span><span class="p">,</span><span class="n">mean_errors_dame</span><span class="p">,</span> <span class="n">std_errors_kent</span><span class="p">,</span>
-                   <span class="n">std_errors_dame</span><span class="p">,</span> <span class="n">xlabel_map</span><span class="p">[</span><span class="n">param_to_vary</span><span class="p">],</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Squared Error&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-                   <span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+    <span class="n">plot_errorbars</span><span class="p">(</span><span class="n">param_values</span><span class="p">,</span> <span class="n">median_errors_kent</span><span class="p">,</span><span class="n">median_errors_dame</span><span class="p">,</span> <span class="n">lower_errors_kent</span><span class="p">,</span>
+                   <span class="n">lower_errors_dame</span><span class="p">,</span><span class="n">upper_errors_kent</span><span class="p">,</span> <span class="n">upper_errors_dame</span><span class="p">,</span> <span class="n">xlabel_map</span><span class="p">[</span><span class="n">param_to_vary</span><span class="p">],</span> 
+                   <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Squared Error&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
+    
 
 
 

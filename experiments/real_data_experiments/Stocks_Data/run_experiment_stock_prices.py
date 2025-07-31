@@ -1,3 +1,21 @@
+"""
+run_stock_experiment.py
+
+This script runs a 500-trial comparison of Kent's mean estimator and DAME-BS
+on real stock prives data from the yfinance.
+
+Steps:
+- Loads ticker symbols.
+- Download available close prices of 1000 stocks using loaded tickers over the period of 1 year for each day.
+- Computes the log returns and check for stationarity of time series.
+- Filter out all the time series with Nan values and truncate them so each of them have same number of sample.
+- Scaled the data in range [-1,1].
+- Runs both algorithms across 500 trials.
+- Reports runtime, mean estimates, and MSE (in both scaled and original ranges).
+
+"""
+
+
 import time
 import numpy as np
 import pandas as pd
@@ -82,23 +100,16 @@ def main():
 
      
     print("--------------------------STATS FOR KENT'S Algo --------------------------------")
-    print(f"Time taken: {np.mean(time_kent):.2f}s")
+    print(f"Time taken: {np.mean(time_kent):.5f}s")
     print(f"Estimated Mean in the range [-1,1]= {np.mean(theta_hats_kent):.4f}, true mean scaled = {true_mean_scaled:.4f}")
     print(f"Estimated mean = {np.mean(ests_kent):.6f}, true mean = {true_mean:.6f}")
     print(f"MSE between values in range [-1,1] (scaled) = {np.mean(errors_kent):.6f}")
     print(f"MSE (in original range) = {np.mean(true_err_kent):.6f}")
     print("--------------------------------------------------------------------------------")
 
-    # Running DAME-BS
-    
-    start = time.time()
-    theta_hat = dame_with_binary_search(n, alpha, m, scaled_returns)
-    dt = time.time() - start
-
-    est_mean = 0.5 * (theta_hat + 1) * (max_val - min_val) + min_val #estimated mean in the orignal range
 
     print("----------------------------STATS FOR DAME-BS ----------------------------------")
-    print(f"Time taken: {np.mean(time_dame_bs):.2f}s")
+    print(f"Time taken: {np.mean(time_dame_bs):.5f}s")
     print(f"Estimated Mean in the range [-1,1]= {np.mean(theta_hats_dame_bs):.4f}, true mean scaled = {true_mean_scaled:.4f}")
     print(f"Estimated mean = {np.mean(ests_dame_bs):.6f}, true mean = {true_mean:.6f}")
     print(f"MSE between values in range [-1,1] (scaled) = {np.mean(errors_dame_bs):.6f}")

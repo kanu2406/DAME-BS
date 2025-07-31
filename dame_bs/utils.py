@@ -59,8 +59,8 @@ def theoretical_upper_bound(alpha, n, m):
 
 
 
-def plot_errorbars(x_values, mean_errors_kent,mean_errors_dame_bs, std_errors_kent,
-                   std_errors_dame_bs, xlabel, ylabel, title,log_scale=True,plot_ub=False,upper_bounds=None):
+def plot_errorbars(x_values, median_errors_kent,median_errors_dame_bs, lower_errors_kent,
+                   lower_errors_dame_bs,upper_errors_kent, upper_errors_dame_bs, xlabel, ylabel, title,log_scale=True,plot_ub=False,upper_bounds=None):
     """
     Plots error bars for dame_bs and kent algorithms on a single graph.
 
@@ -85,13 +85,24 @@ def plot_errorbars(x_values, mean_errors_kent,mean_errors_dame_bs, std_errors_ke
     if upper_bounds is None:
         upper_bounds=[]
     plt.figure(figsize=(8, 5))
-    plt.errorbar(x_values, mean_errors_kent, fmt='o-', capsize=5,label="Kent")
-    plt.errorbar(x_values, mean_errors_dame_bs, fmt='o-', capsize=5,label="DAME-BS")
+    plt.fill_between(x_values, lower_errors_kent, upper_errors_kent, alpha=0.3)
+    plt.plot(x_values, median_errors_kent, label="Kent")
+    
+    plt.fill_between(x_values, lower_errors_dame_bs, upper_errors_dame_bs, alpha=0.3)
+    plt.plot(x_values, median_errors_dame_bs,label="DAME-BS")
+    
+    all_lowers = np.minimum(lower_errors_kent, lower_errors_dame_bs)
+    all_uppers = np.maximum(upper_errors_kent, upper_errors_dame_bs)
+    y_min = np.min(all_lowers) * 0.05
+    y_max = np.max(all_uppers) * 5.8
+    y_min = max(y_min, 1e-8)
+
     if plot_ub and upper_bounds:
         plt.plot(x_values, upper_bounds, 'r--', label='Theoretical Upper Bound')
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
+    plt.ylim(y_min, y_max)
     if log_scale:
         plt.yscale('log')
     plt.grid(True)

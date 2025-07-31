@@ -113,14 +113,18 @@ def compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50):
 
     Returns
     -------
-    mean_err_dame : float
-        Mean of squared errors from DAME‑BS across trials.
-    std_err_dame : float
-        Standard deviation of those squared errors from DAME-BS.
-    mean_err_kent : float
-        Mean of squared errors from Kent’s estimator across trials.
-    std_err_kent : float
-        Standard deviation of those squared errors from Kent's algorithm.
+    median_err_dame : float
+        Median of squared errors from the DAME-BS estimator across trials.
+    lower_err_dame : float
+        First decile of  squared errors from the DAME-BS estimator across trials.
+    upper_err_dame : float
+        Last decile of squared errors from the DAME-BS estimator across trials.
+    median_err_kent : float
+        Median of squared errors from the Kent estimator across trials.
+    lower_err_kent : float
+        First decile of squared errors from the Kent estimator across trials.
+    upper_err_kent : float
+        Last decile of squared errors from the Kent estimator across trials.
 
     """
 
@@ -135,7 +139,8 @@ def compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50):
         estimate = kent_mean_estimator(user_samples_scaled,alpha)
         err2 = (estimate - true_mean_scaled)**2
         error_kent.append(err2)
-    return np.mean(error_dame_bs),np.std(error_dame_bs),np.mean(error_kent),np.std(error_kent)
+    # return np.mean(error_dame_bs),np.std(error_dame_bs),np.mean(error_kent),np.std(error_kent)
+    return np.median(error_dame_bs),np.percentile(error_dame_bs, 10, axis=0),np.percentile(error_dame_bs, 90, axis=0),np.median(error_kent),np.percentile(error_kent, 10, axis=0),np.percentile(error_kent, 90, axis=0)
     
 
 
@@ -198,41 +203,54 @@ def experiment_risk_vs_param_for_dist_univariate(distribution,param_to_vary="alp
         elif param_to_vary == "m":
             param_values = list(range(7, 500, 5))
 
-    mean_errors_dame = []
-    std_errors_dame = []
-    mean_errors_kent = []
-    std_errors_kent = []
+    median_errors_dame = []
+    lower_errors_dame = []
+    upper_errors_dame = []
+    median_errors_kent = []
+    lower_errors_kent = []
+    upper_errors_kent = []
 
     
     if param_to_vary == "alpha":
+       
         for alpha in param_values:
             # Running both algorithms
-            mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
+            print(f"Running algorithms for alpha = {alpha}")
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=trials)
             
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
     
     elif param_to_vary=="n":
+        
         for n in param_values:
             # Running both algorithms
-            mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
+            print(f"Running algorithms for n = {n}")
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=trials)
             
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
 
     else:
         for m in param_values:
+            print(f"Running algorithms for m = {m}")
             # Running both algorithms
-            mean_dame,std_dame,mean_kent,std_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50)
+            median_dame,lower_dame,upper_dame,median_kent,lower_kent,upper_kent= compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=trials)
             
-            mean_errors_kent.append(mean_kent)
-            std_errors_kent.append(std_kent)
-            mean_errors_dame.append(mean_dame)
-            std_errors_dame.append(std_dame)
+            median_errors_dame.append(median_dame)
+            lower_errors_dame.append(lower_dame)
+            upper_errors_dame.append(upper_dame)
+            median_errors_kent.append(median_kent)
+            lower_errors_kent.append(lower_kent)
+            upper_errors_kent.append(upper_kent)
 
 
     # Labels
@@ -245,9 +263,10 @@ def experiment_risk_vs_param_for_dist_univariate(distribution,param_to_vary="alp
     title = f"Mean Squared Error vs {xlabel_map[param_to_vary]} for {distribution} distribution"
    
     
-    plot_errorbars(param_values, mean_errors_kent,mean_errors_dame, std_errors_kent,
-                   std_errors_dame, xlabel_map[param_to_vary], ylabel="Mean Squared Error", title=title,
-                   log_scale=True,plot_ub=False,upper_bounds=None)
+    plot_errorbars(param_values, median_errors_kent,median_errors_dame, lower_errors_kent,
+                   lower_errors_dame,upper_errors_kent, upper_errors_dame, xlabel_map[param_to_vary], 
+                   ylabel="Mean Squared Error", title=title,log_scale=True,plot_ub=False,upper_bounds=None)
+    
 
 
 
