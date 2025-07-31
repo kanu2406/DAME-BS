@@ -65,6 +65,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#real-data-stock-prices">Real Data : Stock Prices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-data-globem">Real Data : GLOBEM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a><ul>
@@ -73,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#real-world-data">Real World Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stock-prices">Stock Prices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mimic-iii-medical-information-mart-for-intensive-care">MIMIC-III (‘Medical Information Mart for Intensive Care’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#globem-dataset">GLOBEM Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
@@ -404,6 +406,9 @@ where each user’s samples are truncated and shuffled.</p>
 <section id="real-data-stock-prices">
 <h2>Real Data : Stock Prices<a class="headerlink" href="#real-data-stock-prices" title="Link to this heading"></a></h2>
 </section>
+<section id="real-data-globem">
+<h2>Real Data : GLOBEM<a class="headerlink" href="#real-data-globem" title="Link to this heading"></a></h2>
+</section>
 </section>
 <section id="results">
 <h1>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h1>
@@ -435,6 +440,9 @@ estimated mean and the scaled true mean across 200 trials.</p>
 <p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
 <a class="reference internal image-reference" href="_images/mse_vs_m_multivariate.png"><img alt="MSE vs m for the different distributions" class="align-center" src="_images/mse_vs_m_multivariate.png" style="width: 600px;" />
 </a>
+<p>Mean Squared Error vs d (dimensionality of each sample) for the different distributions.</p>
+<a class="reference internal image-reference" href="_images/mse_vs_d.png"><img alt="MSE vs d for the different distributions" class="align-center" src="_images/mse_vs_d.png" style="width: 600px;" />
+</a>
 </section>
 <section id="real-world-data">
 <h2>Real World Data<a class="headerlink" href="#real-world-data" title="Link to this heading"></a></h2>
@@ -458,6 +466,24 @@ DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and uns
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
 <a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
+</a>
+</section>
+<section id="globem-dataset">
+<h2>GLOBEM Dataset<a class="headerlink" href="#globem-dataset" title="Link to this heading"></a></h2>
+<p>We conducted this experiment using GLOBEM Dataset which consists of data from a mobile phone and
+a wearable fitness tracker 24×7, including Location, PhoneUsage, Call, Bluetooth, PhysicalActivity,
+and Sleep behavior. The datasets capture various aspects of participants’ life experiences,
+such as general behavior patterns, the weekly routine cycle, the impact of COVID (Year3, 2020), and
+the gradual recovery after COVID (Year4, 2021) (Dataset : <a class="reference external" href="https://github.com/UW-EXP/GLOBEM/tree/main/data_raw">https://github.com/UW-EXP/GLOBEM/tree/main/data_raw</a>).
+We used steps from four segments of the day and total sleep duration per day for each user.
+For both cases, we conducted mean estimation using DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
+and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
+and low number of samples per user.</p>
+<p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results for steps data -</p>
+<a class="reference internal image-reference" href="_images/steps_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/steps_result.png" style="width: 600px;" />
+</a>
+<p>For sleep data, we had a total of 40 user with 15 samples per user. Here are the results for sleep data -</p>
+<a class="reference internal image-reference" href="_images/sleep_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/sleep_result.png" style="width: 600px;" />
 </a>
 </section>
 </section>

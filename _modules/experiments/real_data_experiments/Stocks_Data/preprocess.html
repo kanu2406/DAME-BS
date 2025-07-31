@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>experiments.real_data_experiments.Stocks_Data.preprocess &mdash; dame_bs 0.1 documentation</title>
+  <title>experiments.real_data_experiments.stocks_data.preprocess &mdash; dame_bs 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
@@ -63,7 +63,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">experiments.real_data_experiments.Stocks_Data.preprocess</li>
+      <li class="breadcrumb-item active">experiments.real_data_experiments.stocks_data.preprocess</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -72,7 +72,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for experiments.real_data_experiments.Stocks_Data.preprocess</h1><div class="highlight"><pre>
+  <h1>Source code for experiments.real_data_experiments.stocks_data.preprocess</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
@@ -87,10 +87,21 @@
 
 
 <div class="viewcode-block" id="load_and_clean_tickers">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.load_and_clean_tickers">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_and_clean_tickers</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4996</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function fetches and cleans the dataframe of 4998 tickers from nasdaq url</span>
-<span class="sd">     and returns a clean list containing Symbols of tickers required to extract data from yfinance. &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads and filters NASDAQ-listed stock tickers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of tickers to return after shuffling.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of str</span>
+<span class="sd">        A list of clean ticker symbols ready for data download.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
 
     <span class="c1"># Loading from the official NASDAQ-listed tickers (includes symbols, ETF flags, etc.)</span>
@@ -118,11 +129,28 @@
 
 
 <div class="viewcode-block" id="batch_download_close_prices">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.batch_download_close_prices">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">batch_download_close_prices</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&quot;1y&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s2">&quot;1d&quot;</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function downloads stock prices in batches using tikcers over period </span>
 <span class="sd">    of 1 year with and interval of 1 day. It returns a dictionary with available </span>
-<span class="sd">    close prices of stocks over a year present in the tickers list. &quot;&quot;&quot;</span>
+<span class="sd">    close prices of stocks over a year present in the tickers list. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tickers : list of str</span>
+<span class="sd">        List of stock symbols to fetch.</span>
+<span class="sd">    period : str</span>
+<span class="sd">        Time window for data retrieval (default is &#39;1y&#39;).</span>
+<span class="sd">    interval : str</span>
+<span class="sd">        Interval between observations (default is &#39;1d&#39;).</span>
+<span class="sd">    batch_size : int</span>
+<span class="sd">        Number of tickers per download batch.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary mapping tickers to their daily close price lists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     
     <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
@@ -143,9 +171,21 @@
 
 
 <div class="viewcode-block" id="compute_log_returns">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.compute_log_returns">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.compute_log_returns">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_log_returns</span><span class="p">(</span><span class="n">prices_dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns log of returns of stock prices.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes log returns from stock price series.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    prices_dict : dict</span>
+<span class="sd">        Dictionary mapping tickers to their price time series.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary mapping tickers to their log return time series.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">returns</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">prices_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -155,9 +195,21 @@
 
 
 <div class="viewcode-block" id="check_stationarity">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.check_stationarity">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.check_stationarity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_stationarity</span><span class="p">(</span><span class="n">returns_dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks stationarity of time series of returns of stocks&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks stationarity of return series using Augmented Dickey-Fuller test.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    returns_dict : dict</span>
+<span class="sd">        Dictionary of stocks mapped to their log return time series.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if all series are stationary (p-value &lt; 0.05), False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">returns_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">series</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">returns_dict</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
         <span class="n">stat</span><span class="o">=</span><span class="kc">True</span>
@@ -174,9 +226,25 @@
 
     
 <div class="viewcode-block" id="filter_and_truncate">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.filter_and_truncate">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.filter_and_truncate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filter_and_truncate</span><span class="p">(</span><span class="n">returns_dict</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">230</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Keep the time series with no Nans and having enough samples .&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filters out time series with NaNs or insufficient length,</span>
+<span class="sd">    and truncates all remaining series to the minimum length.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    returns_dict : dict</span>
+<span class="sd">        Dictionary of log return time series.</span>
+<span class="sd">    min_samples : int</span>
+<span class="sd">        Minimum required number of samples for each time series.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        - dict: Truncated time series of equal length.</span>
+<span class="sd">        - int: The truncation length used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">clean_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">ticker</span><span class="p">:</span> <span class="n">prices</span>
     <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">prices</span> <span class="ow">in</span> <span class="n">returns_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -198,9 +266,30 @@
 
 
 <div class="viewcode-block" id="scale_series">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.scale_series">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.scale_series">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scale_series</span><span class="p">(</span><span class="n">series_dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scale all values of series to the range [-1,1].&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scales all time series to the range [-1, 1] using min-max normalization.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    series_dict : dict</span>
+<span class="sd">        Dictionary of unscaled time series.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        - scaled_returns : list of list </span>
+<span class="sd">                Scaled and shuffled time series.</span>
+<span class="sd">        - true_mean : float </span>
+<span class="sd">                Mean of original values.</span>
+<span class="sd">        - true_mean_scaled : float </span>
+<span class="sd">                Scaled mean.</span>
+<span class="sd">        - min_val : float </span>
+<span class="sd">                Minimum value in the original data.</span>
+<span class="sd">        - max_val : float </span>
+<span class="sd">                Maximum value in the original data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">all_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">series_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
     <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
@@ -218,17 +307,38 @@
 
 
 <div class="viewcode-block" id="save_dict">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.save_dict">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.save_dict">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Saves the downloaded dictionary data in .pkl file&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves a Python dictionary to a pickle file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : dict</span>
+<span class="sd">        The dictionary to save.</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path to save the dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="load_dict">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.Stocks_Data.preprocess.load_dict">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_dict">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_dict</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads the dictionary data from .pkl file&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads a Python dictionary from a pickle file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path to load the dictionary from.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        The loaded dictionary object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
