@@ -21,6 +21,36 @@ Multivariate Experiments
    :show-inheritance:
    :undoc-members:
 
+Real Data : MIMIC-III 
+---------------------
+
+
+.. automodule:: experiments.real_data_experiments.mimic.preprocess
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+
+.. automodule:: experiments.real_data_experiments.mimic.run_experiment_mimic
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Real Data : Stock Prices 
+------------------------
+
+
+.. automodule:: experiments.real_data_experiments.Stocks_Data.preprocess
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+
+.. automodule:: experiments.real_data_experiments.Stocks_Data.run_experiment_stock_prices
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 
 Results
 =======

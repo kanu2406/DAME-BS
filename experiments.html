@@ -59,6 +59,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.mimic.preprocess">Real Data : MIMIC-III</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data"><code class="docutils literal notranslate"><span class="pre">scaling_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle"><code class="docutils literal notranslate"><span class="pre">truncate_and_shuffle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#real-data-stock-prices">Real Data : Stock Prices</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#results">Results</a><ul>
@@ -341,6 +347,62 @@ for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cit
 </dl>
 </dd></dl>
 
+</section>
+<section id="module-experiments.real_data_experiments.mimic.preprocess">
+<span id="real-data-mimic-iii"></span><h2>Real Data : MIMIC-III<a class="headerlink" href="#module-experiments.real_data_experiments.mimic.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.scaling_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">scaling_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#scaling_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data" title="Link to this definition"></a></dt>
+<dd><p>Scales user data into the range [-1, 1] and computes relevant statistics.</p>
+<p>This function flattens all user data into a single list, finds the global
+minimum and maximum values, and then linearly scales all values for each user
+into the range [-1, 1] using the transformation:</p>
+<blockquote>
+<div><p>scaled_value = (2 * (value - vmin) / (vmax - vmin)) - 1</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_samples</strong> (<em>dict</em>) – A dictionary mapping users (keys) to lists of numeric samples (values),</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>dict</em>) – Dictionary with the same keys as <cite>user_samples</cite>, where each user’s values
+are scaled to the range [-1, 1].</p></li>
+<li><p><strong>desired_length</strong> (<em>int</em>) – The minimum number of samples across all users.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – The mean of all unscaled sample values.</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>float</em>) – The mean of all scaled sample values.</p></li>
+<li><p><strong>vmin</strong> (<em>float</em>) – Minimum value among all unscaled sample values.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em>) – Maximum value among all unscaled sample values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">truncate_and_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#truncate_and_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle" title="Link to this definition"></a></dt>
+<dd><p>Truncates each user’s sample list to a fixed length and shuffles it randomly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_samples</strong> (<em>dict</em>) – Dictionary mapping users to lists of samples.</p></li>
+<li><p><strong>desired_length</strong> (<em>int</em>) – The number of samples to retain per user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>final</strong> – Dictionary containing users with <cite>desired_length</cite> samples,
+where each user’s samples are truncated and shuffled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="real-data-stock-prices">
+<h2>Real Data : Stock Prices<a class="headerlink" href="#real-data-stock-prices" title="Link to this heading"></a></h2>
 </section>
 </section>
 <section id="results">
