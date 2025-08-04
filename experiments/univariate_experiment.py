@@ -133,7 +133,7 @@ def compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50):
     for _ in range(trials):
         user_samples_scaled,true_mean_scaled = generate_univariate_scaled_data(distribution,n,m, true_mean)
         
-        estimate = dame_with_binary_search(n, alpha, m, user_samples_scaled.tolist())
+        estimate = dame_with_binary_search(n, alpha, m, user_samples_scaled)
         err1 = (estimate - true_mean_scaled)**2
         error_dame_bs.append(err1)
         estimate = kent_mean_estimator(user_samples_scaled,alpha)

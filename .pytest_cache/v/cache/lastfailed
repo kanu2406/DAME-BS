@@ -1,0 +1,4 @@
+{
+  "tests/multivariate_dame_bs_test.py::test_invalid_user_samples": true,
+  "tests/kent_test.py::test_partition_interval_last_shorter": true
+}

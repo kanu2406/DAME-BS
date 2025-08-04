@@ -73,7 +73,7 @@ def multivariate_dame_bs_l_inf(user_samples, alpha):
         X_union_j = user_samples[union_indices, :, j]
         
         #Running algorithm for each coordinate
-        theta_hat[j]=dame_with_binary_search(int(n/d), alpha, m, X_union_j.tolist())
+        theta_hat[j]=dame_with_binary_search(int(n/d), alpha, m, X_union_j)
 
 
     return theta_hat

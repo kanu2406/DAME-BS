@@ -21,7 +21,7 @@ def test_binary_search_output_format():
     delta = 0.1
 
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
-    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
 
     assert isinstance(interval, list)
     assert len(interval) == 2
@@ -43,7 +43,7 @@ def test_binary_search_no_nan_inf():
     true_mean = 0.3
     delta = 0.1
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
-    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
 
     assert not (math.isnan(interval[0]) or math.isnan(interval[1]))
     assert not (math.isinf(interval[0]) or math.isinf(interval[1]))
@@ -63,7 +63,7 @@ def test_binary_search_interval_bounds():
     delta = 0.1
 
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
-    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    interval = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
 
     assert -1<=interval[0] <=1
     assert -1<=interval[1] <=1
@@ -86,7 +86,7 @@ def test_binary_search_invalid_n_type1():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
     with pytest.raises(ValueError, match="n must be a positive integer"):
-        attempting_insertion_using_binary_search(alpha, delta, -n, m, user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, -n, m, user_samples)
 
 
 
@@ -103,7 +103,7 @@ def test_binary_search_invalid_n_type2():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
     with pytest.raises(ValueError, match="n must be a positive integer"):
-        attempting_insertion_using_binary_search(alpha, delta, n+0.5, m, user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, n+0.5, m, user_samples)
 
 
 
@@ -121,7 +121,7 @@ def test_binary_search_invalid_alpha_type():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
     with pytest.raises(ValueError, match="alpha must be a positive number"):
-        attempting_insertion_using_binary_search(-alpha, delta, n, m, user_samples.tolist())
+        attempting_insertion_using_binary_search(-alpha, delta, n, m, user_samples)
 
 
 def test_binary_search_negative_delta():
@@ -137,7 +137,7 @@ def test_binary_search_negative_delta():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
     with pytest.raises(ValueError, match="delta must be a positive number less than 1"):
-        attempting_insertion_using_binary_search(alpha, -delta, n, m, user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, -delta, n, m, user_samples)
 
 def test_binary_search_invalid_delta_range():
     """
@@ -152,7 +152,7 @@ def test_binary_search_invalid_delta_range():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
     with pytest.raises(ValueError, match="delta must be a positive number less than 1"):
-        attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
 
 
 
@@ -167,24 +167,11 @@ def test_binary_search_mismatch_samples():
     delta = 0.1
     m = 20
     true_mean = 0.3
-    user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n-1,m, true_mean)
+    user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
-    with pytest.raises(ValueError, match=f"user_samples must be a list of length {n}"):
-        attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    with pytest.raises(ValueError, match=f"user_samples must be a 2D array"):
+        attempting_insertion_using_binary_search(alpha, delta, n-1, m, user_samples)
 
-def test_binary_search_wrong_sample_length():
-    """
-    Check that an error is raised if individual user samples do not have length m.
-    """
-    np.random.seed(42)
-    alpha = 0.6
-    n = 5000
-    delta = 0.1
-    m = 20
-    true_mean = 0.3
-    user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m-1, true_mean)
-    with pytest.raises(ValueError, match=f"Each user sample must be an array-like of length {m}"):
-        attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
 
 
 def test_binary_search_warns_and_corrects_odd_n():
@@ -202,7 +189,7 @@ def test_binary_search_warns_and_corrects_odd_n():
     user_samples1,true_mean_scaled = generate_univariate_scaled_data("normal",n1,m, true_mean)
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        result1 = attempting_insertion_using_binary_search(alpha, delta, n1, m, user_samples1.tolist())  
+        result1 = attempting_insertion_using_binary_search(alpha, delta, n1, m, user_samples1)  
         assert any("is odd" in str(warning.message) for warning in w)
     
 def test_binary_search_warns_about_smaller_m():
@@ -218,7 +205,7 @@ def test_binary_search_warns_about_smaller_m():
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        result = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())  
+        result = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)  
         assert any("is below the recommended minimum 7" in str(warning.message) for warning in w)
     
     
@@ -234,7 +221,7 @@ def test_binary_search_invalid_m_not_int():
     true_mean = 0.3
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     with pytest.raises(ValueError, match=f"m must be a positive integer"):
-        attempting_insertion_using_binary_search(alpha, delta, n, "a", user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, n, "a", user_samples)
 
 
 def test_binary_search_invalid_m_negative():
@@ -250,7 +237,7 @@ def test_binary_search_invalid_m_negative():
     true_mean = 0.3
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     with pytest.raises(ValueError, match="m must be a positive integer"):
-        attempting_insertion_using_binary_search(alpha, delta, n, -m, user_samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, n, -m, user_samples)
 
     
 def test_incorrect_input_rng():
@@ -266,7 +253,7 @@ def test_incorrect_input_rng():
     user_samples ,true_mean_scaled = generate_univariate_scaled_data("normal",n,m,true_mean)
     samples = 2*user_samples
     with pytest.raises(ValueError, match=f"All entries must lie in"):
-        attempting_insertion_using_binary_search(alpha, delta, n, m, samples.tolist())
+        attempting_insertion_using_binary_search(alpha, delta, n, m, samples)
 
 
 
@@ -287,7 +274,7 @@ def test_binary_search_interval_no_noise():
 
     user_samples,true_mean_scaled = generate_univariate_scaled_data("normal",n,m, true_mean)
     
-    L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
     
     assert L <= true_mean <= R, f"True mean {true_mean} not in estimated interval [{L}, {R}]"
     assert R-L<2, f"estimated interval size has not decreased"
@@ -310,8 +297,8 @@ def test_binary_search_interval_shrinks():
     user_samples_small,_ = generate_univariate_scaled_data("normal",n_small,m, true_mean)
     user_samples_large,_ = generate_univariate_scaled_data("normal",n_large,m, true_mean)
 
-    L1, R1 = attempting_insertion_using_binary_search(alpha, delta_small, n_small, m, user_samples_small.tolist())
-    L2, R2 = attempting_insertion_using_binary_search(alpha, delta_large, n_large, m, user_samples_large.tolist())
+    L1, R1 = attempting_insertion_using_binary_search(alpha, delta_small, n_small, m, user_samples_small)
+    L2, R2 = attempting_insertion_using_binary_search(alpha, delta_large, n_large, m, user_samples_large)
 
     width1 = R1 - L1
     width2 = R2 - L2
@@ -326,6 +313,7 @@ def test_binary_search_constant_data_inf_alpha():
     n, m = 300, 20
     c = 0.2
     data = [np.full(m, c) for _ in range(n)]
+    data = np.asarray(data)
     # No privacy noise i.e. pi_alpha=1
     L, R = attempting_insertion_using_binary_search(np.inf, 0.1, n, m, data)
     # Since there is no noise, we should get the correct interval and interval size should shrink
@@ -337,5 +325,5 @@ def test_binary_search_no_iterations():
     # Using small n so t_max is 0
     n, m, alpha, delta = 8, 20, 0.5, 0.1
     user_samples,_ = generate_univariate_scaled_data("normal",n,m, 0.1)
-    L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples.tolist())
+    L, R = attempting_insertion_using_binary_search(alpha, delta, n, m, user_samples)
     assert (L, R) == (-1.0, 1.0)

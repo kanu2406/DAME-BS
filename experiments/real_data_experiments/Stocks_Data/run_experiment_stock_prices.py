@@ -32,11 +32,11 @@ def main():
     tickers = load_and_clean_tickers(n=2000)
     print("Loaded Tickers")
     # downloading close prices of each ticker
-    prices = batch_download_close_prices(tickers)
-    print("Downloaded Stock Prices")
+    # prices = batch_download_close_prices(tickers)
+    # print("Downloaded Stock Prices")
 
-    save_dict(prices, "experiments/Datasets/stock_data.pkl") #saving the data
-    # prices = load_dict("experiments/Datasets/stock_data.pkl")
+    # save_dict(prices, "experiments/Datasets/stock_data.pkl") #saving the data
+    prices = load_dict("experiments/Datasets/stock_data.pkl")
 
 
     # Computing log returns to have stationarity
@@ -83,7 +83,7 @@ def main():
         ests_kent.append(est_kent)
 
         start_time_dame_bs = time.time()
-        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, scaled_returns)
+        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, X)
         time_dame_bs.append(time.time() - start_time_dame_bs)
         est_dame_bs = 0.5 * (theta_hat_dame_bs + 1) * (max_val - min_val) + min_val #estimated mean in the orignal range
         theta_hats_dame_bs.append(theta_hat_dame_bs)

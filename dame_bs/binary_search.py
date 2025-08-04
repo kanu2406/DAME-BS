@@ -22,8 +22,8 @@ def attempting_insertion_using_binary_search(alpha,delta,n,m,user_samples):
         Number of users allocated to localization (should be n/2 of the total).
     m : int
         Number of samples per user.
-    user_samples : list of array-like
-        A list of length n, each entry an array-like of m real-valued samples for one user.
+    user_samples : lnp.ndarray of shape (n, m)
+        Each entry an array of m real-valued samples for one user.
 
     Returns:
     --------
@@ -33,49 +33,29 @@ def attempting_insertion_using_binary_search(alpha,delta,n,m,user_samples):
     # --- Input validation ---
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
+    if not isinstance(m, int) or m <= 0:
+        raise ValueError("m must be a positive integer")
+    if user_samples.shape != (n, m):
+        raise ValueError(f"user_samples must be a 2D array of shape ({n}, {m})")
+
     if n % 2 != 0:
         warnings.warn(f"n = {n} is odd; reducing user samples to {n - 1} to make it even.")
         n -= 1
         user_samples = user_samples[:n]
-    if not isinstance(m, int) or m <= 0:
-        raise ValueError("m must be a positive integer")
+    
     if not isinstance(delta, (int, float)) or delta<=0 or delta>1:
         raise ValueError("delta must be a positive number less than 1")
     if not (isinstance(alpha, (int, float)) and alpha > 0):
         raise ValueError("alpha must be a positive number")
-    if not isinstance(user_samples, (list, tuple)) or len(user_samples) != n:
-        raise ValueError(f"user_samples must be a list of length {n}")
-
-    # Check that each sample set is an iterable of length m
-    for i, sample in enumerate(user_samples):
-        if not hasattr(sample, '__len__') or len(sample) != m:
-            raise ValueError(f"Each user sample must be an array-like of length {m}")
+    
+    if not np.all((user_samples >= -1) & (user_samples <= 1)):
+        raise ValueError("All entries must lie in [-1, 1]")
         
     # check m is greater than or equal to 7
     if m< 7:
         warnings.warn(f"m = {m} is below the recommended minimum 7; result may be unreliable.")
 
-    # if isinstance(user_samples, np.ndarray):
-        
-    #     if not np.all((user_samples >= -1) & (user_samples <= 1)):
-    #         raise ValueError("All entries must lie in [-1, 1]")
-    # else:
-    #     # if it is a list
-    #     for i, row in enumerate(user_samples):
-    #         # converting each row to array for convenience
-    #         arr = np.asarray(row)
-    #         if arr.size == 0:
-    #             continue
-    #         if arr.min() < -1 or arr.max() > 1:
-    #             raise ValueError(f"All entries must lie in [-1, 1].Entry at index {i} contains values outside [-1,1]")
-        
-    for i, row in enumerate(user_samples):
-            # converting each row to array for convenience
-            arr = np.asarray(row)
-            if arr.min() < -1 or arr.max() > 1:
-                raise ValueError(f"All entries must lie in [-1, 1].Entry at index {i} contains values outside [-1,1]")
-        
-
+      
     # Precomputing the probability of truthful response under randomized response
     if alpha == np.inf:
         pi_alpha=1
@@ -109,20 +89,18 @@ def attempting_insertion_using_binary_search(alpha,delta,n,m,user_samples):
         # Process each user in the current group of size b_max
         start = t * b_max
         end = start + b_max
-        for x in user_samples[start:end]:
-            x_bar = np.mean(x)  # sample-mean for this user
 
-            # Determine true membership in I1 and I3
-            V1 = 1 if (I1_L <= x_bar <= I1_R) else 0
-            V3 = 1 if (I3_L <= x_bar <= I3_R) else 0
+        group = user_samples[start: end]
+        x_bars = np.mean(group, axis=1)
 
-            # Apply randomized response: truth with prob p, flip with prob 1-p
-            if np.random.rand() < p:
-                V1_tilde += V1
-                V3_tilde += V3
-            else:
-                V1_tilde += 1 - V1
-                V3_tilde += 1 - V3
+        V1 = (I1_L <= x_bars) & (x_bars <= I1_R)
+        V3 = (I3_L <= x_bars) & (x_bars <= I3_R)
+
+        # Randomized response
+        flips = np.random.rand(len(V1)) < pi_alpha
+        V1_tilde = np.sum(np.where(flips, V1, 1 - V1))
+        V3_tilde = np.sum(np.where(flips, V3, 1 - V3))
+
 
         # Discard the interval (I1 or I3) with smaller noisy count
         if V1_tilde < V3_tilde:

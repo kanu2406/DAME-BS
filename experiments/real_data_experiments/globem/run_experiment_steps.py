@@ -106,7 +106,7 @@ def main():
         ests_kent.append(est_kent)
 
         start_time_dame_bs = time.time()
-        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, user_samples_scaled)
+        theta_hat_dame_bs   = dame_with_binary_search(n, alpha, m, X)
         time_dame_bs.append(time.time() - start_time_dame_bs)
         est_dame_bs = 0.5 * (theta_hat_dame_bs + 1) * (max_val - min_val) + min_val #estimated mean in the orignal range
         theta_hats_dame_bs.append(theta_hat_dame_bs)
