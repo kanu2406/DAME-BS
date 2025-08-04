@@ -42,8 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Experiments</a><ul>
@@ -454,9 +453,9 @@ In our setup, each stock was considered as a separate user, and its price histor
 For each stock, we used 249 data points and compared the performance of Kent’s algorithm with DAME-BS.
 The results below show the computation time and mean squared errors, both for scaled prices within the
 range [-1, 1] and for the actual price scale.</p>
-<a class="reference internal image-reference" href="_images/mimic_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/mimic_result.png" style="width: 600px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/mimic_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/mimic_result.png" style="width: 600px;" />
 </a>
-</section>
+<div style="margin: 1em 0; text-align: center;"></section>
 <section id="mimic-iii-medical-information-mart-for-intensive-care">
 <h2>MIMIC-III (‘Medical Information Mart for Intensive Care’)<a class="headerlink" href="#mimic-iii-medical-information-mart-for-intensive-care" title="Link to this heading"></a></h2>
 <p>We conducted this experiment using MIMIC-III Dataset which consists of comprehensive clinical data of critical
@@ -465,9 +464,9 @@ We could only find data for 48 patients with 11 samples per user. We conducted m
 DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
-<a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
 </a>
-</section>
+<div style="margin: 1em 0; text-align: center;"></section>
 <section id="globem-dataset">
 <h2>GLOBEM Dataset<a class="headerlink" href="#globem-dataset" title="Link to this heading"></a></h2>
 <p>We conducted this experiment using GLOBEM Dataset which consists of data from a mobile phone and
@@ -479,13 +478,13 @@ We used steps from four segments of the day and total sleep duration per day for
 For both cases, we conducted mean estimation using DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
-<p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results for steps data -</p>
-<a class="reference internal image-reference" href="_images/steps_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/steps_result.png" style="width: 600px;" />
+<p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results -</p>
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/steps_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/steps_result.png" style="width: 600px;" />
 </a>
-<p>For sleep data, we had a total of 40 user with 15 samples per user. Here are the results for sleep data -</p>
-<a class="reference internal image-reference" href="_images/sleep_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/sleep_result.png" style="width: 600px;" />
+<div style="margin: 2em 0;"><p>For sleep data, we had a total of 40 users with 15 samples per user. Here are the results -</p>
+<div style="margin: 2em 0;"><a class="reference internal image-reference" href="_images/sleep_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/sleep_result.png" style="width: 600px;" />
 </a>
-</section>
+<div style="margin: 2em 0;"></section>
 </section>
 
 

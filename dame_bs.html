@@ -42,8 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">dame_bs package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-dame_bs.binary_search">dame_bs.binary_search</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dame_bs.binary_search.attempting_insertion_using_binary_search"><code class="docutils literal notranslate"><span class="pre">attempting_insertion_using_binary_search()</span></code></a></li>
@@ -96,10 +95,7 @@
              
   <section id="dame-bs-package">
 <h1>dame_bs package<a class="headerlink" href="#dame-bs-package" title="Link to this heading"></a></h1>
-<p>The <strong>dame_bs</strong> package provides a set of functions for private mean estimation under user level
-Local Differential Privacy (LDP) using the algorithm called DAME-BS (Distribution-Aware Mean Estimation
-under User-level Local Differential Privacy using Binary Search) for univariate and multivariate cases.
-The following functions are implemented -</p>
+<p>This is the main part which contains the code for the main algorithms. The following functions are implemented -</p>
 <ul class="simple">
 <li><p>A binary-search based subroutine (<cite>dame_bs.binary_search</cite>) that is responsible for the localization phase and returns the interval that contains estimated private mean.</p></li>
 <li><p>The core function of DAME-BS algorithm which combine localization and estimation phase and returns final estimated mean for univariate data (<cite>dame_bs.dame_bs</cite>).</p></li>
@@ -127,7 +123,7 @@ are exhausted, returning the remaining interval.</p>
 </dd>
 <dt>m<span class="classifier">int</span></dt><dd><p>Number of samples per user.</p>
 </dd>
-<dt>user_samples<span class="classifier">list of array-like</span></dt><dd><p>A list of length n, each entry an array-like of m real-valued samples for one user.</p>
+<dt>user_samples<span class="classifier">lnp.ndarray of shape (n, m)</span></dt><dd><p>Each entry an array of m real-valued samples for one user.</p>
 </dd>
 </dl>
 </section>
@@ -157,7 +153,7 @@ are exhausted, returning the remaining interval.</p>
 </dd>
 <dt>m<span class="classifier">int</span></dt><dd><p>number of samples per user</p>
 </dd>
-<dt>user_samples: list or array of shape (n, m)</dt><dd><p>User samples that will be used to estimate the mean.</p>
+<dt>user_samples: np.ndarray of shape (n, m)</dt><dd><p>User samples that will be used to estimate the mean.</p>
 </dd>
 </dl>
 </div></blockquote>

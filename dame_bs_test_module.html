@@ -42,8 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
@@ -68,7 +67,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_output_format"><code class="docutils literal notranslate"><span class="pre">test_binary_search_output_format()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_warns_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_about_smaller_m()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_binary_search_wrong_sample_length()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.binary_search_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
 </ul>
 </li>
@@ -84,7 +82,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_no_noise"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_no_noise()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_output_range"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_output_range()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_wrong_sample_length()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.dame_bs_test.test_output_range_and_type"><code class="docutils literal notranslate"><span class="pre">test_output_range_and_type()</span></code></a></li>
 </ul>
@@ -255,12 +252,6 @@ Compares interval widths for smaller and larger n.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.binary_search_test.test_binary_search_wrong_sample_length">
-<span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_binary_search_wrong_sample_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_binary_search_wrong_sample_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_binary_search_wrong_sample_length" title="Link to this definition"></a></dt>
-<dd><p>Check that an error is raised if individual user samples do not have length m.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="tests.binary_search_test.test_incorrect_input_rng">
 <span class="sig-prename descclassname"><span class="pre">tests.binary_search_test.</span></span><span class="sig-name descname"><span class="pre">test_incorrect_input_rng</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/binary_search_test.html#test_incorrect_input_rng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.binary_search_test.test_incorrect_input_rng" title="Link to this definition"></a></dt>
 <dd><p>Check that ValueError is raised if data is not in [-1,1].</p>
@@ -334,12 +325,6 @@ Checks that estimated mean is within valid range and close to the true mean.</p>
 <dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n">
 <span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_warns_and_corrects_odd_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_warns_and_corrects_odd_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n" title="Link to this definition"></a></dt>
 <dd><p>Check that a warning is issued when n is odd and corrected internally.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length">
-<span class="sig-prename descclassname"><span class="pre">tests.dame_bs_test.</span></span><span class="sig-name descname"><span class="pre">test_dame_with_binary_search_wrong_sample_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/dame_bs_test.html#test_dame_with_binary_search_wrong_sample_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length" title="Link to this definition"></a></dt>
-<dd><p>Check that an error is raised if individual user samples do not have length m.</p>
 </dd></dl>
 
 <dl class="py function">
