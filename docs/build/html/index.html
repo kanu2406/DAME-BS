@@ -16,6 +16,7 @@
       <script src="_static/documentation_options.js?v=2709fde1"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,8 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
@@ -76,205 +76,51 @@
              
   <section id="welcome-to-dame-bs-documentation">
 <h1>Welcome to dame_bs documentation<a class="headerlink" href="#welcome-to-dame-bs-documentation" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <strong>dame_bs</strong> package provides a set of functions for private mean estimation under user level
+Local Differential Privacy (LDP) using the algorithm called DAME-BS (Distribution-Aware Mean Estimation
+under User-level Local Differential Privacy using Binary Search) for univariate and multivariate cases.
+The algorithm is structured as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Localization Phase:</strong> The first half of users are used to identify an interval likely to contain the true mean. This is done privately using a binary search mechanism.</p></li>
+<li><p><strong>Estimation Phase:</strong> The second half of users project their sample averages onto the localized interval and laplacian noise is added to it. The final estimate is the average of all noisy reports.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="theoretical-guarantees-for-univariate-case">
+<h2>Theoretical guarantees for univariate case<a class="headerlink" href="#theoretical-guarantees-for-univariate-case" title="Link to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>The number of samples per user <cite>m</cite> must satisfy:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[m \geq \frac{1}{2}\left(\frac{3}{2}\right)^4 \ln(12) \approx 6.28\]</div>
+<ul class="simple">
+<li><p>Under this assumption, the expected mean squared error of the estimate is bounded by:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\begin{aligned}
+\mathbb{E}\bigl[(\hat{\theta}-\theta)^2\bigr]
+&amp;\le
+\frac{389}{nm\alpha^2}\Bigl\{\ln\bigl(2nm\alpha^2\bigr)\vee 1\Bigr\}\\
+&amp;\quad
++16\max\!\Bigl\{\,2n\exp\!\Bigl(-\tfrac{n(2\pi_\alpha-1)^2}{2}\Bigr),\;
+\frac{9}{\alpha\sqrt{8}}\exp\!\Bigl(-\tfrac{1}{4}(2\pi_\alpha-1)\sqrt{n}\Bigr)\Bigr\}
+\end{aligned}</div><p>where <cite>α</cite> is the privacy parameter, <cite>n</cite> is the number of users, and <cite>π_α</cite> is a function of α.</p>
+</div></blockquote>
+<p class="rubric">Contents of this package -</p>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dame_bs.html#module-dame_bs.binary_search">dame_bs.binary_search</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs.html#dame_bs.binary_search.attempting_insertion_using_binary_search"><code class="docutils literal notranslate"><span class="pre">attempting_insertion_using_binary_search()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dame_bs.html#module-dame_bs.dame_bs">dame_bs.dame_bs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs.html#dame_bs.dame_bs.dame_with_binary_search"><code class="docutils literal notranslate"><span class="pre">dame_with_binary_search()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dame_bs.html#module-dame_bs.multivariate_dame_bs">dame_bs.multivariate_dame_bs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs.html#dame_bs.multivariate_dame_bs.multivariate_dame_bs_l_inf"><code class="docutils literal notranslate"><span class="pre">multivariate_dame_bs_l_inf()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dame_bs.html#module-dame_bs.utils">dame_bs.utils</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs.html#dame_bs.utils.plot_errorbars"><code class="docutils literal notranslate"><span class="pre">plot_errorbars()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs.html#dame_bs.utils.theoretical_upper_bound"><code class="docutils literal notranslate"><span class="pre">theoretical_upper_bound()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kent.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kent.html#module-kent.kent">kent.kent module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kent.html#kent.kent.kent_mean_estimator"><code class="docutils literal notranslate"><span class="pre">kent_mean_estimator()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="kent.html#kent.kent.partition_interval"><code class="docutils literal notranslate"><span class="pre">partition_interval()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kent.html#module-kent.multivariate_kent">kent.multivariate_kent module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kent.html#kent.multivariate_kent.kent_multivariate_estimator"><code class="docutils literal notranslate"><span class="pre">kent_multivariate_estimator()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#module-experiments.univariate_experiment">Univariate Experiments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.univariate_experiment.compare_univariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_univariate_algorithms()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_univariate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.univariate_experiment.generate_univariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_univariate_scaled_data()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#module-experiments.multivariate_experiment">Multivariate Experiments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.multivariate_experiment.compare_multivariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_multivariate_algorithms()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_multivariate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#module-experiments.real_data_experiments.mimic.preprocess">Real Data : MIMIC-III</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.mimic.preprocess.scaling_data"><code class="docutils literal notranslate"><span class="pre">scaling_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle"><code class="docutils literal notranslate"><span class="pre">truncate_and_shuffle()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.mimic.run_experiment_mimic.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#module-experiments.real_data_experiments.stocks_data.preprocess">Real Data : Stock Prices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices"><code class="docutils literal notranslate"><span class="pre">batch_download_close_prices()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.check_stationarity"><code class="docutils literal notranslate"><span class="pre">check_stationarity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.compute_log_returns"><code class="docutils literal notranslate"><span class="pre">compute_log_returns()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.filter_and_truncate"><code class="docutils literal notranslate"><span class="pre">filter_and_truncate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers"><code class="docutils literal notranslate"><span class="pre">load_and_clean_tickers()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_dict"><code class="docutils literal notranslate"><span class="pre">load_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.save_dict"><code class="docutils literal notranslate"><span class="pre">save_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.preprocess.scale_series"><code class="docutils literal notranslate"><span class="pre">scale_series()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.stocks_data.run_experiment_stock_prices.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#module-experiments.real_data_experiments.globem.preprocess">Real Data : GLOBEM</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep"><code class="docutils literal notranslate"><span class="pre">load_and_select_sleep()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_steps"><code class="docutils literal notranslate"><span class="pre">load_and_select_steps()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.preprocess.scaling"><code class="docutils literal notranslate"><span class="pre">scaling()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.preprocess.truncating_data"><code class="docutils literal notranslate"><span class="pre">truncating_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.run_experiment_sleep.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="experiments.html#experiments.real_data_experiments.globem.run_experiment_steps.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#univariate-case">Univariate case</a></li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#multivariate-case">Multivariate case</a></li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#real-world-data">Real World Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#stock-prices">Stock Prices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#mimic-iii-medical-information-mart-for-intensive-care">MIMIC-III (‘Medical Information Mart for Intensive Care’)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="experiments.html#globem-dataset">GLOBEM Dataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dame_bs_test_module.html">Unit tests for dame_bs Algorithm</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs_test_module.html#module-tests.binary_search_test">tests.binary_search_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_constant_data_inf_alpha"><code class="docutils literal notranslate"><span class="pre">test_binary_search_constant_data_inf_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_interval_bounds"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_bounds()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_interval_no_noise"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_interval_shrinks"><code class="docutils literal notranslate"><span class="pre">test_binary_search_interval_shrinks()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_alpha_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_delta_range"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_delta_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_m_negative"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_m_negative()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_m_not_int"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_m_not_int()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_n_type1"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_n_type1()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_invalid_n_type2"><code class="docutils literal notranslate"><span class="pre">test_binary_search_invalid_n_type2()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_mismatch_samples"><code class="docutils literal notranslate"><span class="pre">test_binary_search_mismatch_samples()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_negative_delta"><code class="docutils literal notranslate"><span class="pre">test_binary_search_negative_delta()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_no_iterations"><code class="docutils literal notranslate"><span class="pre">test_binary_search_no_iterations()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_no_nan_inf"><code class="docutils literal notranslate"><span class="pre">test_binary_search_no_nan_inf()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_output_format"><code class="docutils literal notranslate"><span class="pre">test_binary_search_output_format()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_warns_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_about_smaller_m()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_binary_search_wrong_sample_length()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.binary_search_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs_test_module.html#module-tests.dame_bs_test">tests.dame_bs_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_binary_search_warns_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_binary_search_warns_about_smaller_m()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_on_constant_data_inf_alpha"><code class="docutils literal notranslate"><span class="pre">test_dame_on_constant_data_inf_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_alpha_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_negative"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_m_negative()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_m_not_int"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_m_not_int()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type1"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_n_type1()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_invalid_n_type2"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_invalid_n_type2()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_mismatch_samples"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_mismatch_samples()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_no_noise"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_output_range"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_output_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_warns_and_corrects_odd_n"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_warns_and_corrects_odd_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_dame_with_binary_search_wrong_sample_length"><code class="docutils literal notranslate"><span class="pre">test_dame_with_binary_search_wrong_sample_length()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_incorrect_input_rng"><code class="docutils literal notranslate"><span class="pre">test_incorrect_input_rng()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.dame_bs_test.test_output_range_and_type"><code class="docutils literal notranslate"><span class="pre">test_output_range_and_type()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs_test_module.html#module-tests.multivariate_dame_bs_test">tests.multivariate_dame_bs_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_about_small_n"><code class="docutils literal notranslate"><span class="pre">test_about_small_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_about_smaller_m"><code class="docutils literal notranslate"><span class="pre">test_about_smaller_m()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_constant_data_exact_recovery"><code class="docutils literal notranslate"><span class="pre">test_constant_data_exact_recovery()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_exact_multiple_of_2d"><code class="docutils literal notranslate"><span class="pre">test_exact_multiple_of_2d()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_invalid_alpha_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_invalid_n"><code class="docutils literal notranslate"><span class="pre">test_invalid_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_invalid_user_samples_wrong_dim"><code class="docutils literal notranslate"><span class="pre">test_invalid_user_samples_wrong_dim()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_negative_alpha"><code class="docutils literal notranslate"><span class="pre">test_negative_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_no_noise"><code class="docutils literal notranslate"><span class="pre">test_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_output_range"><code class="docutils literal notranslate"><span class="pre">test_output_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.multivariate_dame_bs_test.test_values_out_of_range"><code class="docutils literal notranslate"><span class="pre">test_values_out_of_range()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="dame_bs_test_module.html#module-tests.utils_test">tests.utils_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_bound_decreases_with_m"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_m()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_bound_decreases_with_n"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_estimate_within_error_and_bound"><code class="docutils literal notranslate"><span class="pre">test_estimate_within_error_and_bound()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_invalid_parameters"><code class="docutils literal notranslate"><span class="pre">test_invalid_parameters()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_plot_errorbars_runs"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_plot_errorbars_runs_with_ub"><code class="docutils literal notranslate"><span class="pre">test_plot_errorbars_runs_with_ub()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_theoretical_bound_no_noise"><code class="docutils literal notranslate"><span class="pre">test_theoretical_bound_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dame_bs_test_module.html#tests.utils_test.test_theoretical_upper_bound_valid"><code class="docutils literal notranslate"><span class="pre">test_theoretical_upper_bound_valid()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kent_test_module.html">Unit tests for Kent’s Algorithm</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kent_test_module.html#module-tests.kent_test">tests.kent_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_coverage"><code class="docutils literal notranslate"><span class="pre">test_coverage()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_dame_on_constant_data_inf_alpha"><code class="docutils literal notranslate"><span class="pre">test_dame_on_constant_data_inf_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_delta_zero"><code class="docutils literal notranslate"><span class="pre">test_delta_zero()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_empty_list_raises"><code class="docutils literal notranslate"><span class="pre">test_empty_list_raises()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_list_element_not_iterable"><code class="docutils literal notranslate"><span class="pre">test_list_element_not_iterable()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_list_ragged_lengths"><code class="docutils literal notranslate"><span class="pre">test_list_ragged_lengths()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_ndarray_1d_raises"><code class="docutils literal notranslate"><span class="pre">test_ndarray_1d_raises()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_ndarray_3d_raises"><code class="docutils literal notranslate"><span class="pre">test_ndarray_3d_raises()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_negative_K"><code class="docutils literal notranslate"><span class="pre">test_negative_K()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_negative_alpha"><code class="docutils literal notranslate"><span class="pre">test_negative_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_no_noise"><code class="docutils literal notranslate"><span class="pre">test_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_non_array_non_list_raises"><code class="docutils literal notranslate"><span class="pre">test_non_array_non_list_raises()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_out_of_range_entries"><code class="docutils literal notranslate"><span class="pre">test_out_of_range_entries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_output_range_and_type"><code class="docutils literal notranslate"><span class="pre">test_output_range_and_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_partition_interval_even_division"><code class="docutils literal notranslate"><span class="pre">test_partition_interval_even_division()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_partition_interval_single"><code class="docutils literal notranslate"><span class="pre">test_partition_interval_single()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_small_T_star_path"><code class="docutils literal notranslate"><span class="pre">test_small_T_star_path()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_small_and_large_delta"><code class="docutils literal notranslate"><span class="pre">test_small_and_large_delta()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_test.test_zero_K"><code class="docutils literal notranslate"><span class="pre">test_zero_K()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="kent_test_module.html#module-tests.kent_multivariate_test">tests.ken_multivariate_test module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_about_small_n"><code class="docutils literal notranslate"><span class="pre">test_about_small_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_constant_data_exact_recovery"><code class="docutils literal notranslate"><span class="pre">test_constant_data_exact_recovery()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_exact_multiple_of_2d"><code class="docutils literal notranslate"><span class="pre">test_exact_multiple_of_2d()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_invalid_K"><code class="docutils literal notranslate"><span class="pre">test_invalid_K()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_invalid_alpha_type"><code class="docutils literal notranslate"><span class="pre">test_invalid_alpha_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_invalid_n"><code class="docutils literal notranslate"><span class="pre">test_invalid_n()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_invalid_user_samples_wrong_dim"><code class="docutils literal notranslate"><span class="pre">test_invalid_user_samples_wrong_dim()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_negative_K"><code class="docutils literal notranslate"><span class="pre">test_negative_K()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_negative_alpha"><code class="docutils literal notranslate"><span class="pre">test_negative_alpha()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_no_noise"><code class="docutils literal notranslate"><span class="pre">test_no_noise()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_output_range"><code class="docutils literal notranslate"><span class="pre">test_output_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kent_test_module.html#tests.kent_multivariate_test.test_values_out_of_range"><code class="docutils literal notranslate"><span class="pre">test_values_out_of_range()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
 </ul>
 </div>
+</section>
 </section>
 
 

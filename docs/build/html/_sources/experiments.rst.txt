@@ -147,12 +147,19 @@ For each stock, we used 249 data points and compared the performance of Kent's a
 The results below show the computation time and mean squared errors, both for scaled prices within the 
 range [-1, 1] and for the actual price scale.
 
+
+.. raw:: html
+
+   <div style="margin: 1em 0; text-align: center;">
+
 .. image:: ../figures/mimic_result.png
    :alt: MSE for DAME-BS and Kent
    :align: center
    :width: 600px
 
+.. raw:: html
 
+   <div style="margin: 1em 0; text-align: center;">
 
 
 
@@ -166,10 +173,18 @@ DAME-BS and Kent's algorithm 500 times and report MSE (for both scaled and unsca
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users 
 and low number of samples per user.
 
+.. raw:: html
+
+   <div style="margin: 1em 0; text-align: center;">
+
 .. image:: ../figures/Stocks_Data_Result.png
    :alt: MSE for DAME-BS and Kent
    :align: center
    :width: 600px
+
+.. raw:: html
+
+   <div style="margin: 1em 0; text-align: center;">
 
 
 GLOBEM Dataset
@@ -186,8 +201,11 @@ and average time taken by both algorithms. The results were limited in quality d
 and low number of samples per user.
 
 
-For steps data, we had a total of 40 user with 88 samples per user. Here are the results for steps data - 
+For steps data, we had a total of 40 user with 88 samples per user. Here are the results - 
 
+.. raw:: html
+
+   <div style="margin: 1em 0; text-align: center;">
 
 .. image:: ../figures/steps_result.png
    :alt: MSE for DAME-BS and Kent
@@ -195,10 +213,22 @@ For steps data, we had a total of 40 user with 88 samples per user. Here are the
    :width: 600px
 
 
-For sleep data, we had a total of 40 user with 15 samples per user. Here are the results for sleep data - 
+.. raw:: html
 
+   <div style="margin: 2em 0;">
+
+For sleep data, we had a total of 40 users with 15 samples per user. Here are the results - 
+
+
+.. raw:: html
+
+   <div style="margin: 2em 0;">
 
 .. image:: ../figures/sleep_result.png
    :alt: MSE for DAME-BS and Kent
    :align: center
    :width: 600px
+
+.. raw:: html
+
+   <div style="margin: 2em 0;">
