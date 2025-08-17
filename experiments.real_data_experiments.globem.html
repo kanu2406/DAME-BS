@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>experiments.real_data_experiments.globem package &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">experiments.real_data_experiments.globem package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/experiments.real_data_experiments.globem.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="experiments-real-data-experiments-globem-package">
+<h1>experiments.real_data_experiments.globem package<a class="headerlink" href="#experiments-real-data-experiments-globem-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-experiments.real_data_experiments.globem.preprocess">
+<span id="experiments-real-data-experiments-globem-preprocess-module"></span><h2>experiments.real_data_experiments.globem.preprocess module<a class="headerlink" href="#module-experiments.real_data_experiments.globem.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.append_row_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">append_row_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#append_row_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.append_row_csv" title="Link to this definition"></a></dt>
+<dd><p>Append a single row of results to an existing CSV file.</p>
+<p>This function ensures the parent directory exists and then
+appends a new row (provided as a dictionary) to the CSV file.
+If the file does not already exist, it is the caller’s
+responsibility to initialize it with <cite>init_results_csv</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path to the CSV file.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – A dictionary where keys correspond to column names and
+values correspond to row entries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the new row to the CSV file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.init_results_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">init_results_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#init_results_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.init_results_csv" title="Link to this definition"></a></dt>
+<dd><p>Initialize (create or overwrite) a results CSV file with
+predefined column headers.</p>
+<p>This function ensures the parent directory exists, then
+creates a CSV file with the expected schema for storing
+per-trial results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – File path where the CSV will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the CSV file to disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.load_and_select_sleep">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_and_select_sleep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#load_and_select_sleep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep" title="Link to this definition"></a></dt>
+<dd><p>Load and preprocess sleep duration data from a CSV file.
+This function reads Fitbit sleep data and selects only the participant ID (<cite>pid</cite>),
+date, and total duration of sleep (main sleep) for the day.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the CSV file containing the sleep data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with columns: ‘pid’, ‘date’, and ‘sleep_duration’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.load_and_select_steps">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_and_select_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#load_and_select_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.load_and_select_steps" title="Link to this definition"></a></dt>
+<dd><p>Load and preprocess step count data from a CSV file containing steps data of users.
+This function reads the Fitbit intraday step data and selects only relevant columns:
+participant ID (<cite>pid</cite>), date, and the sum of steps for each time segment of the day
+(morning, afternoon, evening, night). It then renames those columns for readability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the CSV file containing the step data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with columns: ‘pid’, ‘date’, ‘steps_morning’,
+‘steps_afternoon’, ‘steps_evening’, and ‘steps_night’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.make_file">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#make_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.make_file" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the directory for a given file path exists.</p>
+<p>This function extracts the directory portion of the given file path
+and checks if it exists. If it does not exist, it creates the
+directory (including any intermediate directories as needed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A path-like object representing a file system path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return anything. It ensures the
+parent directory exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.make_seed">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#make_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.make_seed" title="Link to this definition"></a></dt>
+<dd><p>Generate a deterministic 32-bit integer seed from a base seed
+and a trial index.</p>
+<p>The function concatenates the <cite>base_seed</cite> and <cite>trial_index</cite>,
+hashes the string using MD5, and returns the first 32 bits
+(8 hex characters) of the hash as an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_seed</strong> (<em>int</em>) – The base seed value used for reproducibility.</p></li>
+<li><p><strong>trial_index</strong> (<em>int</em>) – The trial index used to generate unique seeds across trials.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A deterministic 32-bit integer seed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.scaling">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">scaling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#scaling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.scaling" title="Link to this definition"></a></dt>
+<dd><p>Scales user sample data to the range [-1, 1] and computes the mean before and after scaling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – Dictionary where keys are user IDs and values are lists of numeric samples.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>- user_samples_scaled</strong> (<em>list of list</em>) – Scaled user samples.</p></li>
+<li><p><strong>- min_val</strong> (<em>float</em>) – Minimum value before scaling.</p></li>
+<li><p><strong>- max_val</strong> (<em>float</em>) – Maximum value before scaling.</p></li>
+<li><p><strong>- true_mean</strong> (<em>float</em>) – True mean before scaling.</p></li>
+<li><p><strong>- true_mean_scaled</strong> (<em>float</em>) – True mean after scaling.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.truncating_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">truncating_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#truncating_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.truncating_data" title="Link to this definition"></a></dt>
+<dd><p>Truncates each user’s data to the same number of samples (minimum length among all users),
+after shuffling their individual sample lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – Dictionary where keys are user IDs and values are lists of numeric samples.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>- dict</strong> (<em>Truncated dictionary of user samples with uniform length.</em>)</p></li>
+<li><p><strong>- int</strong> (<em>Number of samples per user after truncation.</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.real_data_experiments.globem.run_sleep_experiment">
+<span id="experiments-real-data-experiments-globem-run-sleep-experiment-module"></span><h2>experiments.real_data_experiments.globem.run_sleep_experiment module<a class="headerlink" href="#module-experiments.real_data_experiments.globem.run_sleep_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_sleep_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_sleep_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_sleep_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_sleep_experiment.main" title="Link to this definition"></a></dt>
+<dd><p>Main experiment function for evaluating Kent’s algorithm and DAME-BS
+on GLOBEM sleep duration data.</p>
+<section id="steps">
+<h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Loads and concatenates multiple CSV files containing Fitbit-derived sleep duration.</p></li>
+<li><p>Handles missing data and prepares a uniform sample length across users.</p></li>
+<li><p>Scales the sleep duration values to the range [-1, 1].</p></li>
+<li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-experiments.real_data_experiments.globem.run_steps_experiment">
+<span id="experiments-real-data-experiments-globem-run-steps-experiment-module"></span><h2>experiments.real_data_experiments.globem.run_steps_experiment module<a class="headerlink" href="#module-experiments.real_data_experiments.globem.run_steps_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_steps_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_steps_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_steps_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_steps_experiment.main" title="Link to this definition"></a></dt>
+<dd><p>Executes the mean estimation experiment on segmented step count data.</p>
+<section id="id1">
+<h3>Steps:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Load 4 CSV files containing Fitbit-derived step counts over different time segments of the day.</p></li>
+<li><p>Preprocess the data: merge, remove NaNs, flatten per-user data, and truncate to uniform length.</p></li>
+<li><p>Scale data to the [-1, 1] range and compute true means.</p></li>
+<li><p>Shuffle users and run both estimation algorithms (Kent’s and DAME-BS) 500 times.</p></li>
+<li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-experiments.real_data_experiments.globem">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-experiments.real_data_experiments.globem" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

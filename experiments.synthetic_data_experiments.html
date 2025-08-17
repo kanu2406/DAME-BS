@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>experiments.synthetic_data_experiments package &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">experiments.synthetic_data_experiments package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/experiments.synthetic_data_experiments.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="experiments-synthetic-data-experiments-package">
+<h1>experiments.synthetic_data_experiments package<a class="headerlink" href="#experiments-synthetic-data-experiments-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-experiments.synthetic_data_experiments.multivariate_experiment">
+<span id="experiments-synthetic-data-experiments-multivariate-experiment-module"></span><h2>experiments.synthetic_data_experiments.multivariate_experiment module<a class="headerlink" href="#module-experiments.synthetic_data_experiments.multivariate_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.generate_multivariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_multivariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#generate_multivariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.generate_multivariate_scaled_data" title="Link to this definition"></a></dt>
+<dd><p>Generates and scales multivariate samples into [-1,1]^d.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – Supported Distributions {“normal”,”uniform”,”standard_t”,”binomial”}.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users (i.e. number of independent sample‐sets).</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of each dimension.</p></li>
+<li><p><strong>true_mean</strong> (<em>array‐like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – The ground‐truth mean vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>ndarray, shape (n, m, d)</em>) – All user samples, scaled so each coordinate lies in [-1,1].</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>ndarray, shape (d,)</em>) – The true_mean vector under the same per‐coordinate scaling.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.run_param_multivariate">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">run_param_multivariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_per_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_csv_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results_param.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#run_param_multivariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.run_param_multivariate" title="Link to this definition"></a></dt>
+<dd><p>Parallel experiment runner for multivariate trials.</p>
+<p>Varies one parameter (<cite>alpha</cite>, <cite>n</cite>, <cite>m</cite>, or <cite>d</cite>) across a grid of values,
+runs multiple independent trials in parallel, evaluates both estimators
+(DAME-BS and Kent), writes results incrementally to CSV, and summarizes
+error statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param_name</strong> (<em>{&quot;alpha&quot;</em><em>, </em><em>&quot;n&quot;</em><em>, </em><em>&quot;m&quot;</em><em>, </em><em>&quot;d&quot;}</em>) – Which parameter to vary across the experiment.</p></li>
+<li><p><strong>param_values</strong> (<em>list</em>) – Sequence of values for the chosen parameter.</p></li>
+<li><p><strong>fixed_n</strong> (<em>int</em>) – Fixed number of users (used when param_name is not “n”).</p></li>
+<li><p><strong>fixed_m</strong> (<em>int</em>) – Fixed number of samples per user (used when param_name is not “m”).</p></li>
+<li><p><strong>fixed_alpha</strong> (<em>float</em>) – Fixed privacy/confidence parameter (used when param_name is not “alpha”).</p></li>
+<li><p><strong>fixed_d</strong> (<em>int</em>) – Fixed data dimensionality (used when param_name is not “d”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type used to generate synthetic multivariate data.</p></li>
+<li><p><strong>true_mean</strong> (<em>array-like</em>) – Ground-truth mean vector of the generating distribution.
+If <cite>param_name == “d”</cite>, this is reset automatically to <cite>[0.1] * d</cite>.</p></li>
+<li><p><strong>trials_per_setting</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=50</em><em>)</em>) – Number of independent trials per parameter value.</p></li>
+<li><p><strong>base_seed</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=42</em><em>)</em>) – Base seed for reproducibility; combined with indices to generate per-trial seeds.</p></li>
+<li><p><strong>out_csv_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;results_param.csv&quot;</em><em>)</em>) – Path to write per-trial results in CSV format (overwritten if exists).</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=8</em><em>)</em>) – Number of worker processes to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>results</strong> – Dictionary with keys:
+- “param_values” : list of parameter values (in original order)
+- “median_dame”, “lower10_dame”, “upper90_dame”
+- “median_kent”, “lower10_kent”, “upper90_kent”
+- “df” : pandas DataFrame with all per-trial rows</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.single_trial">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">single_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#single_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.single_trial" title="Link to this definition"></a></dt>
+<dd><p>Run one complete multivariate experimental trial.</p>
+<p>This function generates synthetic multivariate data, runs both the
+DAME-BS and Kent estimators, and collects their performance metrics
+(mean squared error and runtime). Results are returned in a dict that
+can be written directly to CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter for the estimators.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of the multivariate distribution.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type used for synthetic data generation
+(supported values : “normal”,”uniform”,”binomial”,”standard_t”).</p></li>
+<li><p><strong>true_mean</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – Ground-truth mean vector of the generating distribution
+(before scaling).</p></li>
+<li><p><strong>trial_seed</strong> (<em>int</em>) – Random seed controlling reproducibility of this trial.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>row</strong> – Dictionary with per-trial results containing keys:
+- “n”, “m”, “alpha”, “d”, “distribution”, “true_mean”, “seed”
+- “dame_estimate”, “dame_mse”, “dame_time”
+- “kent_estimate”, “kent_mse”, “kent_time”
+- “status” : “ok” or error string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.synthetic_data_experiments.run_experiments">
+<span id="experiments-synthetic-data-experiments-run-experiments-module"></span><h2>experiments.synthetic_data_experiments.run_experiments module<a class="headerlink" href="#module-experiments.synthetic_data_experiments.run_experiments" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.run_experiments.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.run_experiments.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/run_experiments.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.run_experiments.main" title="Link to this definition"></a></dt>
+<dd><p>Main execution function that runs a series of experiments across:
+- Univariate distributions (Normal, Uniform, Binomial)
+- Multivariate distributions with varying dimensions</p>
+<p>Each distribution is evaluated under variation for different value of following parameters:
+- <cite>alpha</cite> (privacy parameter)
+- <cite>n</cite> (number of users)
+- <cite>m</cite> (number of samples per user)
+- <cite>d</cite> (dimensionality)</p>
+<p>The true mean used for comparison is fixed (scalar for univariate, vector for multivariate).
+Each experiment is repeated for a fixed number of trials = 50.</p>
+</dd></dl>
+
+</section>
+<section id="module-experiments.synthetic_data_experiments.univariate_experiment">
+<span id="experiments-synthetic-data-experiments-univariate-experiment-module"></span><h2>experiments.synthetic_data_experiments.univariate_experiment module<a class="headerlink" href="#module-experiments.synthetic_data_experiments.univariate_experiment" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_univariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#generate_univariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data" title="Link to this definition"></a></dt>
+<dd><p>Generate and linearly scale univariate user samples into [-1,1].
+This function simulates <cite>n</cite> users each providing <cite>m</cite> samples drawn from a
+specified one‑dimensional distribution centered (in expectation) at
+<cite>true_mean</cite>, and then rescales <em>all</em> samples (and the true mean) to lie in
+the interval [-1, 1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>str</em>) – <p>Which distribution to sample from. Supported values are:</p>
+<ul>
+<li><p>”normal”    : Gaussian N(true_mean, 1^2)</p></li>
+<li><p>”uniform”   : Uniform U(true_mean - 1, true_mean + 1)</p></li>
+<li><dl class="simple">
+<dt>”standard_t”<span class="classifier">Student’s t distribution with degrees of freedom = 3</span></dt><dd><p>and expected value shifted to true_mean</p>
+</dd>
+</dl>
+</li>
+<li><p>”binomial”  : Binomial with number of trials as 50 and probability of success as true_mean/50</p></li>
+</ul>
+</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users (i.e., how many independent sample‐sets to generate).</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of i.i.d. samples per user.</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – The ground‐truth mean around which samples are generated; also used
+to compute the scaled “true_mean” output.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>user_samples_scaled</strong> (<em>ndarray of shape (n, m)</em>) – The generated samples for all users, after rescaling linearly so the
+<em>minimum</em> across all samples maps to -1 and the <em>maximum</em> maps to +1.</p></li>
+<li><p><strong>true_mean_scaled</strong> (<em>float</em>) – The location of <cite>true_mean</cite> on the same linear map (i.e. the point in
+[-1,1] where the original <cite>true_mean</cite> falls).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.run_param">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">run_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_per_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_csv_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results_param.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#run_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.run_param" title="Link to this definition"></a></dt>
+<dd><p>Run multiple experimental trials varying one parameter.</p>
+<p>For each value in <cite>param_values</cite>, this function runs
+<cite>trials_per_setting</cite> independent trials in parallel (using a process pool),
+evaluates both DAME-BS and Kent estimators, and writes results to CSV.
+Summary statistics (median, quantile error rates and computation time) are also returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param_name</strong> (<em>{&quot;alpha&quot;</em><em>, </em><em>&quot;n&quot;</em><em>, </em><em>&quot;m&quot;}</em>) – Which parameter to vary across the experiment among privacy parameter (alpha), number of users (n) or number of samples per users (m)</p></li>
+<li><p><strong>param_values</strong> (<em>list</em>) – List of values for the chosen parameter.</p></li>
+<li><p><strong>fixed_n</strong> (<em>int</em>) – Fixed number of users (used when param_name is not “n”).</p></li>
+<li><p><strong>fixed_m</strong> (<em>int</em>) – Fixed number of samples per user (used when param_name is not “m”).</p></li>
+<li><p><strong>fixed_alpha</strong> (<em>float</em>) – Fixed privacy/confidence parameter (used when param_name is not “alpha”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type for synthetic data (“uniform”,”normal”,”binomial”,”standard_t”)</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the generating distribution.</p></li>
+<li><p><strong>trials_per_setting</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=50</em><em>)</em>) – Number of independent trials per parameter value.</p></li>
+<li><p><strong>base_seed</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=42</em><em>)</em>) – Base seed for reproducibility. It is combined with indices to generate per-trial seeds.</p></li>
+<li><p><strong>out_csv_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;results_param.csv&quot;</em><em>)</em>) – Path to write per-trial results in CSV format.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=8</em><em>)</em>) – Number of parallel worker processes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>results</strong> – A dictionary with keys:
+- “param_values” : list of parameter values
+- “median_dame”, “lower10_dame”, “upper90_dame”
+- “median_kent”, “lower10_kent”, “upper90_kent”
+- “df” : pandas DataFrame containing all per-trial rows</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.single_trial">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">single_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#single_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.single_trial" title="Link to this definition"></a></dt>
+<dd><p>Run one complete experimental trial.</p>
+<p>This function generates a fresh dataset with the given random seed,
+runs both the DAME-BS and Kent estimators on it, and records their
+performance metrics (MSE and runtime). The output is formatted as a
+dictionary suitable for logging to CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter passed to both estimators.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type to generate synthetic data from
+(supported values : “normal”,”uniform”,”binomial”,”standard_t”).</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the distribution (before scaling).</p></li>
+<li><p><strong>trial_seed</strong> (<em>int</em>) – Random seed controlling reproducibility of this trial.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>row</strong> – Dictionary containing per-trial information with keys:
+- “n”, “m”, “alpha”, “distribution”, “true_mean”, “seed”
+- “dame_estimate”, “dame_mse”, “dame_time”
+- “kent_estimate”, “kent_mse”, “kent_time”
+- “status” : “ok” or error string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-experiments.synthetic_data_experiments">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-experiments.synthetic_data_experiments" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

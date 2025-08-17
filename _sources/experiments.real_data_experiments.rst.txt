@@ -1,0 +1,20 @@
+experiments.real\_data\_experiments package
+===========================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   experiments.real_data_experiments.globem
+   experiments.real_data_experiments.mimic
+   experiments.real_data_experiments.stocks_data
+
+Module contents
+---------------
+
+.. automodule:: experiments.real_data_experiments
+   :members:
+   :show-inheritance:
+   :undoc-members:

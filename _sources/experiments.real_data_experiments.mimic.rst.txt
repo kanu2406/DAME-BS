@@ -1,0 +1,29 @@
+experiments.real\_data\_experiments.mimic package
+=================================================
+
+Submodules
+----------
+
+experiments.real\_data\_experiments.mimic.preprocess module
+-----------------------------------------------------------
+
+.. automodule:: experiments.real_data_experiments.mimic.preprocess
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+experiments.real\_data\_experiments.mimic.run\_mimic\_experiment module
+-----------------------------------------------------------------------
+
+.. automodule:: experiments.real_data_experiments.mimic.run_mimic_experiment
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: experiments.real_data_experiments.mimic
+   :members:
+   :show-inheritance:
+   :undoc-members:
