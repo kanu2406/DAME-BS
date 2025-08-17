@@ -1,6 +1,8 @@
 import random
 import numpy as np
 from collections import defaultdict
+import pandas as pd
+import os,hashlib
 
 
 def scaling_data(user_samples):
@@ -85,4 +87,121 @@ def truncate_and_shuffle(user_samples,desired_length):
             random.shuffle(vals_copy)
             final[uid] = vals_copy[:desired_length]
     return final
+
+
+
+
+
+def make_file(path):
+    """
+    Ensure that the directory for a given file path exists.
+
+    This function extracts the directory portion of the given file path 
+    and checks if it exists. If it does not exist, it creates the 
+    directory (including any intermediate directories as needed).
+
+    Parameters
+    ----------
+    path : str
+        A path-like object representing a file system path.
+
+    Returns
+    -------
+    None
+        This function does not return anything. It ensures the 
+        parent directory exists.
+    """
+    d = os.path.dirname(path)
+    if d and not os.path.exists(d):
+        os.makedirs(d, exist_ok=True)
+
+def make_seed(base_seed, trial_index):
+    """
+    Generate a deterministic 32-bit integer seed from a base seed 
+    and a trial index.
+
+    The function concatenates the `base_seed` and `trial_index`, 
+    hashes the string using MD5, and returns the first 32 bits 
+    (8 hex characters) of the hash as an integer.
+
+    Parameters
+    ----------
+    base_seed : int
+        The base seed value used for reproducibility.
+    trial_index : int
+        The trial index used to generate unique seeds across trials.
+
+    Returns
+    -------
+    int
+        A deterministic 32-bit integer seed.
+    """
+    s = f"{int(base_seed)}_{int(trial_index)}"
+    h = hashlib.md5(s.encode("utf8")).hexdigest()
+    return int(h[:8], 16)  # 32-bit integer
+
+def init_results_csv(path):
+    """
+    Initialize (create or overwrite) a results CSV file with 
+    predefined column headers.
+
+    This function ensures the parent directory exists, then 
+    creates a CSV file with the expected schema for storing 
+    per-trial results.
+
+    Parameters
+    ----------
+    path : str
+        File path where the CSV will be created.
+
+    Returns
+    -------
+    None
+        This function writes the CSV file to disk.
+    """
+    make_file(path)
+    columns = [
+        "trial",
+        "seed",
+        "n", "m", "alpha",
+        "theta_hat_kent_scaled", "theta_hat_dame_scaled",
+        "theta_hat_kent_orig",  "theta_hat_dame_orig",
+        "scaled_mse_kent", "scaled_mse_dame",
+        "orig_mse_kent", "orig_mse_dame",
+        "time_kent_s", "time_dame_s",
+        "status"
+    ]
+    df = pd.DataFrame(columns=columns)
+    df.to_csv(path, index=False)
+
+def append_row_csv(path, row: dict):
+    """
+    Append a single row of results to an existing CSV file.
+
+    This function ensures the parent directory exists and then 
+    appends a new row (provided as a dictionary) to the CSV file. 
+    If the file does not already exist, it is the caller's 
+    responsibility to initialize it with `init_results_csv`.
+
+    Parameters
+    ----------
+    path : str
+        File path to the CSV file.
+    row : dict
+        A dictionary where keys correspond to column names and 
+        values correspond to row entries.
+
+    Returns
+    -------
+    None
+        This function writes the new row to the CSV file.
+    """
+    make_file(path)
+    pd.DataFrame([row]).to_csv(path, mode="a", header=False, index=False)
+
+
+
+
+
+
 

@@ -39,8 +39,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
@@ -77,7 +76,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span> 
-
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">switch_backend</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="theoretical_upper_bound">
@@ -140,7 +140,8 @@
 <div class="viewcode-block" id="plot_errorbars">
 <a class="viewcode-back" href="../../dame_bs.html#dame_bs.utils.plot_errorbars">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_errorbars</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">median_errors_kent</span><span class="p">,</span><span class="n">median_errors_dame_bs</span><span class="p">,</span> <span class="n">lower_errors_kent</span><span class="p">,</span>
-                   <span class="n">lower_errors_dame_bs</span><span class="p">,</span><span class="n">upper_errors_kent</span><span class="p">,</span> <span class="n">upper_errors_dame_bs</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                   <span class="n">lower_errors_dame_bs</span><span class="p">,</span><span class="n">upper_errors_kent</span><span class="p">,</span> <span class="n">upper_errors_dame_bs</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> 
+                   <span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot_ub</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">upper_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plots error bars for dame_bs and kent algorithms on a single graph.</span>
 
@@ -157,9 +158,10 @@
 <span class="sd">        title (str): Title of the plot.</span>
 <span class="sd">        plot_ub (Bool) : If true then plots theoretical upper bounds for dame_bs algorithm. Default is &#39;False&#39;.</span>
 <span class="sd">        upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas`. Default is empty-list.</span>
+<span class="sd">        save_path (str) : If save_path is provided then saves the generated plot to provided path else displays plot. Default is None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        None. Displays the plot using `matplotlib.pyplot`</span>
+<span class="sd">        None. Displays the plot using `matplotlib.pyplot` or or saves the plot at the given path.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">upper_bounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -187,7 +189,14 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span> 
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+    <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved plot to </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
 
 
 

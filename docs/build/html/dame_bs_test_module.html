@@ -42,8 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
@@ -102,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tests.utils_test">tests.utils_test module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.compare_univariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_univariate_algorithms()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_m"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_m()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_bound_decreases_with_n"><code class="docutils literal notranslate"><span class="pre">test_bound_decreases_with_n()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.utils_test.test_estimate_within_error_and_bound"><code class="docutils literal notranslate"><span class="pre">test_estimate_within_error_and_bound()</span></code></a></li>
@@ -413,6 +413,55 @@ Checks that estimated mean is within valid range and close to the true mean.</p>
 </section>
 <section id="module-tests.utils_test">
 <span id="tests-utils-test-module"></span><h2>tests.utils_test module<a class="headerlink" href="#module-tests.utils_test" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.utils_test.compare_univariate_algorithms">
+<span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">compare_univariate_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#compare_univariate_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.compare_univariate_algorithms" title="Link to this definition"></a></dt>
+<dd><p>Compare DAME‑BS and Kent univariate estimators over multiple trials.</p>
+<dl class="simple">
+<dt>In each trial, this function:</dt><dd><ol class="arabic simple">
+<li><p>Generates <cite>n</cite> users × <cite>m</cite> samples from the specified <cite>distribution</cite>
+centered (in expectation) at <cite>true_mean</cite>.</p></li>
+<li><p>Scales all samples and <cite>true_mean</cite> into [-1,1].</p></li>
+<li><p>Runs both the DAME‑BS estimator and the Kent estimator under privacy
+budget <cite>alpha</cite>.</p></li>
+<li><p>Computes the squared error of each estimate vs. the scaled <cite>true_mean</cite>.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of i.i.d. samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Local differential privacy parameter.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – <dl class="simple">
+<dt>Which distribution to sample from. Supported Distributions:</dt><dd><ul>
+<li><p>”normal”</p></li>
+<li><p>”uniform”</p></li>
+<li><p>”student_t”</p></li>
+<li><p>”binomial”</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the underlying distribution.</p></li>
+<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of independent trials to average over (default: 50).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>median_err_dame</strong> (<em>float</em>) – Median of squared errors from the DAME-BS estimator across trials.</p></li>
+<li><p><strong>lower_err_dame</strong> (<em>float</em>) – First decile of  squared errors from the DAME-BS estimator across trials.</p></li>
+<li><p><strong>upper_err_dame</strong> (<em>float</em>) – Last decile of squared errors from the DAME-BS estimator across trials.</p></li>
+<li><p><strong>median_err_kent</strong> (<em>float</em>) – Median of squared errors from the Kent estimator across trials.</p></li>
+<li><p><strong>lower_err_kent</strong> (<em>float</em>) – First decile of squared errors from the Kent estimator across trials.</p></li>
+<li><p><strong>upper_err_kent</strong> (<em>float</em>) – Last decile of squared errors from the Kent estimator across trials.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.utils_test.test_bound_decreases_with_m">
 <span class="sig-prename descclassname"><span class="pre">tests.utils_test.</span></span><span class="sig-name descname"><span class="pre">test_bound_decreases_with_m</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/utils_test.html#test_bound_decreases_with_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.utils_test.test_bound_decreases_with_m" title="Link to this definition"></a></dt>

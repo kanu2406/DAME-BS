@@ -7,7 +7,7 @@ This section presents experiments done to compare the DAME-BS algorithm and Kent
 Univariate Experiments
 ----------------------
 
-.. automodule:: experiments.univariate_experiment
+.. automodule:: experiments.synthetic_data_experiments.univariate_experiment
    :members:
    :show-inheritance:
    :undoc-members:
@@ -16,7 +16,7 @@ Univariate Experiments
 Multivariate Experiments 
 ------------------------
 
-.. automodule:: experiments.multivariate_experiment
+.. automodule:: experiments.synthetic_data_experiments.multivariate_experiment
    :members:
    :show-inheritance:
    :undoc-members:
@@ -31,7 +31,7 @@ Real Data : MIMIC-III
    :undoc-members:
 
 
-.. automodule:: experiments.real_data_experiments.mimic.run_experiment_mimic
+.. automodule:: experiments.real_data_experiments.mimic.run_mimic_experiment
    :members:
    :show-inheritance:
    :undoc-members:
@@ -46,7 +46,7 @@ Real Data : Stock Prices
    :undoc-members:
 
 
-.. automodule:: experiments.real_data_experiments.stocks_data.run_experiment_stock_prices
+.. automodule:: experiments.real_data_experiments.stocks_data.run_stocks_experiment
    :members:
    :show-inheritance:
    :undoc-members:
@@ -59,12 +59,12 @@ Real Data : GLOBEM
    :show-inheritance:
    :undoc-members:
 
-.. automodule:: experiments.real_data_experiments.globem.run_experiment_sleep
+.. automodule:: experiments.real_data_experiments.globem.run_sleep_experiment
    :members:
    :show-inheritance:
    :undoc-members:
 
-.. automodule:: experiments.real_data_experiments.globem.run_experiment_steps
+.. automodule:: experiments.real_data_experiments.globem.run_steps_experiment
    :members:
    :show-inheritance:
    :undoc-members:
@@ -84,55 +84,148 @@ Univariate case
 
 Mean Squared Error vs privacy parameter alpha for the different distributions.
 
-.. image:: ../figures/mse_vs_alpha_univariate.png
-   :alt: Mean Squared Error vs Alpha for the different distributions
+
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_normal.png
+         :width: 250px
+         :alt: MSE vs alpha
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_uniform.png
+         :width: 250px
+         :alt: MSE vs alpha
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_binomial.png
+         :width: 250px
+         :alt: MSE vs alpha
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_standard_t.png
+         :width: 250px
+         :alt: MSE vs alpha
 
 Mean Squared Error vs n (total number of users) for the different distributions.
 
-.. image:: ../figures/mse_vs_n_univariate.png
-   :alt: Mean Squared Error vs n (total number of users) for the different distributions
+
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_normal.png
+         :width: 250px
+         :alt: MSE vs n
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_uniform.png
+         :width: 250px
+         :alt: MSE vs n
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_binomial.png
+         :width: 250px
+         :alt: MSE vs n
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_standard_t.png
+         :width: 250px
+         :alt: MSE vs n
 
 Mean Squared Error vs m (number of samples per user) for the different distributions.
 
-.. image:: ../figures/mse_vs_m_univariate.png
-   :alt: MSE vs m for the different distributions
+
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_normal.png
+         :width: 250px
+         :alt: MSE vs m
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_uniform.png
+         :width: 250px
+         :alt: MSE vs m
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_binomial.png
+         :width: 250px
+         :alt: MSE vs m
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_standard_t.png
+         :width: 250px
+         :alt: MSE vs m
+
 
 Multivariate case
 -----------------
 
 Mean Squared Error vs privacy parameter alpha for the different distributions.
 
-.. image:: ../figures/mse_vs_alpha_multivariate.png
-   :alt: Mean Squared Error vs Alpha for the different distributions
+
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_normal.png
+         :width: 250px
+         :alt: MSE vs alpha
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_uniform.png
+         :width: 250px
+         :alt: MSE vs alpha
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_binomial.png
+         :width: 250px
+         :alt: MSE vs alpha
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_standard_t.png
+         :width: 250px
+         :alt: MSE vs alpha
 
 Mean Squared Error vs n (total number of users) for the different distributions.
 
-.. image:: ../figures/mse_vs_n_multivariate.png
-   :alt: Mean Squared Error vs n (total number of users) for the different distributions
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_normal.png
+         :width: 250px
+         :alt: MSE vs n
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_uniform.png
+         :width: 250px
+         :alt: MSE vs n
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_binomial.png
+         :width: 250px
+         :alt: MSE vs n
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_standard_t.png
+         :width: 250px
+         :alt: MSE vs n
 
 Mean Squared Error vs m (number of samples per user) for the different distributions.
 
-.. image:: ../figures/mse_vs_m_multivariate.png
-   :alt: MSE vs m for the different distributions
+
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_normal.png
+         :width: 250px
+         :alt: MSE vs m
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_uniform.png
+         :width: 250px
+         :alt: MSE vs m
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_binomial.png
+         :width: 250px
+         :alt: MSE vs m
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_standard_t.png
+         :width: 250px
+         :alt: MSE vs m
+
 
 Mean Squared Error vs d (dimensionality of each sample) for the different distributions.
 
-.. image:: ../figures/mse_vs_d.png
-   :alt: MSE vs d for the different distributions
+.. list-table::
+   :header-rows: 0
    :align: center
-   :width: 600px
+
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_d_normal.png
+         :width: 250px
+         :alt: MSE vs d
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_d_uniform.png
+         :width: 250px
+         :alt: MSE vs d
+   * - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_d_binomial.png
+         :width: 250px
+         :alt: MSE vs d
+     - .. image:: ../../experiments/synthetic_data_experiments/plots_multivariate/mse_vs_d_standard_t.png
+         :width: 250px
+         :alt: MSE vs d
+
+
 
 Real World Data 
 ---------------
@@ -152,10 +245,10 @@ range [-1, 1] and for the actual price scale.
 
    <div style="margin: 1em 0; text-align: center;">
 
-.. image:: ../figures/mimic_result.png
+.. image:: ../../experiments/real_data_experiments/stocks_data/results/stocks_data.png
    :alt: MSE for DAME-BS and Kent
    :align: center
-   :width: 600px
+   :width: 500px
 
 .. raw:: html
 
@@ -177,10 +270,10 @@ and low number of samples per user.
 
    <div style="margin: 1em 0; text-align: center;">
 
-.. image:: ../figures/Stocks_Data_Result.png
+.. image:: ../../experiments/real_data_experiments/mimic/results/mimic_data.png
    :alt: MSE for DAME-BS and Kent
    :align: center
-   :width: 600px
+   :width: 500px
 
 .. raw:: html
 
@@ -207,10 +300,10 @@ For steps data, we had a total of 40 user with 88 samples per user. Here are the
 
    <div style="margin: 1em 0; text-align: center;">
 
-.. image:: ../figures/steps_result.png
+.. image:: ../../experiments/real_data_experiments/globem/results/globem_steps.png
    :alt: MSE for DAME-BS and Kent
    :align: center
-   :width: 600px
+   :width: 500px
 
 
 .. raw:: html
@@ -224,10 +317,10 @@ For sleep data, we had a total of 40 users with 15 samples per user. Here are th
 
    <div style="margin: 2em 0;">
 
-.. image:: ../figures/sleep_result.png
+.. image:: ../../experiments/real_data_experiments/globem/results/globem_sleep.png
    :alt: MSE for DAME-BS and Kent
    :align: center
-   :width: 600px
+   :width: 500px
 
 .. raw:: html
 

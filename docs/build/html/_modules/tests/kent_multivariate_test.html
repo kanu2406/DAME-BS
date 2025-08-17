@@ -39,12 +39,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
 </ul>
 
         </div>
@@ -73,7 +73,7 @@
              
   <h1>Source code for tests.kent_multivariate_test</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.multivariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_multivariate_scaled_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.synthetic_data_experiments.multivariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_multivariate_scaled_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kent.multivariate_kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">kent_multivariate_estimator</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
@@ -82,7 +82,7 @@
 <span class="c1"># Invalid Input Check </span>
 
 <div class="viewcode-block" id="test_invalid_user_samples_wrong_dim">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_invalid_user_samples_wrong_dim">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_invalid_user_samples_wrong_dim">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_user_samples_wrong_dim</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised for wrong dim of user_samples.</span>
@@ -97,7 +97,7 @@
 
 
 <div class="viewcode-block" id="test_values_out_of_range">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_values_out_of_range">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_values_out_of_range">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_values_out_of_range</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised coordinates of user_samples are outside the range [-1,1].</span>
@@ -110,7 +110,7 @@
 
 
 <div class="viewcode-block" id="test_invalid_n">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_invalid_n">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_invalid_n">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_n</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check warning is raised if n is not a multiple of 2d.</span>
@@ -124,7 +124,7 @@
 
 
 <div class="viewcode-block" id="test_negative_alpha">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_negative_alpha">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_negative_alpha">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_negative_alpha</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised for negative alpha.</span>
@@ -136,7 +136,7 @@
 
 
 <div class="viewcode-block" id="test_invalid_alpha_type">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_invalid_alpha_type">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_invalid_alpha_type">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_alpha_type</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised if alpha is not float or int.</span>
@@ -148,7 +148,7 @@
 
 
 <div class="viewcode-block" id="test_negative_K">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_negative_K">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_negative_K">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_negative_K</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised if K&lt;0.</span>
@@ -160,7 +160,7 @@
 
 
 <div class="viewcode-block" id="test_invalid_K">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_invalid_K">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_invalid_K">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_K</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check ValueError is raised if K is not float or int.</span>
@@ -173,7 +173,7 @@
 
 
 <div class="viewcode-block" id="test_about_small_n">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_about_small_n">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_about_small_n">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_about_small_n</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check that a warning is issued when n&lt;2d.</span>
@@ -191,7 +191,7 @@
 <span class="c1">###########################################################################################</span>
 <span class="c1"># Tests for output ranges</span>
 <div class="viewcode-block" id="test_output_range">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_output_range">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_output_range">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_output_range</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test that the function returns a d-dimensional array with each coordinate within the valid range [-1, 1].</span>
@@ -206,7 +206,7 @@
 
 
 <div class="viewcode-block" id="test_no_noise">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_no_noise">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_no_noise">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_no_noise</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test output when noise is absent (alpha = infinity).</span>
@@ -223,7 +223,7 @@
 
 
 <div class="viewcode-block" id="test_constant_data_exact_recovery">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_constant_data_exact_recovery">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_constant_data_exact_recovery">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_constant_data_exact_recovery</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Testing the case when data is constant and alpha = inf. We should get a very good estimate of mean.</span>
@@ -237,7 +237,7 @@
 
     
 <div class="viewcode-block" id="test_exact_multiple_of_2d">
-<a class="viewcode-back" href="../../tests.html#tests.kent_multivariate_test.test_exact_multiple_of_2d">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_multivariate_test.test_exact_multiple_of_2d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_exact_multiple_of_2d</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Testing the case when data is exact multiple of 2d then there should be no warnings.</span>

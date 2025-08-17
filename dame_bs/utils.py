@@ -2,7 +2,8 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from tqdm import tqdm 
-
+import os
+plt.switch_backend("Agg")
 
 
 def theoretical_upper_bound(alpha, n, m):
@@ -60,7 +61,8 @@ def theoretical_upper_bound(alpha, n, m):
 
 
 def plot_errorbars(x_values, median_errors_kent,median_errors_dame_bs, lower_errors_kent,
-                   lower_errors_dame_bs,upper_errors_kent, upper_errors_dame_bs, xlabel, ylabel, title,log_scale=True,plot_ub=False,upper_bounds=None):
+                   lower_errors_dame_bs,upper_errors_kent, upper_errors_dame_bs, xlabel, 
+                   ylabel, title,log_scale=True,plot_ub=False,upper_bounds=None,save_path=None):
     """
     Plots error bars for dame_bs and kent algorithms on a single graph.
 
@@ -77,9 +79,10 @@ def plot_errorbars(x_values, median_errors_kent,median_errors_dame_bs, lower_err
         title (str): Title of the plot.
         plot_ub (Bool) : If true then plots theoretical upper bounds for dame_bs algorithm. Default is 'False'.
         upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas`. Default is empty-list.
+        save_path (str) : If save_path is provided then saves the generated plot to provided path else displays plot. Default is None.
 
     Returns:
-        None. Displays the plot using `matplotlib.pyplot`
+        None. Displays the plot using `matplotlib.pyplot` or or saves the plot at the given path.
     """
 
     if upper_bounds is None:
@@ -107,7 +110,14 @@ def plot_errorbars(x_values, median_errors_kent,median_errors_dame_bs, lower_err
         plt.yscale('log')
     plt.grid(True)
     plt.legend() 
-    plt.show()
+    if save_path:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path, bbox_inches="tight")
+        plt.close()
+        print(f"Saved plot to {save_path}")
+    else:
+        plt.show()
+
 
 
 

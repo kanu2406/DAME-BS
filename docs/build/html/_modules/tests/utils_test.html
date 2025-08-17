@@ -39,8 +39,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
@@ -80,7 +79,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.univariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare_univariate_algorithms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.synthetic_data_experiments.univariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_univariate_scaled_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kent.kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">kent_mean_estimator</span>
+
+
+
+
 
 <span class="c1">########################################################################################</span>
 
@@ -273,7 +277,73 @@
 
     
 
+<span class="c1">#################################################################################################</span>
+<span class="c1">#### Additional Function </span>
+<div class="viewcode-block" id="compare_univariate_algorithms">
+<a class="viewcode-back" href="../../dame_bs_test_module.html#tests.utils_test.compare_univariate_algorithms">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_univariate_algorithms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">distribution</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">trials</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare DAME‑BS and Kent univariate estimators over multiple trials.</span>
 
+<span class="sd">    In each trial, this function:</span>
+<span class="sd">      1. Generates `n` users × `m` samples from the specified `distribution`</span>
+<span class="sd">         centered (in expectation) at `true_mean`.</span>
+<span class="sd">      2. Scales all samples and `true_mean` into [-1,1].</span>
+<span class="sd">      3. Runs both the DAME‑BS estimator and the Kent estimator under privacy</span>
+<span class="sd">         budget `alpha`.</span>
+<span class="sd">      4. Computes the squared error of each estimate vs. the scaled `true_mean`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of users.</span>
+<span class="sd">    m : int</span>
+<span class="sd">        Number of i.i.d. samples per user.</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        Local differential privacy parameter.</span>
+<span class="sd">    distribution : str</span>
+<span class="sd">        Which distribution to sample from. Supported Distributions:</span>
+<span class="sd">          - &quot;normal&quot;</span>
+<span class="sd">          - &quot;uniform&quot;</span>
+<span class="sd">          - &quot;student_t&quot;</span>
+<span class="sd">          - &quot;binomial&quot;</span>
+<span class="sd">    true_mean : float</span>
+<span class="sd">        Ground-truth mean of the underlying distribution.</span>
+<span class="sd">    trials : int, optional</span>
+<span class="sd">        Number of independent trials to average over (default: 50).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    median_err_dame : float</span>
+<span class="sd">        Median of squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    lower_err_dame : float</span>
+<span class="sd">        First decile of  squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    upper_err_dame : float</span>
+<span class="sd">        Last decile of squared errors from the DAME-BS estimator across trials.</span>
+<span class="sd">    median_err_kent : float</span>
+<span class="sd">        Median of squared errors from the Kent estimator across trials.</span>
+<span class="sd">    lower_err_kent : float</span>
+<span class="sd">        First decile of squared errors from the Kent estimator across trials.</span>
+<span class="sd">    upper_err_kent : float</span>
+<span class="sd">        Last decile of squared errors from the Kent estimator across trials.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">error_dame_bs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error_kent</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">):</span>
+        <span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">generate_univariate_scaled_data</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span> <span class="n">true_mean</span><span class="p">)</span>
+        
+        <span class="n">estimate</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">user_samples_scaled</span><span class="p">)</span>
+        <span class="n">err1</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">error_dame_bs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err1</span><span class="p">)</span>
+        <span class="n">estimate</span> <span class="o">=</span> <span class="n">kent_mean_estimator</span><span class="p">(</span><span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">err2</span> <span class="o">=</span> <span class="p">(</span><span class="n">estimate</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">error_kent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err2</span><span class="p">)</span>
+    <span class="c1"># return np.mean(error_dame_bs),np.std(error_dame_bs),np.mean(error_kent),np.std(error_kent)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_dame_bs</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error_kent</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_kent</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">error_kent</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+    
 </pre></div>
 
            </div>

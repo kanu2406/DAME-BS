@@ -1,0 +1,29 @@
+experiments.real\_data\_experiments.stocks\_data package
+========================================================
+
+Submodules
+----------
+
+experiments.real\_data\_experiments.stocks\_data.preprocess module
+------------------------------------------------------------------
+
+.. automodule:: experiments.real_data_experiments.stocks_data.preprocess
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+experiments.real\_data\_experiments.stocks\_data.run\_stocks\_experiment module
+-------------------------------------------------------------------------------
+
+.. automodule:: experiments.real_data_experiments.stocks_data.run_stocks_experiment
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: experiments.real_data_experiments.stocks_data
+   :members:
+   :show-inheritance:
+   :undoc-members:

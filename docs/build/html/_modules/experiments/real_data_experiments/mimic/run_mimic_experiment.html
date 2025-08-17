@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>experiments.real_data_experiments.mimic.run_mimic_experiment &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">experiments.real_data_experiments.mimic.run_mimic_experiment</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for experiments.real_data_experiments.mimic.run_mimic_experiment</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="o">,</span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">)))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.real_data_experiments.mimic.preprocess</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dame_bs.dame_bs</span><span class="w"> </span><span class="kn">import</span> <span class="n">dame_with_binary_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kent.kent</span><span class="w"> </span><span class="kn">import</span> <span class="n">kent_mean_estimator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.mimic.run_mimic_experiment.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This script runs a 500-trial comparison of Kent&#39;s mean estimator and DAME-BS</span>
+<span class="sd">    on real heart rate data from the MIMIC-III dataset.</span>
+
+<span class="sd">    Steps:</span>
+<span class="sd">        - Loads and filters MIMIC-III CHARTEVENTS for heart rate data.</span>
+<span class="sd">        - Scales all values to [-1, 1] and truncates samples so each user have same number of samples.</span>
+<span class="sd">        - Runs both algorithms across 500 trials.</span>
+<span class="sd">        - Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</span>
+<span class="sd">        - Saves each trial along with other parameter in a csv file.</span>
+<span class="sd">        - Also saves the final summary of results.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Load patients data </span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;experiments/Datasets/CHARTEVENTS.csv&quot;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Filter for heart rate (i.e. itemid = 211) and non-missing values</span>
+    <span class="n">df_hr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;itemid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">211</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;valuenum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">())]</span>
+    <span class="c1"># Keep only relevant columns</span>
+    <span class="n">df_hr</span> <span class="o">=</span> <span class="n">df_hr</span><span class="p">[[</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span><span class="s1">&#39;itemid&#39;</span><span class="p">,</span> <span class="s1">&#39;charttime&#39;</span><span class="p">,</span> <span class="s1">&#39;valuenum&#39;</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_hr</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+    <span class="c1"># converting to dictionary</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_hr</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+        <span class="n">sid</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">subject_id</span>
+        <span class="k">if</span> <span class="n">sid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_samples</span><span class="p">:</span>
+            <span class="n">user_samples</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">user_samples</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">valuenum</span><span class="p">)</span>
+    
+    <span class="c1"># keeping only SIDs with at least 7 samples</span>
+    <span class="n">user_samples</span> <span class="o">=</span> <span class="p">{</span><span class="n">sid</span><span class="p">:</span> <span class="n">vals</span> <span class="k">for</span> <span class="n">sid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">user_samples</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">}</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data Loaded.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Scaling everything to range [-1,1]</span>
+    <span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">desired_length</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">true_mean_scaled</span><span class="p">,</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">scaling_data</span><span class="p">(</span><span class="n">user_samples</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scaling Done.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Truncating and shuffling </span>
+    <span class="n">users_and_heart_rate_final</span> <span class="o">=</span> <span class="n">truncate_and_shuffle</span><span class="p">(</span><span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">desired_length</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Truncation Done.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of users&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_samples</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of samples per user : &quot;</span><span class="p">,</span><span class="n">desired_length</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True mean : </span><span class="si">{</span><span class="n">true_mean</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True mean scaled : </span><span class="si">{</span><span class="n">true_mean_scaled</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
+    
+    
+    <span class="n">num_exp</span><span class="o">=</span><span class="mi">500</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running both algorithms 500 times&quot;</span><span class="p">)</span>
+    <span class="c1"># Flattening the data to list </span>
+    <span class="n">heart_rates</span><span class="o">=</span><span class="p">[</span><span class="n">vals</span> <span class="k">for</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">users_and_heart_rate_final</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">heart_rates</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">desired_length</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span>
+
+    <span class="n">base_seed</span> <span class="o">=</span> <span class="mi">42</span>             
+    <span class="n">out_trials_csv</span> <span class="o">=</span> <span class="s2">&quot;experiments/real_data_experiments/mimic/results/mimic_trials.csv&quot;</span>
+    <span class="n">out_summary_csv</span> <span class="o">=</span> <span class="s2">&quot;experiments/real_data_experiments/mimic/results/mimic_summary.csv&quot;</span>
+    
+    <span class="c1"># initialize output CSV</span>
+    <span class="n">init_results_csv</span><span class="p">(</span><span class="n">out_trials_csv</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running both algorithms for </span><span class="si">{</span><span class="n">num_exp</span><span class="si">}</span><span class="s2"> trials; writing to </span><span class="si">{</span><span class="n">out_trials_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">trial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_exp</span><span class="p">):</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="n">make_seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">trial</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">rates</span><span class="o">=</span><span class="n">heart_rates</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rates</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Kent</span>
+            <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">theta_hat_kent_scaled</span> <span class="o">=</span> <span class="n">kent_mean_estimator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">time_k</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
+            <span class="n">theta_hat_kent_orig</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta_hat_kent_scaled</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmin</span>
+
+            <span class="c1"># DAME-BS</span>
+            <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">theta_hat_dame_scaled</span> <span class="o">=</span> <span class="n">dame_with_binary_search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">time_d</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
+            <span class="n">theta_hat_dame_orig</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta_hat_dame_scaled</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">+</span> <span class="n">vmin</span>
+
+            <span class="c1"># errors (scaled and original)</span>
+            <span class="n">scaled_mse_kent</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta_hat_kent_scaled</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">scaled_mse_dame</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta_hat_dame_scaled</span> <span class="o">-</span> <span class="n">true_mean_scaled</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">orig_mse_kent</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta_hat_kent_orig</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">orig_mse_dame</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta_hat_dame_orig</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;ok&quot;</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># on error, record NaNs and error message</span>
+            <span class="n">theta_hat_kent_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">theta_hat_dame_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">theta_hat_kent_orig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">theta_hat_dame_orig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">scaled_mse_kent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">scaled_mse_dame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">orig_mse_kent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">orig_mse_dame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">time_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">time_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;error: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trial </span><span class="si">{</span><span class="n">trial</span><span class="si">}</span><span class="s2">: error: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># prepare row and append </span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;trial&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">trial</span><span class="p">),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">seed</span><span class="p">),</span>
+            <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+            <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
+            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+            <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">theta_hat_kent_scaled</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">theta_hat_kent_scaled</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">theta_hat_dame_scaled</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">theta_hat_dame_scaled</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">theta_hat_kent_orig</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">theta_hat_kent_orig</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">theta_hat_dame_orig</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">theta_hat_dame_orig</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">scaled_mse_kent</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">scaled_mse_kent</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">scaled_mse_dame</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">scaled_mse_dame</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">orig_mse_kent</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">orig_mse_kent</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">orig_mse_dame</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">orig_mse_dame</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;time_kent_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">time_k</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">time_k</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;time_dame_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">time_d</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">time_d</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span>
+        <span class="p">}</span>
+        <span class="n">append_row_csv</span><span class="p">(</span><span class="n">out_trials_csv</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trials complete. Aggregating results to </span><span class="si">{</span><span class="n">out_summary_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Aggregate and save summary </span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">out_trials_csv</span><span class="p">)</span>
+
+    <span class="c1"># compute summary</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="s2">&quot;MIMIC_Heart_Rate_Data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span>
+        <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+        <span class="s2">&quot;trials&quot;</span><span class="p">:</span> <span class="n">num_exp</span><span class="p">,</span>
+        <span class="s2">&quot;median_scaled_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="s2">&quot;median_scaled_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="s2">&quot;10pct_scaled_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+        <span class="s2">&quot;90pct_scaled_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)),</span>
+        <span class="s2">&quot;10pct_scaled_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+        <span class="s2">&quot;90pct_scaled_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)),</span>
+        <span class="s2">&quot;median_orig_mse_kent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="s2">&quot;median_orig_mse_dame&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="s2">&quot;mean_time_kent_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;time_kent_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="s2">&quot;mean_time_dame_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;time_dame_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+        <span class="p">}</span>
+    
+    <span class="c1"># save summary</span>
+    <span class="n">make_file</span><span class="p">(</span><span class="n">out_summary_csv</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">summary</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">out_summary_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Summary saved. Done.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset:               </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Privacy alpha:        </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Trials:               </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;trials&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Mean Squared Error (Scaled values)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Kent median MSE:   </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;median_scaled_mse_kent&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;(10%: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;10pct_scaled_mse_kent&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">, 90%: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;90pct_scaled_mse_kent&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   DAME median MSE:   </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;median_scaled_mse_dame&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;(10%: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;10pct_scaled_mse_dame&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">, 90%: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;90pct_scaled_mse_dame&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Mean Squared Error (Original values)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Kent median MSE:   </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;median_orig_mse_kent&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   DAME median MSE:   </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;median_orig_mse_dame&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Runtime (seconds)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Kent mean runtime: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;mean_time_kent_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   DAME mean runtime: </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;mean_time_dame_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

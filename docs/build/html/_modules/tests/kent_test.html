@@ -39,12 +39,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
 </ul>
 
         </div>
@@ -76,13 +76,13 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.univariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_univariate_scaled_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">experiments.synthetic_data_experiments.univariate_experiment</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_univariate_scaled_data</span>
 
 <span class="c1">#################################################################</span>
 <span class="c1">########## Test for kent_mean_estimator #########################</span>
 
 <div class="viewcode-block" id="test_ndarray_1d_raises">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_ndarray_1d_raises">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_ndarray_1d_raises">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_ndarray_1d_raises</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;1D ndarray should raise ValueError about needing a 2D array.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -92,7 +92,7 @@
 
 
 <div class="viewcode-block" id="test_ndarray_3d_raises">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_ndarray_3d_raises">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_ndarray_3d_raises">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_ndarray_3d_raises</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;3D ndarray should raise ValueError about needing a 2D array.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -102,7 +102,7 @@
 
 
 <div class="viewcode-block" id="test_non_array_non_list_raises">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_non_array_non_list_raises">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_non_array_non_list_raises">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_non_array_non_list_raises</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Passing an integer should raise ValueError about type.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -112,7 +112,7 @@
 
 
 <div class="viewcode-block" id="test_empty_list_raises">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_empty_list_raises">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_empty_list_raises">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_empty_list_raises</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An empty list has no user samples&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -122,7 +122,7 @@
 
 
 <div class="viewcode-block" id="test_list_element_not_iterable">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_list_element_not_iterable">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_list_element_not_iterable">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_list_element_not_iterable</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;If list elements don&#39;t support len(), it should error.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -133,7 +133,7 @@
 
 
 <div class="viewcode-block" id="test_list_ragged_lengths">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_list_ragged_lengths">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_list_ragged_lengths">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_list_ragged_lengths</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;List of arrays with different lengths should raise error.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -143,7 +143,7 @@
 
 
 <div class="viewcode-block" id="test_negative_alpha">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_negative_alpha">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_negative_alpha">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_negative_alpha</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Negative alpha should raise value error.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -153,7 +153,7 @@
 
 
 <div class="viewcode-block" id="test_zero_K">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_zero_K">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_zero_K">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_zero_K</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;K=0 should throw value error.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -163,7 +163,7 @@
 
 
 <div class="viewcode-block" id="test_negative_K">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_negative_K">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_negative_K">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_negative_K</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;K&lt;0 should throw value error.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -173,7 +173,7 @@
 
 
 <div class="viewcode-block" id="test_out_of_range_entries">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_out_of_range_entries">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_out_of_range_entries">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_out_of_range_entries</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Values of user_samples should lie in [-1,1]&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -184,7 +184,7 @@
 
 
 <div class="viewcode-block" id="test_output_range_and_type">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_output_range_and_type">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_output_range_and_type">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_output_range_and_type</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimated mean should lie in [-1,1]&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -195,7 +195,7 @@
 
 
 <div class="viewcode-block" id="test_no_noise">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_no_noise">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_no_noise">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_no_noise</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the output when noise is absent (alpha = infinity).</span>
@@ -211,7 +211,7 @@
     
 
 <div class="viewcode-block" id="test_dame_on_constant_data_inf_alpha">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_dame_on_constant_data_inf_alpha">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_dame_on_constant_data_inf_alpha">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_dame_on_constant_data_inf_alpha</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test that on constant data and no noise we should be able to get a very good estimate of estimated mean.</span>
@@ -226,7 +226,7 @@
 
 
 <div class="viewcode-block" id="test_small_T_star_path">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_small_T_star_path">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_small_T_star_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_small_T_star_path</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Choosing alpha small so exp(arg_safe) &lt;&lt; T, ensuring T_star &lt; T&quot;&quot;&quot;</span>
     
@@ -243,7 +243,7 @@
 <span class="c1">############## Test for partition_interval ####################################</span>
 
 <div class="viewcode-block" id="test_partition_interval_even_division">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_partition_interval_even_division">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_partition_interval_even_division">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_partition_interval_even_division</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;with delta = 0.5, we should get exactly two intervals&quot;&quot;&quot;</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">partition_interval</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
@@ -251,7 +251,7 @@
 
 
 <div class="viewcode-block" id="test_small_and_large_delta">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_small_and_large_delta">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_small_and_large_delta">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_small_and_large_delta</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;smaller delta should give more intervals &quot;&quot;&quot;</span>
 
@@ -264,7 +264,7 @@
 
 
 <div class="viewcode-block" id="test_coverage">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_coverage">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_coverage">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_coverage</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Testing if union of all intervals is [-1,1]&quot;&quot;&quot;</span>
 
@@ -295,7 +295,7 @@
     
 
 <div class="viewcode-block" id="test_partition_interval_single">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_partition_interval_single">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_partition_interval_single">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_partition_interval_single</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;delta = (b-a)/2 should return interval itself&quot;&quot;&quot;</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="n">partition_interval</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -303,7 +303,7 @@
 
 
 <div class="viewcode-block" id="test_delta_zero">
-<a class="viewcode-back" href="../../tests.html#tests.kent_test.test_delta_zero">[docs]</a>
+<a class="viewcode-back" href="../../kent_test_module.html#tests.kent_test.test_delta_zero">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_delta_zero</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;for delta=0 function should return orignal interval&quot;&quot;&quot;</span>
     <span class="n">intervals</span> <span class="o">=</span>  <span class="n">partition_interval</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>

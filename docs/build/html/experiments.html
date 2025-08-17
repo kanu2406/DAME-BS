@@ -46,43 +46,55 @@
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Experiments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-experiments.univariate_experiment">Univariate Experiments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.compare_univariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_univariate_algorithms()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_univariate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.univariate_experiment.generate_univariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_univariate_scaled_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.synthetic_data_experiments.univariate_experiment">Univariate Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_univariate_scaled_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.run_param"><code class="docutils literal notranslate"><span class="pre">run_param()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.single_trial"><code class="docutils literal notranslate"><span class="pre">single_trial()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-experiments.multivariate_experiment">Multivariate Experiments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.compare_multivariate_algorithms"><code class="docutils literal notranslate"><span class="pre">compare_multivariate_algorithms()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate"><code class="docutils literal notranslate"><span class="pre">experiment_risk_vs_param_for_dist_multivariate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-experiments.synthetic_data_experiments.multivariate_experiment">Multivariate Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.multivariate_experiment.generate_multivariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_multivariate_scaled_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.multivariate_experiment.run_param_multivariate"><code class="docutils literal notranslate"><span class="pre">run_param_multivariate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.multivariate_experiment.single_trial"><code class="docutils literal notranslate"><span class="pre">single_trial()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.mimic.preprocess">Real Data : MIMIC-III</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.append_row_csv"><code class="docutils literal notranslate"><span class="pre">append_row_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.init_results_csv"><code class="docutils literal notranslate"><span class="pre">init_results_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.make_file"><code class="docutils literal notranslate"><span class="pre">make_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.make_seed"><code class="docutils literal notranslate"><span class="pre">make_seed()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data"><code class="docutils literal notranslate"><span class="pre">scaling_data()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle"><code class="docutils literal notranslate"><span class="pre">truncate_and_shuffle()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.run_experiment_mimic.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.mimic.run_mimic_experiment.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.stocks_data.preprocess">Real Data : Stock Prices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.append_row_csv"><code class="docutils literal notranslate"><span class="pre">append_row_csv()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices"><code class="docutils literal notranslate"><span class="pre">batch_download_close_prices()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.check_stationarity"><code class="docutils literal notranslate"><span class="pre">check_stationarity()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.compute_log_returns"><code class="docutils literal notranslate"><span class="pre">compute_log_returns()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.filter_and_truncate"><code class="docutils literal notranslate"><span class="pre">filter_and_truncate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.init_results_csv"><code class="docutils literal notranslate"><span class="pre">init_results_csv()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers"><code class="docutils literal notranslate"><span class="pre">load_and_clean_tickers()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.load_dict"><code class="docutils literal notranslate"><span class="pre">load_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.make_file"><code class="docutils literal notranslate"><span class="pre">make_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.make_seed"><code class="docutils literal notranslate"><span class="pre">make_seed()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.save_dict"><code class="docutils literal notranslate"><span class="pre">save_dict()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.preprocess.scale_series"><code class="docutils literal notranslate"><span class="pre">scale_series()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.run_experiment_stock_prices.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.stocks_data.run_stocks_experiment.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-experiments.real_data_experiments.globem.preprocess">Real Data : GLOBEM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.append_row_csv"><code class="docutils literal notranslate"><span class="pre">append_row_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.init_results_csv"><code class="docutils literal notranslate"><span class="pre">init_results_csv()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep"><code class="docutils literal notranslate"><span class="pre">load_and_select_sleep()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.load_and_select_steps"><code class="docutils literal notranslate"><span class="pre">load_and_select_steps()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.make_file"><code class="docutils literal notranslate"><span class="pre">make_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.make_seed"><code class="docutils literal notranslate"><span class="pre">make_seed()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.scaling"><code class="docutils literal notranslate"><span class="pre">scaling()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.preprocess.truncating_data"><code class="docutils literal notranslate"><span class="pre">truncating_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.run_experiment_sleep.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.run_experiment_steps.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.run_sleep_experiment.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.real_data_experiments.globem.run_steps_experiment.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -126,101 +138,11 @@
   <section id="experiments">
 <h1>Experiments<a class="headerlink" href="#experiments" title="Link to this heading"></a></h1>
 <p>This section presents experiments done to compare the DAME-BS algorithm and Kent’s algorithm for both univariate and multivariate cases.</p>
-<section id="module-experiments.univariate_experiment">
-<span id="univariate-experiments"></span><h2>Univariate Experiments<a class="headerlink" href="#module-experiments.univariate_experiment" title="Link to this heading"></a></h2>
+<section id="module-experiments.synthetic_data_experiments.univariate_experiment">
+<span id="univariate-experiments"></span><h2>Univariate Experiments<a class="headerlink" href="#module-experiments.synthetic_data_experiments.univariate_experiment" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="experiments.univariate_experiment.compare_univariate_algorithms">
-<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">compare_univariate_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#compare_univariate_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.compare_univariate_algorithms" title="Link to this definition"></a></dt>
-<dd><p>Compare DAME‑BS and Kent univariate estimators over multiple trials.</p>
-<dl class="simple">
-<dt>In each trial, this function:</dt><dd><ol class="arabic simple">
-<li><p>Generates <cite>n</cite> users × <cite>m</cite> samples from the specified <cite>distribution</cite>
-centered (in expectation) at <cite>true_mean</cite>.</p></li>
-<li><p>Scales all samples and <cite>true_mean</cite> into [-1,1].</p></li>
-<li><p>Runs both the DAME‑BS estimator and the Kent estimator under privacy
-budget <cite>alpha</cite>.</p></li>
-<li><p>Computes the squared error of each estimate vs. the scaled <cite>true_mean</cite>.</p></li>
-</ol>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
-<li><p><strong>m</strong> (<em>int</em>) – Number of i.i.d. samples per user.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – Local differential privacy parameter.</p></li>
-<li><p><strong>distribution</strong> (<em>str</em>) – <dl class="simple">
-<dt>Which distribution to sample from. Supported Distributions:</dt><dd><ul>
-<li><p>”normal”</p></li>
-<li><p>”uniform”</p></li>
-<li><p>”student_t”</p></li>
-<li><p>”binomial”</p></li>
-</ul>
-</dd>
-</dl>
-</p></li>
-<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the underlying distribution.</p></li>
-<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of independent trials to average over (default: 50).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>median_err_dame</strong> (<em>float</em>) – Median of squared errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>lower_err_dame</strong> (<em>float</em>) – First decile of  squared errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>upper_err_dame</strong> (<em>float</em>) – Last decile of squared errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>median_err_kent</strong> (<em>float</em>) – Median of squared errors from the Kent estimator across trials.</p></li>
-<li><p><strong>lower_err_kent</strong> (<em>float</em>) – First decile of squared errors from the Kent estimator across trials.</p></li>
-<li><p><strong>upper_err_kent</strong> (<em>float</em>) – Last decile of squared errors from the Kent estimator across trials.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate">
-<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_param_for_dist_univariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_to_vary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alpha'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#experiment_risk_vs_param_for_dist_univariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.experiment_risk_vs_param_for_dist_univariate" title="Link to this definition"></a></dt>
-<dd><p>For the specified parameter <cite>param_to_vary</cite> (α, n, or m),
-plots MSE of two univariate LDP estimators by DAME-BS and Kent’s algorithm.</p>
-<p>For each value in <cite>param_values</cite>, this function runs
-<cite>compare_univariate_algorithms</cite> to obtain mean±std of squared error
-for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution</strong> (<em>str</em>) – Supported Data distributions (“normal”, “uniform”, “student_t”, “binomial”).</p></li>
-<li><p><strong>param_to_vary</strong> (<em>str</em><em>, </em><em>optional</em>) – Which parameter to vary: “alpha”, “n”, or “m” (default: “alpha”).</p></li>
-<li><p><strong>param_values</strong> (<em>array-like</em><em>, </em><em>optional</em>) – <dl class="simple">
-<dt>Values to use for specified parameter to vary. If None, defaults are:</dt><dd><ul>
-<li><p>alpha → np.linspace(0.1, 1.0, 20)</p></li>
-<li><p>n     → range(500, 16000, 200)</p></li>
-<li><p>m     → range(7, 500, 5)</p></li>
-</ul>
-</dd>
-</dl>
-</p></li>
-<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Base number of users (used when param_to_vary ≠ “n”; default: 8000).</p></li>
-<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – Base samples per user (used when param_to_vary ≠ “m”; default: 20).</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Base privacy parameter (used when param_to_vary ≠ “alpha”; default: 0.6).</p></li>
-<li><p><strong>true_mean</strong> (<em>float</em><em>, </em><em>optional</em>) – Ground‑truth mean (default: 0.3).</p></li>
-<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Trials per setting (default: 50).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If <cite>param_to_vary</cite> is not one of “alpha”, “n”, “m”.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Displays a plot of MSE vs. the chosen parameter for both estimators.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="experiments.univariate_experiment.generate_univariate_scaled_data">
-<span class="sig-prename descclassname"><span class="pre">experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_univariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/univariate_experiment.html#generate_univariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.univariate_experiment.generate_univariate_scaled_data" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_univariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#generate_univariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data" title="Link to this definition"></a></dt>
 <dd><p>Generate and linearly scale univariate user samples into [-1,1].
 This function simulates <cite>n</cite> users each providing <cite>m</cite> samples drawn from a
 specified one‑dimensional distribution centered (in expectation) at
@@ -234,7 +156,7 @@ the interval [-1, 1].</p>
 <li><p>”normal”    : Gaussian N(true_mean, 1^2)</p></li>
 <li><p>”uniform”   : Uniform U(true_mean - 1, true_mean + 1)</p></li>
 <li><dl class="simple">
-<dt>”student_t”<span class="classifier">Student’s t distribution with degrees of freedom = 3</span></dt><dd><p>and expected value shifted to true_mean</p>
+<dt>”standard_t”<span class="classifier">Student’s t distribution with degrees of freedom = 3</span></dt><dd><p>and expected value shifted to true_mean</p>
 </dd>
 </dl>
 </li>
@@ -259,94 +181,82 @@ to compute the scaled “true_mean” output.</p></li>
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-experiments.multivariate_experiment">
-<span id="multivariate-experiments"></span><h2>Multivariate Experiments<a class="headerlink" href="#module-experiments.multivariate_experiment" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="experiments.multivariate_experiment.compare_multivariate_algorithms">
-<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">compare_multivariate_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#compare_multivariate_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.compare_multivariate_algorithms" title="Link to this definition"></a></dt>
-<dd><p>Compare two multivariate LDP mean‐estimators (Kent vs. DAME‑BS) over multiple trials.</p>
-<dl class="simple">
-<dt>For each of <cite>trials</cite> iterations, this function:</dt><dd><ol class="arabic simple">
-<li><p>Generates an (n × m × d) dataset from <cite>distribution</cite> with expected mean <cite>true_mean</cite>.</p></li>
-<li><p>Scales every coordinate into [-1, 1] (and scales <cite>true_mean</cite> accordingly).</p></li>
-<li><p>Runs the Kent multivariate estimator under privacy budget <cite>alpha</cite>.</p></li>
-<li><p>Runs the DAME‑BS multivariate estimator under the same budget.</p></li>
-<li><p>Computes the squared ℓ₂‐error of each estimate vs. the scaled true mean.</p></li>
-</ol>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.run_param">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">run_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_per_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_csv_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results_param.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#run_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.run_param" title="Link to this definition"></a></dt>
+<dd><p>Run multiple experimental trials varying one parameter.</p>
+<p>For each value in <cite>param_values</cite>, this function runs
+<cite>trials_per_setting</cite> independent trials in parallel (using a process pool),
+evaluates both DAME-BS and Kent estimators, and writes results to CSV.
+Summary statistics (median, quantile error rates and computation time) are also returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>int</em>) – Number of users</p></li>
-<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user</p></li>
-<li><p><strong>d</strong> (<em>int</em>) – Dimension of each sample</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – Local differential privacy parameter.</p></li>
-<li><p><strong>distribution</strong> (<em>str</em>) – Sampling distribution: one of {“normal”, “uniform”, “student_t”, “binomial”}.</p></li>
-<li><p><strong>true_mean</strong> (<em>array‐like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – The ground‐truth mean vector in R^d.</p></li>
-<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – How many independent datasets (and runs) to average over (default: 50).</p></li>
+<li><p><strong>param_name</strong> (<em>{&quot;alpha&quot;</em><em>, </em><em>&quot;n&quot;</em><em>, </em><em>&quot;m&quot;}</em>) – Which parameter to vary across the experiment among privacy parameter (alpha), number of users (n) or number of samples per users (m)</p></li>
+<li><p><strong>param_values</strong> (<em>list</em>) – List of values for the chosen parameter.</p></li>
+<li><p><strong>fixed_n</strong> (<em>int</em>) – Fixed number of users (used when param_name is not “n”).</p></li>
+<li><p><strong>fixed_m</strong> (<em>int</em>) – Fixed number of samples per user (used when param_name is not “m”).</p></li>
+<li><p><strong>fixed_alpha</strong> (<em>float</em>) – Fixed privacy/confidence parameter (used when param_name is not “alpha”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type for synthetic data (“uniform”,”normal”,”binomial”,”standard_t”)</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the generating distribution.</p></li>
+<li><p><strong>trials_per_setting</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=50</em><em>)</em>) – Number of independent trials per parameter value.</p></li>
+<li><p><strong>base_seed</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=42</em><em>)</em>) – Base seed for reproducibility. It is combined with indices to generate per-trial seeds.</p></li>
+<li><p><strong>out_csv_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;results_param.csv&quot;</em><em>)</em>) – Path to write per-trial results in CSV format.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=8</em><em>)</em>) – Number of parallel worker processes.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>median_err_dame</strong> (<em>float</em>) – Median of squared ℓ₂‐errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>lower_err_dame</strong> (<em>float</em>) – First decile of ℓ₂‐errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>upper_err_dame</strong> (<em>float</em>) – Last decile of ℓ₂‐errors from the DAME-BS estimator across trials.</p></li>
-<li><p><strong>median_err_kent</strong> (<em>float</em>) – Median of squared ℓ₂‐errors from the Kent estimator across trials.</p></li>
-<li><p><strong>lower_err_kent</strong> (<em>float</em>) – First decile of ℓ₂‐errors from the Kent estimator across trials.</p></li>
-<li><p><strong>upper_err_kent</strong> (<em>float</em>) – Last decile of ℓ₂‐errors from the Kent estimator across trials.</p></li>
-</ul>
-</p>
+<dd class="field-even"><p><strong>results</strong> – A dictionary with keys:
+- “param_values” : list of parameter values
+- “median_dame”, “lower10_dame”, “upper90_dame”
+- “median_kent”, “lower10_kent”, “upper90_kent”
+- “df” : pandas DataFrame containing all per-trial rows</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate">
-<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">experiment_risk_vs_param_for_dist_multivariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_to_vary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'alpha'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1,</span> <span class="pre">0.1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#experiment_risk_vs_param_for_dist_multivariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.experiment_risk_vs_param_for_dist_multivariate" title="Link to this definition"></a></dt>
-<dd><p>For the specified parameter <cite>param_to_vary</cite> (α, n, m or d),
-plots ℓ₂‐errors of two univariate LDP estimators by DAME-BS and Kent’s algorithm.</p>
-<p>For each value in <cite>param_values</cite>, this function runs
-<cite>compare_multivariate_algorithms</cite> to obtain mean±std of squared ℓ₂‐error
-for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cite>.</p>
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.single_trial">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">single_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#single_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.single_trial" title="Link to this definition"></a></dt>
+<dd><p>Run one complete experimental trial.</p>
+<p>This function generates a fresh dataset with the given random seed,
+runs both the DAME-BS and Kent estimators on it, and records their
+performance metrics (MSE and runtime). The output is formatted as a
+dictionary suitable for logging to CSV.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution</strong> (<em>str</em>) – Data distribution (“normal”, “uniform”, “student_t”, “binomial”).</p></li>
-<li><p><strong>param_to_vary</strong> (<em>str</em><em>, </em><em>optional</em>) – Which parameter to vary: “alpha”, “n”, or “m” (default: “alpha”).</p></li>
-<li><p><strong>param_values</strong> (<em>array-like</em><em>, </em><em>optional</em>) – <dl class="simple">
-<dt>Values to use for specified parameter to vary. If None, defaults are:</dt><dd><ul>
-<li><p>alpha -&gt; np.linspace(0.1, 1.0, 20)</p></li>
-<li><p>n     -&gt; range(500, 16000, 200)</p></li>
-<li><p>m     -&gt; range(7, 500, 5)</p></li>
-<li><p>d     -&gt; list(range(2,500,10))</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter passed to both estimators.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type to generate synthetic data from
+(supported values : “normal”,”uniform”,”binomial”,”standard_t”).</p></li>
+<li><p><strong>true_mean</strong> (<em>float</em>) – Ground-truth mean of the distribution (before scaling).</p></li>
+<li><p><strong>trial_seed</strong> (<em>int</em>) – Random seed controlling reproducibility of this trial.</p></li>
 </ul>
 </dd>
-</dl>
-</p></li>
-<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Base number of users (used when param_to_vary ≠ “n”; default: 8000).</p></li>
-<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – Base samples per user (used when param_to_vary ≠ “m”; default: 20).</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Base privacy parameter (used when param_to_vary ≠ “alpha”; default: 0.6).</p></li>
-<li><p><strong>true_mean</strong> (<em>float</em><em>, </em><em>optional</em>) – Ground‑truth mean (default: 0.3).</p></li>
-<li><p><strong>trials</strong> (<em>int</em><em>, </em><em>optional</em>) – Trials per setting (default: 50).</p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>row</strong> – Dictionary containing per-trial information with keys:
+- “n”, “m”, “alpha”, “distribution”, “true_mean”, “seed”
+- “dame_estimate”, “dame_mse”, “dame_time”
+- “kent_estimate”, “kent_mse”, “kent_time”
+- “status” : “ok” or error string</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If <cite>param_to_vary</cite> is not one of “alpha”, “n”, “m”,”d.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Displays a plot of mean squared ℓ₂‐error vs. the chosen parameter for both estimators.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
+</section>
+<section id="module-experiments.synthetic_data_experiments.multivariate_experiment">
+<span id="multivariate-experiments"></span><h2>Multivariate Experiments<a class="headerlink" href="#module-experiments.synthetic_data_experiments.multivariate_experiment" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="experiments.multivariate_experiment.generate_multivariate_scaled_data">
-<span class="sig-prename descclassname"><span class="pre">experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_multivariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/multivariate_experiment.html#generate_multivariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.multivariate_experiment.generate_multivariate_scaled_data" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.generate_multivariate_scaled_data">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">generate_multivariate_scaled_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#generate_multivariate_scaled_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.generate_multivariate_scaled_data" title="Link to this definition"></a></dt>
 <dd><p>Generates and scales multivariate samples into [-1,1]^d.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -368,9 +278,174 @@ for both DAME‑BS and Kent estimators, and then calls <cite>plot_errorbars</cit
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.run_param_multivariate">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">run_param_multivariate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_per_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_csv_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results_param.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#run_param_multivariate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.run_param_multivariate" title="Link to this definition"></a></dt>
+<dd><p>Parallel experiment runner for multivariate trials.</p>
+<p>Varies one parameter (<cite>alpha</cite>, <cite>n</cite>, <cite>m</cite>, or <cite>d</cite>) across a grid of values,
+runs multiple independent trials in parallel, evaluates both estimators
+(DAME-BS and Kent), writes results incrementally to CSV, and summarizes
+error statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param_name</strong> (<em>{&quot;alpha&quot;</em><em>, </em><em>&quot;n&quot;</em><em>, </em><em>&quot;m&quot;</em><em>, </em><em>&quot;d&quot;}</em>) – Which parameter to vary across the experiment.</p></li>
+<li><p><strong>param_values</strong> (<em>list</em>) – Sequence of values for the chosen parameter.</p></li>
+<li><p><strong>fixed_n</strong> (<em>int</em>) – Fixed number of users (used when param_name is not “n”).</p></li>
+<li><p><strong>fixed_m</strong> (<em>int</em>) – Fixed number of samples per user (used when param_name is not “m”).</p></li>
+<li><p><strong>fixed_alpha</strong> (<em>float</em>) – Fixed privacy/confidence parameter (used when param_name is not “alpha”).</p></li>
+<li><p><strong>fixed_d</strong> (<em>int</em>) – Fixed data dimensionality (used when param_name is not “d”).</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type used to generate synthetic multivariate data.</p></li>
+<li><p><strong>true_mean</strong> (<em>array-like</em>) – Ground-truth mean vector of the generating distribution.
+If <cite>param_name == “d”</cite>, this is reset automatically to <cite>[0.1] * d</cite>.</p></li>
+<li><p><strong>trials_per_setting</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=50</em><em>)</em>) – Number of independent trials per parameter value.</p></li>
+<li><p><strong>base_seed</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=42</em><em>)</em>) – Base seed for reproducibility; combined with indices to generate per-trial seeds.</p></li>
+<li><p><strong>out_csv_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;results_param.csv&quot;</em><em>)</em>) – Path to write per-trial results in CSV format (overwritten if exists).</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=8</em><em>)</em>) – Number of worker processes to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>results</strong> – Dictionary with keys:
+- “param_values” : list of parameter values (in original order)
+- “median_dame”, “lower10_dame”, “upper90_dame”
+- “median_kent”, “lower10_kent”, “upper90_kent”
+- “df” : pandas DataFrame with all per-trial rows</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.multivariate_experiment.single_trial">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.multivariate_experiment.</span></span><span class="sig-name descname"><span class="pre">single_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/multivariate_experiment.html#single_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.multivariate_experiment.single_trial" title="Link to this definition"></a></dt>
+<dd><p>Run one complete multivariate experimental trial.</p>
+<p>This function generates synthetic multivariate data, runs both the
+DAME-BS and Kent estimators, and collects their performance metrics
+(mean squared error and runtime). Results are returned in a dict that
+can be written directly to CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of users.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of samples per user.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Privacy parameter for the estimators.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Dimension of the multivariate distribution.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Distribution type used for synthetic data generation
+(supported values : “normal”,”uniform”,”binomial”,”standard_t”).</p></li>
+<li><p><strong>true_mean</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>d</em><em>,</em><em>)</em>) – Ground-truth mean vector of the generating distribution
+(before scaling).</p></li>
+<li><p><strong>trial_seed</strong> (<em>int</em>) – Random seed controlling reproducibility of this trial.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>row</strong> – Dictionary with per-trial results containing keys:
+- “n”, “m”, “alpha”, “d”, “distribution”, “true_mean”, “seed”
+- “dame_estimate”, “dame_mse”, “dame_time”
+- “kent_estimate”, “kent_mse”, “kent_time”
+- “status” : “ok” or error string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-experiments.real_data_experiments.mimic.preprocess">
 <span id="real-data-mimic-iii"></span><h2>Real Data : MIMIC-III<a class="headerlink" href="#module-experiments.real_data_experiments.mimic.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.append_row_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">append_row_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#append_row_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.append_row_csv" title="Link to this definition"></a></dt>
+<dd><p>Append a single row of results to an existing CSV file.</p>
+<p>This function ensures the parent directory exists and then
+appends a new row (provided as a dictionary) to the CSV file.
+If the file does not already exist, it is the caller’s
+responsibility to initialize it with <cite>init_results_csv</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path to the CSV file.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – A dictionary where keys correspond to column names and
+values correspond to row entries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the new row to the CSV file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.init_results_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">init_results_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#init_results_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.init_results_csv" title="Link to this definition"></a></dt>
+<dd><p>Initialize (create or overwrite) a results CSV file with
+predefined column headers.</p>
+<p>This function ensures the parent directory exists, then
+creates a CSV file with the expected schema for storing
+per-trial results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – File path where the CSV will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the CSV file to disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.make_file">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#make_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.make_file" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the directory for a given file path exists.</p>
+<p>This function extracts the directory portion of the given file path
+and checks if it exists. If it does not exist, it creates the
+directory (including any intermediate directories as needed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A path-like object representing a file system path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return anything. It ensures the
+parent directory exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.make_seed">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#make_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.make_seed" title="Link to this definition"></a></dt>
+<dd><p>Generate a deterministic 32-bit integer seed from a base seed
+and a trial index.</p>
+<p>The function concatenates the <cite>base_seed</cite> and <cite>trial_index</cite>,
+hashes the string using MD5, and returns the first 32 bits
+(8 hex characters) of the hash as an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_seed</strong> (<em>int</em>) – The base seed value used for reproducibility.</p></li>
+<li><p><strong>trial_index</strong> (<em>int</em>) – The trial index used to generate unique seeds across trials.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A deterministic 32-bit integer seed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.preprocess.scaling_data">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.preprocess.</span></span><span class="sig-name descname"><span class="pre">scaling_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/preprocess.html#scaling_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.preprocess.scaling_data" title="Link to this definition"></a></dt>
@@ -421,9 +496,9 @@ where each user’s samples are truncated and shuffled.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function" id="module-experiments.real_data_experiments.mimic.run_experiment_mimic">
-<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.run_experiment_mimic.main">
-<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.run_experiment_mimic.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/run_experiment_mimic.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.run_experiment_mimic.main" title="Link to this definition"></a></dt>
+<dl class="py function" id="module-experiments.real_data_experiments.mimic.run_mimic_experiment">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.run_mimic_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.run_mimic_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/run_mimic_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.run_mimic_experiment.main" title="Link to this definition"></a></dt>
 <dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
 on real heart rate data from the MIMIC-III dataset.</p>
 <dl class="simple">
@@ -431,7 +506,9 @@ on real heart rate data from the MIMIC-III dataset.</p>
 <li><p>Loads and filters MIMIC-III CHARTEVENTS for heart rate data.</p></li>
 <li><p>Scales all values to [-1, 1] and truncates samples so each user have same number of samples.</p></li>
 <li><p>Runs both algorithms across 500 trials.</p></li>
-<li><p>Reports runtime, mean estimates, and MSE (in both scaled and original ranges).</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
 </ul>
 </dd>
 </dl>
@@ -440,6 +517,31 @@ on real heart rate data from the MIMIC-III dataset.</p>
 </section>
 <section id="module-experiments.real_data_experiments.stocks_data.preprocess">
 <span id="real-data-stock-prices"></span><h2>Real Data : Stock Prices<a class="headerlink" href="#module-experiments.real_data_experiments.stocks_data.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.append_row_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">append_row_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#append_row_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.append_row_csv" title="Link to this definition"></a></dt>
+<dd><p>Append a single row of results to an existing CSV file.</p>
+<p>This function ensures the parent directory exists and then
+appends a new row (provided as a dictionary) to the CSV file.
+If the file does not already exist, it is the caller’s
+responsibility to initialize it with <cite>init_results_csv</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path to the CSV file.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – A dictionary where keys correspond to column names and
+values correspond to row entries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the new row to the CSV file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">batch_download_close_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#batch_download_close_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices" title="Link to this definition"></a></dt>
@@ -524,6 +626,27 @@ and truncates all remaining series to the minimum length.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.init_results_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">init_results_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#init_results_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.init_results_csv" title="Link to this definition"></a></dt>
+<dd><p>Initialize (create or overwrite) a results CSV file with
+predefined column headers.</p>
+<p>This function ensures the parent directory exists, then
+creates a CSV file with the expected schema for storing
+per-trial results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – File path where the CSV will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the CSV file to disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_and_clean_tickers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4996</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#load_and_clean_tickers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers" title="Link to this definition"></a></dt>
 <dd><p>Loads and filters NASDAQ-listed stock tickers.</p>
@@ -553,6 +676,51 @@ and truncates all remaining series to the minimum length.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.make_file">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#make_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.make_file" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the directory for a given file path exists.</p>
+<p>This function extracts the directory portion of the given file path
+and checks if it exists. If it does not exist, it creates the
+directory (including any intermediate directories as needed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A path-like object representing a file system path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return anything. It ensures the
+parent directory exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.preprocess.make_seed">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/preprocess.html#make_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.preprocess.make_seed" title="Link to this definition"></a></dt>
+<dd><p>Generate a deterministic 32-bit integer seed from a base seed
+and a trial index.</p>
+<p>The function concatenates the <cite>base_seed</cite> and <cite>trial_index</cite>,
+hashes the string using MD5, and returns the first 32 bits
+(8 hex characters) of the hash as an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_seed</strong> (<em>int</em>) – The base seed value used for reproducibility.</p></li>
+<li><p><strong>trial_index</strong> (<em>int</em>) – The trial index used to generate unique seeds across trials.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A deterministic 32-bit integer seed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -615,9 +783,9 @@ and truncates all remaining series to the minimum length.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function" id="module-experiments.real_data_experiments.stocks_data.run_experiment_stock_prices">
-<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.run_experiment_stock_prices.main">
-<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.run_experiment_stock_prices.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/run_experiment_stock_prices.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.run_experiment_stock_prices.main" title="Link to this definition"></a></dt>
+<dl class="py function" id="module-experiments.real_data_experiments.stocks_data.run_stocks_experiment">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.run_stocks_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.run_stocks_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/run_stocks_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.run_stocks_experiment.main" title="Link to this definition"></a></dt>
 <dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
 on real stock prives data from the yfinance.</p>
 <dl class="simple">
@@ -628,7 +796,9 @@ on real stock prives data from the yfinance.</p>
 <li><p>Filter out all the time series with Nan values and truncate them so each of them have same number of sample.</p></li>
 <li><p>Scaled the data in range [-1,1].</p></li>
 <li><p>Runs both algorithms across 500 trials.</p></li>
-<li><p>Reports runtime, mean estimates, and MSE (in both scaled and original ranges).</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
 </ul>
 </dd>
 </dl>
@@ -637,6 +807,52 @@ on real stock prives data from the yfinance.</p>
 </section>
 <section id="module-experiments.real_data_experiments.globem.preprocess">
 <span id="real-data-globem"></span><h2>Real Data : GLOBEM<a class="headerlink" href="#module-experiments.real_data_experiments.globem.preprocess" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.append_row_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">append_row_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#append_row_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.append_row_csv" title="Link to this definition"></a></dt>
+<dd><p>Append a single row of results to an existing CSV file.</p>
+<p>This function ensures the parent directory exists and then
+appends a new row (provided as a dictionary) to the CSV file.
+If the file does not already exist, it is the caller’s
+responsibility to initialize it with <cite>init_results_csv</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path to the CSV file.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – A dictionary where keys correspond to column names and
+values correspond to row entries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the new row to the CSV file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.init_results_csv">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">init_results_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#init_results_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.init_results_csv" title="Link to this definition"></a></dt>
+<dd><p>Initialize (create or overwrite) a results CSV file with
+predefined column headers.</p>
+<p>This function ensures the parent directory exists, then
+creates a CSV file with the expected schema for storing
+per-trial results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – File path where the CSV will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function writes the CSV file to disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.load_and_select_sleep">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">load_and_select_sleep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#load_and_select_sleep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep" title="Link to this definition"></a></dt>
@@ -673,6 +889,51 @@ participant ID (<cite>pid</cite>), date, and the sum of steps for each time segm
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.make_file">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#make_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.make_file" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the directory for a given file path exists.</p>
+<p>This function extracts the directory portion of the given file path
+and checks if it exists. If it does not exist, it creates the
+directory (including any intermediate directories as needed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A path-like object representing a file system path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return anything. It ensures the
+parent directory exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.preprocess.make_seed">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.preprocess.</span></span><span class="sig-name descname"><span class="pre">make_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/preprocess.html#make_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.preprocess.make_seed" title="Link to this definition"></a></dt>
+<dd><p>Generate a deterministic 32-bit integer seed from a base seed
+and a trial index.</p>
+<p>The function concatenates the <cite>base_seed</cite> and <cite>trial_index</cite>,
+hashes the string using MD5, and returns the first 32 bits
+(8 hex characters) of the hash as an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_seed</strong> (<em>int</em>) – The base seed value used for reproducibility.</p></li>
+<li><p><strong>trial_index</strong> (<em>int</em>) – The trial index used to generate unique seeds across trials.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A deterministic 32-bit integer seed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -717,9 +978,9 @@ after shuffling their individual sample lists.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function" id="module-experiments.real_data_experiments.globem.run_experiment_sleep">
-<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_experiment_sleep.main">
-<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_experiment_sleep.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_experiment_sleep.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_experiment_sleep.main" title="Link to this definition"></a></dt>
+<dl class="py function" id="module-experiments.real_data_experiments.globem.run_sleep_experiment">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_sleep_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_sleep_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_sleep_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_sleep_experiment.main" title="Link to this definition"></a></dt>
 <dd><p>Main experiment function for evaluating Kent’s algorithm and DAME-BS
 on GLOBEM sleep duration data.</p>
 <section id="steps">
@@ -730,15 +991,17 @@ on GLOBEM sleep duration data.</p>
 <li><p>Handles missing data and prepares a uniform sample length across users.</p></li>
 <li><p>Scales the sleep duration values to the range [-1, 1].</p></li>
 <li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
-<li><p>Reports mean squared error (MSE) in both scaled and original ranges, along with timing stats.</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
 </ul>
 </div></blockquote>
 </section>
 </dd></dl>
 
-<dl class="py function" id="module-experiments.real_data_experiments.globem.run_experiment_steps">
-<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_experiment_steps.main">
-<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_experiment_steps.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_experiment_steps.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_experiment_steps.main" title="Link to this definition"></a></dt>
+<dl class="py function" id="module-experiments.real_data_experiments.globem.run_steps_experiment">
+<dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_steps_experiment.main">
+<span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_steps_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_steps_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_steps_experiment.main" title="Link to this definition"></a></dt>
 <dd><p>Executes the mean estimation experiment on segmented step count data.</p>
 <section id="id1">
 <h3>Steps:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
@@ -748,15 +1011,10 @@ on GLOBEM sleep duration data.</p>
 <li><p>Preprocess the data: merge, remove NaNs, flatten per-user data, and truncate to uniform length.</p></li>
 <li><p>Scale data to the [-1, 1] range and compute true means.</p></li>
 <li><p>Shuffle users and run both estimation algorithms (Kent’s and DAME-BS) 500 times.</p></li>
-<li><dl class="simple">
-<dt>Record and print:</dt><dd><ul>
-<li><p>Mean estimated values</p></li>
-<li><p>Mean Squared Error (MSE) on scaled and unscaled data</p></li>
-<li><p>Average runtime per algorithm</p></li>
-</ul>
-</dd>
-</dl>
-</li>
+<li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
+<li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
+<li><p>Saves each trial along with other parameter in a csv file.</p></li>
+<li><p>Also saves the final summary of results.</p></li>
 </ul>
 </div></blockquote>
 </section>
@@ -774,29 +1032,141 @@ estimated mean and the scaled true mean across 200 trials.</p>
 <section id="univariate-case">
 <h2>Univariate case<a class="headerlink" href="#univariate-case" title="Link to this heading"></a></h2>
 <p>Mean Squared Error vs privacy parameter alpha for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_alpha_univariate.png"><img alt="Mean Squared Error vs Alpha for the different distributions" class="align-center" src="_images/mse_vs_alpha_univariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_normal.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_normal.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_uniform.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_binomial.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_standard_t.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Mean Squared Error vs n (total number of users) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_n_univariate.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/mse_vs_n_univariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_n_normal.png"><img alt="MSE vs n" src="_images/mse_vs_n_normal.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_uniform.png"><img alt="MSE vs n" src="_images/mse_vs_n_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_n_binomial.png"><img alt="MSE vs n" src="_images/mse_vs_n_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_standard_t.png"><img alt="MSE vs n" src="_images/mse_vs_n_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_m_univariate.png"><img alt="MSE vs m for the different distributions" class="align-center" src="_images/mse_vs_m_univariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_m_normal.png"><img alt="MSE vs m" src="_images/mse_vs_m_normal.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_uniform.png"><img alt="MSE vs m" src="_images/mse_vs_m_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_m_binomial.png"><img alt="MSE vs m" src="_images/mse_vs_m_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_standard_t.png"><img alt="MSE vs m" src="_images/mse_vs_m_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="multivariate-case">
 <h2>Multivariate case<a class="headerlink" href="#multivariate-case" title="Link to this heading"></a></h2>
 <p>Mean Squared Error vs privacy parameter alpha for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_alpha_multivariate.png"><img alt="Mean Squared Error vs Alpha for the different distributions" class="align-center" src="_images/mse_vs_alpha_multivariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_normal1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_normal1.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_uniform1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_binomial1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_standard_t1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Mean Squared Error vs n (total number of users) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_n_multivariate.png"><img alt="Mean Squared Error vs n (total number of users) for the different distributions" class="align-center" src="_images/mse_vs_n_multivariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_n_normal1.png"><img alt="MSE vs n" src="_images/mse_vs_n_normal1.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_uniform1.png"><img alt="MSE vs n" src="_images/mse_vs_n_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_n_binomial1.png"><img alt="MSE vs n" src="_images/mse_vs_n_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_standard_t1.png"><img alt="MSE vs n" src="_images/mse_vs_n_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_m_multivariate.png"><img alt="MSE vs m for the different distributions" class="align-center" src="_images/mse_vs_m_multivariate.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_m_normal1.png"><img alt="MSE vs m" src="_images/mse_vs_m_normal1.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_uniform1.png"><img alt="MSE vs m" src="_images/mse_vs_m_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_m_binomial1.png"><img alt="MSE vs m" src="_images/mse_vs_m_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_standard_t1.png"><img alt="MSE vs m" src="_images/mse_vs_m_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Mean Squared Error vs d (dimensionality of each sample) for the different distributions.</p>
-<a class="reference internal image-reference" href="_images/mse_vs_d.png"><img alt="MSE vs d for the different distributions" class="align-center" src="_images/mse_vs_d.png" style="width: 600px;" />
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_d_normal.png"><img alt="MSE vs d" src="_images/mse_vs_d_normal.png" style="width: 250px;" />
 </a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_d_uniform.png"><img alt="MSE vs d" src="_images/mse_vs_d_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_d_binomial.png"><img alt="MSE vs d" src="_images/mse_vs_d_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_d_standard_t.png"><img alt="MSE vs d" src="_images/mse_vs_d_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="real-world-data">
 <h2>Real World Data<a class="headerlink" href="#real-world-data" title="Link to this heading"></a></h2>
@@ -808,7 +1178,7 @@ In our setup, each stock was considered as a separate user, and its price histor
 For each stock, we used 249 data points and compared the performance of Kent’s algorithm with DAME-BS.
 The results below show the computation time and mean squared errors, both for scaled prices within the
 range [-1, 1] and for the actual price scale.</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/mimic_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/mimic_result.png" style="width: 600px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/stocks_data.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/stocks_data.png" style="width: 500px;" />
 </a>
 <div style="margin: 1em 0; text-align: center;"></section>
 <section id="mimic-iii-medical-information-mart-for-intensive-care">
@@ -819,7 +1189,7 @@ We could only find data for 48 patients with 11 samples per user. We conducted m
 DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/Stocks_Data_Result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/Stocks_Data_Result.png" style="width: 600px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/mimic_data.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/mimic_data.png" style="width: 500px;" />
 </a>
 <div style="margin: 1em 0; text-align: center;"></section>
 <section id="globem-dataset">
@@ -834,10 +1204,10 @@ For both cases, we conducted mean estimation using DAME-BS and Kent’s algorith
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
 <p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results -</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/steps_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/steps_result.png" style="width: 600px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/globem_steps.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/globem_steps.png" style="width: 500px;" />
 </a>
 <div style="margin: 2em 0;"><p>For sleep data, we had a total of 40 users with 15 samples per user. Here are the results -</p>
-<div style="margin: 2em 0;"><a class="reference internal image-reference" href="_images/sleep_result.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/sleep_result.png" style="width: 600px;" />
+<div style="margin: 2em 0;"><a class="reference internal image-reference" href="_images/globem_sleep.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/globem_sleep.png" style="width: 500px;" />
 </a>
 <div style="margin: 2em 0;"></section>
 </section>

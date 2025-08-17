@@ -1,0 +1,37 @@
+experiments.synthetic\_data\_experiments package
+================================================
+
+Submodules
+----------
+
+experiments.synthetic\_data\_experiments.multivariate\_experiment module
+------------------------------------------------------------------------
+
+.. automodule:: experiments.synthetic_data_experiments.multivariate_experiment
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+experiments.synthetic\_data\_experiments.run\_experiments module
+----------------------------------------------------------------
+
+.. automodule:: experiments.synthetic_data_experiments.run_experiments
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+experiments.synthetic\_data\_experiments.univariate\_experiment module
+----------------------------------------------------------------------
+
+.. automodule:: experiments.synthetic_data_experiments.univariate_experiment
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: experiments.synthetic_data_experiments
+   :members:
+   :show-inheritance:
+   :undoc-members:

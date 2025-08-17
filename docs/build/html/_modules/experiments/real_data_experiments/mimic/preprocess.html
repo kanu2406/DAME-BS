@@ -39,8 +39,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../kent.html">Kent’s Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
@@ -76,10 +75,12 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="nn">hashlib</span>
 
 
 <div class="viewcode-block" id="scaling_data">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.mimic.preprocess.scaling_data">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.scaling_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scaling_data</span><span class="p">(</span><span class="n">user_samples</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scales user data into the range [-1, 1] and computes relevant statistics.</span>
@@ -136,7 +137,7 @@
 
 
 <div class="viewcode-block" id="truncate_and_shuffle">
-<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.truncate_and_shuffle">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">truncate_and_shuffle</span><span class="p">(</span><span class="n">user_samples</span><span class="p">,</span><span class="n">desired_length</span><span class="p">):</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -165,6 +166,135 @@
             <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">vals_copy</span><span class="p">)</span>
             <span class="n">final</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals_copy</span><span class="p">[:</span><span class="n">desired_length</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">final</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="make_file">
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.make_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure that the directory for a given file path exists.</span>
+
+<span class="sd">    This function extracts the directory portion of the given file path </span>
+<span class="sd">    and checks if it exists. If it does not exist, it creates the </span>
+<span class="sd">    directory (including any intermediate directories as needed).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        A path-like object representing a file system path.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        This function does not return anything. It ensures the </span>
+<span class="sd">        parent directory exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_seed">
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.make_seed">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">trial_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a deterministic 32-bit integer seed from a base seed </span>
+<span class="sd">    and a trial index.</span>
+
+<span class="sd">    The function concatenates the `base_seed` and `trial_index`, </span>
+<span class="sd">    hashes the string using MD5, and returns the first 32 bits </span>
+<span class="sd">    (8 hex characters) of the hash as an integer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base_seed : int</span>
+<span class="sd">        The base seed value used for reproducibility.</span>
+<span class="sd">    trial_index : int</span>
+<span class="sd">        The trial index used to generate unique seeds across trials.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        A deterministic 32-bit integer seed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">base_seed</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">trial_index</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>  <span class="c1"># 32-bit integer</span></div>
+
+
+<div class="viewcode-block" id="init_results_csv">
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.init_results_csv">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_results_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize (create or overwrite) a results CSV file with </span>
+<span class="sd">    predefined column headers.</span>
+
+<span class="sd">    This function ensures the parent directory exists, then </span>
+<span class="sd">    creates a CSV file with the expected schema for storing </span>
+<span class="sd">    per-trial results.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path where the CSV will be created.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        This function writes the CSV file to disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">make_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;trial&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;seed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">,</span>  <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_kent_s&quot;</span><span class="p">,</span> <span class="s2">&quot;time_dame_s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span>
+    <span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="append_row_csv">
+<a class="viewcode-back" href="../../../../experiments.real_data_experiments.mimic.html#experiments.real_data_experiments.mimic.preprocess.append_row_csv">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">append_row_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Append a single row of results to an existing CSV file.</span>
+
+<span class="sd">    This function ensures the parent directory exists and then </span>
+<span class="sd">    appends a new row (provided as a dictionary) to the CSV file. </span>
+<span class="sd">    If the file does not already exist, it is the caller&#39;s </span>
+<span class="sd">    responsibility to initialize it with `init_results_csv`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path to the CSV file.</span>
+<span class="sd">    row : dict</span>
+<span class="sd">        A dictionary where keys correspond to column names and </span>
+<span class="sd">        values correspond to row entries.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        This function writes the new row to the CSV file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">make_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">row</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+
+
+
 
 
 </pre></div>
