@@ -55,7 +55,7 @@ import numpy as np
 import math
 from dame_bs.dame_bs import dame_with_binary_search
 from dame_bs.binary_search import attempting_insertion_using_binary_search
-from experiments.univariate_experiment import generate_univariate_scaled_data
+from experiments.synthetic_data_experiments.univariate_experiment import generate_univariate_scaled_data
  
 alpha = 0.6
 n = 20000
@@ -87,19 +87,51 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 
 #### Mean squared error vs alpha (privacy parameter)
 
-<p align="center"><img src="docs/figures/mse_vs_alpha_univariate.png" alt="risk_vs_alpha" style="width:800px;"/></p>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 
 
 #### Mean squared error vs n (number of users)
 
-<p align="center"><img src="docs/figures/mse_vs_n_univariate.png" alt="risk_vs_n" style="width:800px;"/></p>
-
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 
 #### Mean squared error vs m (number of samples per user)
 
-<p align="center"><img src="docs/figures/mse_vs_m_univariate.png" alt="risk_vs_n_diff_alpha" style="width:800px;"/></p>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 ### Multivariate Case
 
@@ -108,20 +140,53 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 #### Mean squared error vs alpha (privacy parameter)
 
 
-<p align="center"><img src="docs/figures/mse_vs_alpha_multivariate.png" alt="risk_vs_alpha" style="width:800px;"/></p>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 
 
 #### Mean squared error vs n (number of users)
 
 
-<p align="center"><img src="docs/figures/mse_vs_n_multivariate.png" alt="risk_vs_n" style="width:800px;"/></p>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 
 
 #### Mean squared error vs m (number of samples per user)
 
-<p align="center"><img src="docs/figures/mse_vs_m_multivariate.png" alt="risk_vs_n_diff_alpha" style="width:800px;"/></p>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_uniform.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_standard_t.png" width="400"/></td>
+    </tr>
+  </table>
+</p>
 
 
 ## License
