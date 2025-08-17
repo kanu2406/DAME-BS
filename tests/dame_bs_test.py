@@ -5,7 +5,7 @@ from dame_bs.utils import theoretical_upper_bound
 import numpy as np
 import math
 import warnings
-from experiments.univariate_experiment import generate_univariate_scaled_data
+from experiments.synthetic_data_experiments.univariate_experiment import generate_univariate_scaled_data
 
 
 ##################################################################################################

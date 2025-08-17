@@ -1,5 +1,5 @@
 import numpy as np
-from experiments.multivariate_experiment import generate_multivariate_scaled_data
+from experiments.synthetic_data_experiments.multivariate_experiment import generate_multivariate_scaled_data
 from kent.multivariate_kent import kent_multivariate_estimator
 import pytest
 import warnings

@@ -5,7 +5,12 @@ from dame_bs.utils import theoretical_upper_bound,plot_errorbars
 import numpy as np
 from dame_bs.dame_bs import dame_with_binary_search
 import matplotlib.pyplot as plt
-from experiments.univariate_experiment import compare_univariate_algorithms
+from experiments.synthetic_data_experiments.univariate_experiment import generate_univariate_scaled_data
+from kent.kent import kent_mean_estimator
+
+
+
+
 
 ########################################################################################
 
@@ -174,4 +179,67 @@ def test_plot_errorbars_runs_with_ub(monkeypatch):
                    log_scale=True,plot_ub=False,upper_bounds=upper_bounds)
     
 
+#################################################################################################
+#### Additional Function 
+def compare_univariate_algorithms(n,m,alpha,distribution,true_mean,trials=50):
+    """
+    Compare DAME‑BS and Kent univariate estimators over multiple trials.
 
+    In each trial, this function:
+      1. Generates `n` users × `m` samples from the specified `distribution`
+         centered (in expectation) at `true_mean`.
+      2. Scales all samples and `true_mean` into [-1,1].
+      3. Runs both the DAME‑BS estimator and the Kent estimator under privacy
+         budget `alpha`.
+      4. Computes the squared error of each estimate vs. the scaled `true_mean`.
+
+    Parameters
+    ----------
+    n : int
+        Number of users.
+    m : int
+        Number of i.i.d. samples per user.
+    alpha : float
+        Local differential privacy parameter.
+    distribution : str
+        Which distribution to sample from. Supported Distributions:
+          - "normal"
+          - "uniform"
+          - "student_t"
+          - "binomial"
+    true_mean : float
+        Ground-truth mean of the underlying distribution.
+    trials : int, optional
+        Number of independent trials to average over (default: 50).
+
+    Returns
+    -------
+    median_err_dame : float
+        Median of squared errors from the DAME-BS estimator across trials.
+    lower_err_dame : float
+        First decile of  squared errors from the DAME-BS estimator across trials.
+    upper_err_dame : float
+        Last decile of squared errors from the DAME-BS estimator across trials.
+    median_err_kent : float
+        Median of squared errors from the Kent estimator across trials.
+    lower_err_kent : float
+        First decile of squared errors from the Kent estimator across trials.
+    upper_err_kent : float
+        Last decile of squared errors from the Kent estimator across trials.
+
+    """
+
+    error_dame_bs = []
+    error_kent = []
+    for _ in range(trials):
+        user_samples_scaled,true_mean_scaled = generate_univariate_scaled_data(distribution,n,m, true_mean)
+        
+        estimate = dame_with_binary_search(n, alpha, m, user_samples_scaled)
+        err1 = (estimate - true_mean_scaled)**2
+        error_dame_bs.append(err1)
+        estimate = kent_mean_estimator(user_samples_scaled,alpha)
+        err2 = (estimate - true_mean_scaled)**2
+        error_kent.append(err2)
+    # return np.mean(error_dame_bs),np.std(error_dame_bs),np.mean(error_kent),np.std(error_kent)
+    return np.median(error_dame_bs),np.percentile(error_dame_bs, 10, axis=0),np.percentile(error_dame_bs, 90, axis=0),np.median(error_kent),np.percentile(error_kent, 10, axis=0),np.percentile(error_kent, 90, axis=0)
+    

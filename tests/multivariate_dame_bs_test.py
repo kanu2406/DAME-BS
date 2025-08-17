@@ -2,7 +2,7 @@ import pytest
 from dame_bs.multivariate_dame_bs import multivariate_dame_bs_l_inf
 import numpy as np
 import warnings
-from experiments.multivariate_experiment import generate_multivariate_scaled_data
+from experiments.synthetic_data_experiments.multivariate_experiment import generate_multivariate_scaled_data
 
 ##################################################################################################
 # Invalid Input Check 

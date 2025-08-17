@@ -2,7 +2,7 @@ from kent.kent import kent_mean_estimator, partition_interval
 import numpy as np
 import pytest
 import warnings
-from experiments.univariate_experiment import generate_univariate_scaled_data
+from experiments.synthetic_data_experiments.univariate_experiment import generate_univariate_scaled_data
 
 #################################################################
 ########## Test for kent_mean_estimator #########################
