@@ -83,19 +83,19 @@ print(f"Final mean Estimate: {bar_theta:.3f}")
 
 ### Univariate Case
 
-Following plots compares of dame_bs and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for univariate case.
+Following plots compares of dame_bs, Girgis and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for univariate case.
 
 #### Mean squared error vs alpha (privacy parameter)
 
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_alpha_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_alpha_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_alpha_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_alpha_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_alpha_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
@@ -107,12 +107,12 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_n_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_n_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_n_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_n_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_n_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
@@ -123,19 +123,19 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_m_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_m_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_univariate/mse_vs_m_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_m_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_univariate/mse_vs_m_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
 
 ### Multivariate Case
 
-Following plots compares of dame_bs and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for multivariate case.
+Following plots compares of dame_bs, Girgis and Kent's algorithm by displaying how mean squared error changes with different parameters like 𝛼,n or m for multivariate case.
 
 #### Mean squared error vs alpha (privacy parameter)
 
@@ -161,12 +161,12 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_n_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_n_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_n_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_n_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_n_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
@@ -178,12 +178,12 @@ Following plots compares of dame_bs and Kent's algorithm by displaying how mean 
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_m_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_m_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_m_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_m_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_m_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
