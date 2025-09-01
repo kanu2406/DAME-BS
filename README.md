@@ -172,7 +172,7 @@ Following plots compares of dame_bs, Girgis and Kent's algorithm by displaying h
 </p>
 
 
-
+<!-- 
 #### Mean squared error vs m (number of samples per user)
 
 <p align="center">
@@ -186,7 +186,7 @@ Following plots compares of dame_bs, Girgis and Kent's algorithm by displaying h
       <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_m_standard_t.png" width="400"/></td>
     </tr>
   </table>
-</p>
+</p> -->
 
 
 ## License
