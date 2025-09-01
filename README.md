@@ -143,12 +143,12 @@ Following plots compares of dame_bs, Girgis and Kent's algorithm by displaying h
 <p align="center">
   <table>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_normal.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_uniform.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_alpha_normal.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_alpha_uniform.png" width="400"/></td>
     </tr>
     <tr>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_binomial.png" width="400"/></td>
-      <td><img src="experiments/synthetic_data_experiments/plots_multivariate/mse_vs_alpha_standard_t.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_alpha_binomial.png" width="400"/></td>
+      <td><img src="experiments/synthetic_data_experiments/results/plots_multivariate/mse_vs_alpha_standard_t.png" width="400"/></td>
     </tr>
   </table>
 </p>
