@@ -53,6 +53,7 @@ Theoretical guarantees for univariate case
  
    dame_bs
    kent
+   girgis
    experiments
    tests
 

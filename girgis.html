@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Girgis’ Algorithm &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Experiments" href="experiments.html" />
+    <link rel="prev" title="Kent’s Algorithm" href="kent.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Girgis’ Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-girgis.scalar">girgis.scalar module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.scalar.is_power_of_two"><code class="docutils literal notranslate"><span class="pre">is_power_of_two()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.scalar.mean_user_scalar"><code class="docutils literal notranslate"><span class="pre">mean_user_scalar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.scalar.meanscalar"><code class="docutils literal notranslate"><span class="pre">meanscalar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.scalar.range_scalar"><code class="docutils literal notranslate"><span class="pre">range_scalar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.scalar.rangeuser_scalar"><code class="docutils literal notranslate"><span class="pre">rangeuser_scalar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-girgis.multivariate">girgis.multivariate module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.multivariate.mean_vector"><code class="docutils literal notranslate"><span class="pre">mean_vector()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#girgis.multivariate.next_power_of_two"><code class="docutils literal notranslate"><span class="pre">next_power_of_two()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Girgis’ Algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/girgis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="girgis-algorithm">
+<h1>Girgis’ Algorithm<a class="headerlink" href="#girgis-algorithm" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>girgis</strong> module that implements locally differentially private mean estimation algorithms proposed by Girgis. This method includes Hadamard-based range-localization, per-user Laplace mechanisms for mean privatization, and aggregation utilities for both scalar and multivariate inputs.</p></li>
+<li><p><strong>girgis.scalar</strong> provides locally private range and mean estimation algorithms for 1-dimensional (scalar) data.</p></li>
+<li><p><strong>girgis.multivariate</strong> extends the same mechanisms to handle multi-dimensional (vector) data.</p></li>
+</ul>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-girgis.scalar">
+<span id="girgis-scalar-module"></span><h2>girgis.scalar module<a class="headerlink" href="#module-girgis.scalar" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.scalar.is_power_of_two">
+<span class="sig-prename descclassname"><span class="pre">girgis.scalar.</span></span><span class="sig-name descname"><span class="pre">is_power_of_two</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/scalar.html#is_power_of_two"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.scalar.is_power_of_two" title="Link to this definition"></a></dt>
+<dd><p>Check whether an integer k is a power of two.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>k<span class="classifier">int</span></dt><dd><p>The integer to test.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>bool</dt><dd><p>True if k is a power of two (1, 2, 4, 8, …),
+False otherwise.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.scalar.mean_user_scalar">
+<span class="sig-prename descclassname"><span class="pre">girgis.scalar.</span></span><span class="sig-name descname"><span class="pre">mean_user_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/scalar.html#mean_user_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.scalar.mean_user_scalar" title="Link to this definition"></a></dt>
+<dd><p>Privately release a clipped per-user mean using Laplace noise and final projection.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>user_samples<span class="classifier">array-like</span></dt><dd><p>One user’s samples (1D array or sequence).</p>
+</dd>
+<dt>a<span class="classifier">float</span></dt><dd><p>Lower bound for clipping and final projection.</p>
+</dd>
+<dt>b<span class="classifier">float</span></dt><dd><p>Upper bound for clipping and final projection.</p>
+</dd>
+<dt>eps0<span class="classifier">float</span></dt><dd><p>Privacy parameter</p>
+</dd>
+<dt>tau<span class="classifier">float</span></dt><dd><p>used for scaling laplacian noise. Scale used for Laplacian Noise is 12*tau/eps0</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>z_proj<span class="classifier">float</span></dt><dd><p>The privatized mean lying [a, b].</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.scalar.meanscalar">
+<span class="sig-prename descclassname"><span class="pre">girgis.scalar.</span></span><span class="sig-name descname"><span class="pre">meanscalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/scalar.html#meanscalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.scalar.meanscalar" title="Link to this definition"></a></dt>
+<dd><p>Privately estimate the mean of a 2D dataset (user x samples)
+using range estimation and per-user privatized means.
+It first estimate the global value range [a, b] of the dataset <cite>D</cite>
+by calling <cite>range_scalar</cite> with half the privacy budget (eps0/2).
+For each user i:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Compute the average of their samples D[i, :].</p></li>
+<li><p>Call <cite>mean_user_scalar</cite> with [a, b] and the privacy budget.</p></li>
+<li><p>This clips, noised, and projects the user mean.</p></li>
+</ul>
+</div></blockquote>
+<p>Then, aggregate the privatized user-level means across all users by taking their arithmetic mean.</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>D<span class="classifier">np.ndarray, shape (n, m)</span></dt><dd><p>Dataset with <cite>n</cite> users, each contributing <cite>m</cite> scalar samples.</p>
+</dd>
+<dt>tau<span class="classifier">float</span></dt><dd><p>Concentration radius</p>
+</dd>
+<dt>eps0<span class="classifier">float</span></dt><dd><p>Total privacy budget for the whole algorithm.
+Internally split between range estimation (eps0/2)
+and mean privatization (eps0/2).</p>
+</dd>
+<dt>B<span class="classifier">float, optional (default=1.0)</span></dt><dd><p>Known absolute bound on all samples. All entries of <cite>D</cite>
+must lie in [-B, B].</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>x_hat<span class="classifier">float</span></dt><dd><p>The privatized global mean estimate for the dataset.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.scalar.range_scalar">
+<span class="sig-prename descclassname"><span class="pre">girgis.scalar.</span></span><span class="sig-name descname"><span class="pre">range_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/scalar.html#range_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.scalar.range_scalar" title="Link to this definition"></a></dt>
+<dd><p>Distributed Private Range Estimation for Scalars.</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>D<span class="classifier">np.ndarray of shape (n, m)</span></dt><dd><p>Dataset, n users each with m samples in [-B, B].</p>
+</dd>
+<dt>tau<span class="classifier">float</span></dt><dd><p>Concentration radius.</p>
+</dd>
+<dt>epsilon0<span class="classifier">float</span></dt><dd><p>User-level LDP parameter.</p>
+</dd>
+<dt>B<span class="classifier">float</span></dt><dd><p>Bound on data values (data ∈ [-B, B]).</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id6">
+<h3>Returns:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>R<span class="classifier">List of floats</span></dt><dd><p>Estimated range [amax - 3*tau, amax + 3*tau].</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.scalar.rangeuser_scalar">
+<span class="sig-prename descclassname"><span class="pre">girgis.scalar.</span></span><span class="sig-name descname"><span class="pre">rangeuser_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/scalar.html#rangeuser_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.scalar.rangeuser_scalar" title="Link to this definition"></a></dt>
+<dd><p>Implements the Hadamard-based LDP mechanism for range localization.</p>
+<section id="id7">
+<h3>Parameters:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>D<span class="classifier">np.ndarray, shape (m,)</span></dt><dd><p>User’s samples, each in [-B, B].</p>
+</dd>
+<dt>tau<span class="classifier">float</span></dt><dd><p>Concentration radius (not used explicitly in this step, but relevant for T construction).</p>
+</dd>
+<dt>eps0<span class="classifier">float</span></dt><dd><p>User-level LDP parameter.</p>
+</dd>
+<dt>T<span class="classifier">np.ndarray, shape (k,)</span></dt><dd><p>Set of middle points of the intervals (the centers).</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id8">
+<h3>Returns:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>z<span class="classifier">float</span></dt><dd><p>User’s privatized response</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-girgis.multivariate">
+<span id="girgis-multivariate-module"></span><h2>girgis.multivariate module<a class="headerlink" href="#module-girgis.multivariate" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.multivariate.mean_vector">
+<span class="sig-prename descclassname"><span class="pre">girgis.multivariate.</span></span><span class="sig-name descname"><span class="pre">mean_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/multivariate.html#mean_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.multivariate.mean_vector" title="Link to this definition"></a></dt>
+<dd><p>Differentially private estimation of a high-dimensional mean vector
+using randomized Hadamard transform, range estimation, and
+per-coordinate privatized user means.</p>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>D<span class="classifier">np.ndarray, shape (n, m, d)</span></dt><dd><p>Input dataset with:
+- n : number of users
+- m : samples per user
+- d : dimension (must be a power of two)
+All entries must lie within [-B, B].</p>
+</dd>
+<dt>tau<span class="classifier">float</span></dt><dd><p>Concentration radius parameter</p>
+</dd>
+<dt>eps0<span class="classifier">float</span></dt><dd><p>Total user-level privacy budget.</p>
+</dd>
+<dt>B<span class="classifier">float, optional (default=1.0)</span></dt><dd><p>Known absolute bound on each coordinate of the input samples.</p>
+</dd>
+<dt>gamma<span class="classifier">float, optional (default=0.05)</span></dt><dd><p>Small failure probability (δ-like parameter) used in the
+computation of tau_prime. Must be &gt; 0.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id10">
+<h3>Returns:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>x_hat<span class="classifier">np.ndarray, shape (d,)</span></dt><dd><p>Differentially private estimate of the d-dimensional mean vector.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="girgis.multivariate.next_power_of_two">
+<span class="sig-prename descclassname"><span class="pre">girgis.multivariate.</span></span><span class="sig-name descname"><span class="pre">next_power_of_two</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/girgis/multivariate.html#next_power_of_two"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#girgis.multivariate.next_power_of_two" title="Link to this definition"></a></dt>
+<dd><p>Compute the smallest power of two greater than or equal to x.</p>
+<section id="id11">
+<h3>Parameters:<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>x<span class="classifier">int</span></dt><dd><p>Input integer (must be &gt;= 1).</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="id12">
+<h3>Returns:<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<blockquote>
+<div><dl class="simple">
+<dt>int</dt><dd><p>The least power of two such that result &gt;= x.
+- If x &lt;= 1, returns 1.</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kent.html" class="btn btn-neutral float-left" title="Kent’s Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experiments.html" class="btn btn-neutral float-right" title="Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

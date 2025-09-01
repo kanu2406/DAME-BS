@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>girgis.multivariate &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../girgis.html">Girgis’ Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments.html#results">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">girgis.multivariate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for girgis.multivariate</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">hadamard</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">girgis.scalar</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">hadamard</span>
+
+
+
+
+
+<div class="viewcode-block" id="next_power_of_two">
+<a class="viewcode-back" href="../../girgis.html#girgis.multivariate.next_power_of_two">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">next_power_of_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the smallest power of two greater than or equal to x.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">        x : int</span>
+<span class="sd">            Input integer (must be &gt;= 1).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        int</span>
+<span class="sd">            The least power of two such that result &gt;= x.</span>
+<span class="sd">            - If x &lt;= 1, returns 1.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">())</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="mean_vector">
+<a class="viewcode-back" href="../../girgis.html#girgis.multivariate.mean_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_vector</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">eps0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Differentially private estimation of a high-dimensional mean vector</span>
+<span class="sd">    using randomized Hadamard transform, range estimation, and </span>
+<span class="sd">    per-coordinate privatized user means.</span>
+
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">        D : np.ndarray, shape (n, m, d)</span>
+<span class="sd">            Input dataset with:</span>
+<span class="sd">            - n : number of users</span>
+<span class="sd">            - m : samples per user</span>
+<span class="sd">            - d : dimension (must be a power of two)</span>
+<span class="sd">            All entries must lie within [-B, B].</span>
+<span class="sd">        tau : float</span>
+<span class="sd">            Concentration radius parameter </span>
+<span class="sd">        eps0 : float</span>
+<span class="sd">            Total user-level privacy budget.</span>
+<span class="sd">        B : float, optional (default=1.0)</span>
+<span class="sd">            Known absolute bound on each coordinate of the input samples.</span>
+<span class="sd">        gamma : float, optional (default=0.05)</span>
+<span class="sd">            Small failure probability (δ-like parameter) used in the </span>
+<span class="sd">            computation of tau_prime. Must be &gt; 0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        x_hat : np.ndarray, shape (d,)</span>
+<span class="sd">            Differentially private estimate of the d-dimensional mean vector.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+
+    <span class="c1"># validate shapes</span>
+    <span class="k">if</span> <span class="n">D</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;D should have shape (n, m, d)&quot;</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_power_of_two</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;d must be power of 2 for Hadamard transform&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">D</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">B</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">D</span> <span class="o">&lt;=</span> <span class="n">B</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All entries of D must lie in [-B,B]&quot;</span><span class="p">)</span>
+
+    <span class="c1"># sample w in {+1,-1}^d and compute U = (1/sqrt(d)) H_d diag(w)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">Hd</span> <span class="o">=</span> <span class="n">hadamard</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">Hd_norm</span> <span class="o">=</span> <span class="n">Hd</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>       
+    <span class="n">U</span> <span class="o">=</span> <span class="n">Hd_norm</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>        
+
+    
+
+    <span class="c1"># compute eps0&#39; and tau&#39;</span>
+    <span class="n">eps0_prime</span> <span class="o">=</span> <span class="n">eps0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>   <span class="c1"># budget per coordinate for Range</span>
+    <span class="c1"># Compute tau&#39; = 10 * tau * sqrt(log(n d / delta)) / d</span>
+    <span class="k">if</span> <span class="n">gamma</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;delta must be &gt; 0&quot;</span><span class="p">)</span>
+    <span class="n">tau_prime</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span> <span class="n">n</span> <span class="o">*</span> <span class="n">d</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
+    <span class="c1"># adjusting upper bound after hadamard transform</span>
+    <span class="n">B_y</span> <span class="o">=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    
+
+    <span class="c1"># Adjusting tau_prime so B/tau_prime is integer &amp; power of two (required by range_scalar)</span>
+    <span class="n">raw_k</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">B_y</span> <span class="o">/</span> <span class="n">tau_prime</span><span class="p">)))</span>
+    <span class="n">k_pow2</span> <span class="o">=</span> <span class="n">next_power_of_two</span><span class="p">(</span><span class="n">raw_k</span><span class="p">)</span>
+    <span class="c1"># recompute tau_prime consistent with chosen k</span>
+    <span class="n">tau_prime</span> <span class="o">=</span> <span class="n">B_y</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">k_pow2</span><span class="p">)</span>
+
+    
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># For each coordinate l, build Dl (n, m) using Y[..., l], then call range_scalar with eps0_prime and tau_prime</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span>
+    
+    
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="n">Dl</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">l</span><span class="p">]</span>   <span class="c1"># shape (n,m)</span>
+        <span class="n">Rl</span> <span class="o">=</span> <span class="n">range_scalar</span><span class="p">(</span><span class="n">Dl</span><span class="p">,</span> <span class="n">tau_prime</span><span class="p">,</span> <span class="n">eps0_prime</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="n">B_y</span><span class="p">)</span>
+        <span class="n">ranges</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rl</span>
+        
+
+   
+    
+    <span class="n">eps_mean</span> <span class="o">=</span> <span class="n">eps0</span> <span class="o">/</span> <span class="mf">2.0</span>   <span class="c1"># half budget for the mean reporting step</span>
+    <span class="n">Z_reports</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># sampled coordinate</span>
+        <span class="p">[</span><span class="n">a_j</span><span class="p">,</span> <span class="n">b_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="c1"># user&#39;s samples in coordinate j</span>
+        <span class="n">user_coord_samples</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="n">j</span><span class="p">]</span>   <span class="c1"># length m</span>
+        <span class="c1"># privatize scalar mean for this coordinate</span>
+        <span class="n">z_scalar</span> <span class="o">=</span> <span class="n">mean_user_scalar</span><span class="p">(</span><span class="n">user_coord_samples</span><span class="p">,</span> <span class="n">a_j</span><span class="p">,</span> <span class="n">b_j</span><span class="p">,</span> <span class="n">eps_mean</span><span class="p">,</span><span class="n">tau_prime</span><span class="p">)</span>
+
+       
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">zi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">z_scalar</span>
+        <span class="n">Z_reports</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zi</span>
+
+   
+    <span class="n">z_hat</span> <span class="o">=</span> <span class="n">Z_reports</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># length d</span>
+    <span class="n">x_hat</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">z_hat</span>
+    <span class="c1"># x_hat = np.clip(x_hat, -B, B)</span>
+
+    
+    <span class="k">return</span> <span class="n">x_hat</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
