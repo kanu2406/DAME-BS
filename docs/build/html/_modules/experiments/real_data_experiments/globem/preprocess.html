@@ -42,6 +42,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../girgis.html">Girgis’ Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html#results">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">Tests</a></li>
@@ -77,7 +78,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span><span class="nn">hashlib</span>
 
 <div class="viewcode-block" id="load_and_select_steps">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.load_and_select_steps">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_steps">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_and_select_steps</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load and preprocess step count data from a CSV file containing steps data of users.</span>
@@ -115,7 +116,7 @@
 
 
 <div class="viewcode-block" id="truncating_data">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.truncating_data">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.truncating_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">truncating_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Truncates each user&#39;s data to the same number of samples (minimum length among all users),</span>
@@ -149,7 +150,7 @@
 
 
 <div class="viewcode-block" id="scaling">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.scaling">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.scaling">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scaling</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scales user sample data to the range [-1, 1] and computes the mean before and after scaling.</span>
@@ -180,20 +181,29 @@
     <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
     <span class="n">true_mean</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean: &quot;</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">vals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-        <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vals</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">user_samples_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scaled</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-    
-    <span class="n">all_vals_scaled</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">user_samples_scaled</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]</span>
-    <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_vals_scaled</span><span class="p">)</span>
 
+
+    <span class="n">user_samples_norm</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">vals_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">vals_arr</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipped</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span><span class="o">-</span><span class="n">min_val</span><span class="p">)</span>   <span class="c1"># in [0,1]</span>
+        <span class="n">user_samples_norm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">norm</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">norm</span> <span class="ow">in</span> <span class="n">user_samples_norm</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">norm</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">user_samples_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">scaled</span><span class="p">))</span>
+
+    <span class="n">true_mean_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+    <span class="n">true_mean_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">true_mean_clipped</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span><span class="o">-</span><span class="n">min_val</span><span class="p">)</span>
+    <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">true_mean_norm</span> <span class="o">-</span> <span class="mf">1.0</span>
+    
     <span class="k">return</span> <span class="n">user_samples_scaled</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span><span class="n">max_val</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span><span class="n">true_mean_scaled</span></div>
 
 
 
 <div class="viewcode-block" id="load_and_select_sleep">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.load_and_select_sleep">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_and_select_sleep</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load and preprocess sleep duration data from a CSV file.</span>
@@ -223,7 +233,7 @@
 
 
 <div class="viewcode-block" id="make_file">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.make_file">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.make_file">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensure that the directory for a given file path exists.</span>
@@ -249,7 +259,7 @@
 
 
 <div class="viewcode-block" id="make_seed">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.make_seed">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.make_seed">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">trial_index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a deterministic 32-bit integer seed from a base seed </span>
@@ -277,7 +287,7 @@
 
 
 <div class="viewcode-block" id="init_results_csv">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.init_results_csv">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.init_results_csv">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">init_results_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize (create or overwrite) a results CSV file with </span>
@@ -302,11 +312,11 @@
         <span class="s2">&quot;trial&quot;</span><span class="p">,</span>
         <span class="s2">&quot;seed&quot;</span><span class="p">,</span>
         <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">,</span>  <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;time_kent_s&quot;</span><span class="p">,</span> <span class="s2">&quot;time_dame_s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">,</span><span class="s2">&quot;theta_hat_girgis_scaled&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">,</span>  <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">,</span><span class="s2">&quot;theta_hat_girgis_orig&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">,</span><span class="s2">&quot;scaled_mse_girgis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">,</span><span class="s2">&quot;orig_mse_girgis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_kent_s&quot;</span><span class="p">,</span> <span class="s2">&quot;time_dame_s&quot;</span><span class="p">,</span><span class="s2">&quot;time_girgis_s&quot;</span><span class="p">,</span>
         <span class="s2">&quot;status&quot;</span>
     <span class="p">]</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
@@ -314,7 +324,7 @@
 
 
 <div class="viewcode-block" id="append_row_csv">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.globem.html#experiments.real_data_experiments.globem.preprocess.append_row_csv">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.globem.preprocess.append_row_csv">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">append_row_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Append a single row of results to an existing CSV file.</span>

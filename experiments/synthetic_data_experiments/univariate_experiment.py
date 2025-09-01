@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from dame_bs.utils import plot_errorbars
 from dame_bs.dame_bs import dame_with_binary_search
 from kent.kent import kent_mean_estimator
+from girgis.scalar import *
 
 
 
@@ -53,25 +53,61 @@ def generate_univariate_scaled_data(distribution,n,m, true_mean,seed=42):
         [-1,1] where the original `true_mean` falls).
 
     """
-    np.random.seed(seed)
+    r = np.random.default_rng(seed)
 
     if distribution=="normal":
         # Generate user samples: n users × m samples, sampled from N(true_mean, 1)
-        user_samples = [np.random.normal(loc=true_mean, scale=1, size=m) for _ in range(n)]
+        user_samples = [r.normal(loc=true_mean, scale=1, size=m) for _ in range(n)]
+        user_samples = np.array(user_samples)
     if distribution=="uniform":
         # Uniform
-        user_samples = [np.random.uniform(low=true_mean-1, high=true_mean+1, size=m) for _ in range(n)]
+        user_samples = [r.uniform(low=true_mean-1, high=true_mean+1, size=m) for _ in range(n)]
+        user_samples = np.array(user_samples)
     if distribution=="standard_t":
         # standard_t
-        user_samples = np.random.standard_t(df=3, size=(n, m)) + true_mean
+        user_samples = r.standard_t(df=3, size=(n, m)) + true_mean
     if distribution=="binomial":
         # Binomial 
-        user_samples = np.random.binomial(n=50,p=true_mean/50,size=(n, m)).astype(float)
+        # user_samples = np.random.binomial(n=50,p=true_mean/50,size=(n, m)).astype(float)
+        # user_samples = np.array(user_samples)
+        # lam = 3.0 if true_mean is None else float(true_mean)
+        # lambdas = np.full(n, lam, dtype=float)
+        # user_samples = r.poisson(lam=lam, size=(n, m)).astype(float)
+        # true_mean = float(lam)
+        p = true_mean
+        trials = 50
+        user_samples = r.binomial(trials, p, size=(n, m)).astype(float)
+        # print(user_samples)
+        user_samples = user_samples / float(trials)   # now nominally in [0,1]
+        actual_mean = trials*p
+        true_mean = actual_mean / float(trials)
+
+
+    
+    
+    if distribution == "binomial":
+        vmin,vmax = 0,1
+    else:
+        vmin = np.min(user_samples)
+        vmax = np.max(user_samples)
+        # low_q, high_q = 0.05,0.99
+        # vmin = float(np.quantile(flat, low_q))
+        # vmax = float(np.quantile(flat, high_q))
+        user_samples = (user_samples-vmin) / (vmax-vmin)   # now nominally in [0,1]
+        true_mean = (true_mean-vmin) /(vmax-vmin)
+
+    data_clipped = np.clip(user_samples, vmin, vmax)
+    jitter_eps = 1e-6
+    # if jitter_eps and jitter_eps > 0:
+    noise = np.random.uniform(low=-jitter_eps, high=jitter_eps, size=data_clipped.shape)
+    data_clipped = data_clipped + noise
 
 
     
     vmin = np.min(user_samples)
     vmax = np.max(user_samples)
+    data_clipped = np.clip(user_samples, vmin, vmax)
+    user_samples = data_clipped
     eps=1e-5
     rng = vmax - vmin
 
@@ -88,6 +124,93 @@ def generate_univariate_scaled_data(distribution,n,m, true_mean,seed=42):
         true_mean_scaled   = (2 * (true_mean   - vmin) / safe_rng) - 1
 
     return user_samples_scaled, true_mean_scaled
+
+
+
+
+
+
+
+
+
+
+def plot_errorbars(x_values, median_errors_kent,median_errors_dame_bs, lower_errors_kent,
+                   lower_errors_dame_bs,upper_errors_kent, upper_errors_dame_bs,
+                   median_errors_girgis,lower_errors_girgis,upper_errors_girgis, xlabel, 
+                   ylabel, title,log_scale=True,plot_ub=False,upper_bounds=None,save_path=None,
+                   log_log_scale = False,y_lim=True):
+    """
+    Plots error bars for dame_bs and kent algorithms on a single graph.
+
+    This function is typically used to visualize the mean squared errors for different values (e.g., alpha or n or m).
+
+    Args:
+        x_values (list or array-like): X-axis values (e.g., alpha values or user counts).
+        mean_errors_kent (list or array-like): Mean squared error values corresponding to `alphas` for kent algorithm.
+        mean_errors_dame_bs (list or array-like): Mean squared error values corresponding to `alphas` for dame_bs algorithm.
+        std_errors_kent (list or array-like): Standard deviation of the errors for each value in `alphas` for kent algorithm.
+        std_errors_dame_bs (list or array-like): Standard deviation of the errors for each value in `alphas` for dame_bs algorithm.
+        xlabel (str): Label for the x-axis.
+        ylabel (str): Label for the y-axis.
+        title (str): Title of the plot.
+        plot_ub (Bool) : If true then plots theoretical upper bounds for dame_bs algorithm. Default is 'False'.
+        upper_bounds (list or array-like): Theoretical upper bound values for dame_bs algorithm corresponding to `alphas`. Default is empty-list.
+        save_path (str) : If save_path is provided then saves the generated plot to provided path else displays plot. Default is None.
+
+    Returns:
+        None. Displays the plot using `matplotlib.pyplot` or or saves the plot at the given path.
+    """
+
+    if upper_bounds is None:
+        upper_bounds=[]
+    plt.figure(figsize=(8, 5))
+    plt.fill_between(x_values, lower_errors_kent, upper_errors_kent, alpha=0.3)
+    plt.plot(x_values, median_errors_kent, label="Kent")
+    
+    plt.fill_between(x_values, lower_errors_dame_bs, upper_errors_dame_bs, alpha=0.3)
+    plt.plot(x_values, median_errors_dame_bs,label="DAME-BS")
+    
+    plt.fill_between(x_values, lower_errors_girgis, upper_errors_girgis, alpha=0.3)
+    plt.plot(x_values, median_errors_girgis,label="Girgis")
+    
+    all_lowers = np.minimum(np.minimum(lower_errors_kent, lower_errors_dame_bs), lower_errors_girgis)
+    all_uppers = np.maximum(np.maximum(upper_errors_kent, upper_errors_dame_bs), upper_errors_girgis)
+
+    y_min = np.min(all_lowers) * 0.05
+    y_max = np.max(all_uppers) * 5.8
+    y_min = max(y_min, 1e-8)
+
+    if plot_ub and upper_bounds:
+        plt.plot(x_values, upper_bounds, 'r--', label='Theoretical Upper Bound')
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    if y_lim:
+        plt.ylim(y_min, y_max)
+    if log_scale & log_log_scale:
+        print("Both log scale and log_log scale cannot")
+    if log_scale:
+        plt.yscale('log')
+    if log_log_scale:
+        plt.xscale("log")
+        plt.yscale("log")
+    plt.grid(True)
+    plt.legend() 
+    if save_path:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path, bbox_inches="tight")
+        plt.close()
+        print(f"Saved plot to {save_path}")
+    else:
+        plt.show()
+
+
+
+
+
+
+
+
 
 
 def single_trial(n, m, alpha, distribution, true_mean, trial_seed):
@@ -120,8 +243,9 @@ def single_trial(n, m, alpha, distribution, true_mean, trial_seed):
     row : dict
         Dictionary containing per-trial information with keys:
         - "n", "m", "alpha", "distribution", "true_mean", "seed"
-        - "dame_estimate", "dame_mse", "dame_time"
-        - "kent_estimate", "kent_mse", "kent_time"
+        - "dame_estimate", "dame_mse", "dame_time",
+        - "kent_estimate", "kent_mse", "kent_time",
+        - "girgis_estimate","girgis_mse","girgis_time",
         - "status" : "ok" or error string
     """
     try:
@@ -144,6 +268,33 @@ def single_trial(n, m, alpha, distribution, true_mean, trial_seed):
         kent_time = t1 - t0
         kent_mse = float((est_kent - true_mean_scaled) ** 2)
 
+        # run Girgis
+        pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
+        term1 = 2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+        logA = np.log(81 / (8 * alpha**2))
+        logB = np.log(n)
+        logC = np.log(81 / (8 * n * alpha**2))
+        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+        term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
+        delta = min(max(term1, term2),1)
+
+
+        gamma = delta
+        tau = np.sqrt((np.log(2*n/gamma))/m)
+        inv_tau = 1/tau
+
+        # Round to nearest power of 2
+        nearest_pow2 = 2**int(np.round(np.log2(inv_tau)))
+
+        # Adjusted tau
+        tau_adj = 1/nearest_pow2
+        t0 = time.time()
+        est_girgis = meanscalar(user_samples_scaled, tau_adj, alpha, 1.0)
+        t1 = time.time()
+        girgis_time = t1 - t0
+        girgis_mse = float((est_girgis - true_mean_scaled) ** 2)
+
+
         row = {
             "n": int(n),
             "m": int(m),
@@ -157,6 +308,9 @@ def single_trial(n, m, alpha, distribution, true_mean, trial_seed):
             "kent_estimate": float(est_kent),
             "kent_mse": kent_mse,
             "kent_time": float(kent_time),
+            "girgis_estimate": float(est_girgis),
+            "girgis_mse": girgis_mse,
+            "girgis_time": float(girgis_time),
             "status": "ok",
         }
     except Exception as e:
@@ -173,6 +327,9 @@ def single_trial(n, m, alpha, distribution, true_mean, trial_seed):
             "kent_estimate": None,
             "kent_mse": math.nan,
             "kent_time": math.nan,
+            "girgis_estimate": None,
+            "girgis_mse": math.nan,
+            "girgis_time": math.nan,
             "status": f"error: {repr(e)}",
         }
     return row
@@ -260,6 +417,7 @@ def run_param(
         - "param_values" : list of parameter values
         - "median_dame", "lower10_dame", "upper90_dame"
         - "median_kent", "lower10_kent", "upper90_kent"
+        - "median_girgis","lower10_girgis","upper90_girgis"
         - "df" : pandas DataFrame containing all per-trial rows
     """
     if param_name not in {"alpha", "n", "m"}:
@@ -281,6 +439,9 @@ def run_param(
         "kent_estimate",
         "kent_mse",
         "kent_time",
+        "girgis_estimate",
+        "girgis_mse",
+        "girgis_time",
         "status",
     ]
 
@@ -334,6 +495,9 @@ def run_param(
                     "kent_estimate": None,
                     "kent_mse": math.nan,
                     "kent_time": math.nan,
+                    "girgis_estimate": None,
+                    "girgis_mse": math.nan,
+                    "girgis_time": math.nan,
                     "status": f"fatal_error: {repr(e)}",
                 }
 
@@ -355,6 +519,9 @@ def run_param(
                 "kent_estimate": row.get("kent_estimate"),
                 "kent_mse": row.get("kent_mse"),
                 "kent_time": row.get("kent_time"),
+                "girgis_estimate": row.get("girgis_estimate"),
+                "girgis_mse":row.get("girgis_mse"),
+                "girgis_time": row.get("girgis_time"),
                 "status": row.get("status", "ok"),
             }
 
@@ -378,6 +545,11 @@ def run_param(
     lower10_kent = grouped["kent_mse"].quantile(0.10).reindex(param_values).tolist()
     upper90_kent = grouped["kent_mse"].quantile(0.90).reindex(param_values).tolist()
 
+    median_girgis = grouped["girgis_mse"].median().reindex(param_values).tolist()
+    lower10_girgis = grouped["girgis_mse"].quantile(0.10).reindex(param_values).tolist()
+    upper90_girgis = grouped["girgis_mse"].quantile(0.90).reindex(param_values).tolist()
+
+
     return {
         "param_values": list(param_values),
         "median_dame": median_dame,
@@ -386,5 +558,11 @@ def run_param(
         "median_kent": median_kent,
         "lower10_kent": lower10_kent,
         "upper90_kent": upper90_kent,
+        "median_girgis":median_girgis,
+        "lower10_girgis":lower10_girgis,
+        "upper90_girgis":upper90_girgis,
         "df": df,
     }
+
+
+

@@ -98,14 +98,23 @@ def scaling(data):
     max_val = max(all_vals)
     true_mean=np.mean(all_vals)
     print("Mean: ",true_mean)
-    for pid, vals in data.items():
-        vals=np.array(vals)
-        scaled = (2 * (vals - min_val) / (max_val - min_val)) - 1
-        user_samples_scaled.append(scaled.tolist())
-    
-    all_vals_scaled = [v for vals in user_samples_scaled for v in vals]
-    true_mean_scaled = np.mean(all_vals_scaled)
 
+
+    user_samples_norm = []
+    for pid, vals in data.items():
+        vals_arr = np.array(vals, dtype=float)
+        clipped = np.clip(vals_arr, min_val, max_val)
+        norm = (clipped - min_val) / (max_val-min_val)   # in [0,1]
+        user_samples_norm.append(norm)
+
+    for norm in user_samples_norm:
+        scaled = 2.0 * norm - 1.0
+        user_samples_scaled.append(list(scaled))
+
+    true_mean_clipped = np.clip(true_mean, min_val, max_val)
+    true_mean_norm = (true_mean_clipped - min_val) / (max_val-min_val)
+    true_mean_scaled = 2.0 * true_mean_norm - 1.0
+    
     return user_samples_scaled, min_val,max_val,true_mean,true_mean_scaled
 
 
@@ -208,11 +217,11 @@ def init_results_csv(path):
         "trial",
         "seed",
         "n", "m", "alpha",
-        "theta_hat_kent_scaled", "theta_hat_dame_scaled",
-        "theta_hat_kent_orig",  "theta_hat_dame_orig",
-        "scaled_mse_kent", "scaled_mse_dame",
-        "orig_mse_kent", "orig_mse_dame",
-        "time_kent_s", "time_dame_s",
+        "theta_hat_kent_scaled", "theta_hat_dame_scaled","theta_hat_girgis_scaled",
+        "theta_hat_kent_orig",  "theta_hat_dame_orig","theta_hat_girgis_orig",
+        "scaled_mse_kent", "scaled_mse_dame","scaled_mse_girgis",
+        "orig_mse_kent", "orig_mse_dame","orig_mse_girgis",
+        "time_kent_s", "time_dame_s","time_girgis_s",
         "status"
     ]
     df = pd.DataFrame(columns=columns)

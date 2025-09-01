@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tests" href="tests.html" />
-    <link rel="prev" title="Kent’s Algorithm" href="kent.html" /> 
+    <link rel="prev" title="Girgis’ Algorithm" href="girgis.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,9 +45,11 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="girgis.html">Girgis’ Algorithm</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Experiments</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-experiments.synthetic_data_experiments.univariate_experiment">Univariate Experiments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.generate_univariate_scaled_data"><code class="docutils literal notranslate"><span class="pre">generate_univariate_scaled_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.plot_errorbars"><code class="docutils literal notranslate"><span class="pre">plot_errorbars()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.run_param"><code class="docutils literal notranslate"><span class="pre">run_param()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#experiments.synthetic_data_experiments.univariate_experiment.single_trial"><code class="docutils literal notranslate"><span class="pre">single_trial()</span></code></a></li>
 </ul>
@@ -137,7 +139,7 @@
              
   <section id="experiments">
 <h1>Experiments<a class="headerlink" href="#experiments" title="Link to this heading"></a></h1>
-<p>This section presents experiments done to compare the DAME-BS algorithm and Kent’s algorithm for both univariate and multivariate cases.</p>
+<p>This section presents experiments done to compare the DAME-BS algorithm, Kent’s algorithm and Girgis’ algorithm for both univariate and multivariate cases.</p>
 <section id="module-experiments.synthetic_data_experiments.univariate_experiment">
 <span id="univariate-experiments"></span><h2>Univariate Experiments<a class="headerlink" href="#module-experiments.synthetic_data_experiments.univariate_experiment" title="Link to this heading"></a></h2>
 <dl class="py function">
@@ -182,6 +184,33 @@ to compute the scaled “true_mean” output.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.plot_errorbars">
+<span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">plot_errorbars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">median_errors_kent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">median_errors_dame_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_errors_kent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_errors_dame_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_errors_kent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_errors_dame_bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">median_errors_girgis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_errors_girgis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_errors_girgis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_ub</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#plot_errorbars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.plot_errorbars" title="Link to this definition"></a></dt>
+<dd><p>Plots error bars for dame_bs and kent algorithms on a single graph.</p>
+<p>This function is typically used to visualize the mean squared errors for different values (e.g., alpha or n or m).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_values</strong> (<em>list</em><em> or </em><em>array-like</em>) – X-axis values (e.g., alpha values or user counts).</p></li>
+<li><p><strong>mean_errors_kent</strong> (<em>list</em><em> or </em><em>array-like</em>) – Mean squared error values corresponding to <cite>alphas</cite> for kent algorithm.</p></li>
+<li><p><strong>mean_errors_dame_bs</strong> (<em>list</em><em> or </em><em>array-like</em>) – Mean squared error values corresponding to <cite>alphas</cite> for dame_bs algorithm.</p></li>
+<li><p><strong>std_errors_kent</strong> (<em>list</em><em> or </em><em>array-like</em>) – Standard deviation of the errors for each value in <cite>alphas</cite> for kent algorithm.</p></li>
+<li><p><strong>std_errors_dame_bs</strong> (<em>list</em><em> or </em><em>array-like</em>) – Standard deviation of the errors for each value in <cite>alphas</cite> for dame_bs algorithm.</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – Label for the x-axis.</p></li>
+<li><p><strong>ylabel</strong> (<em>str</em>) – Label for the y-axis.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Title of the plot.</p></li>
+<li><p><strong>plot_ub</strong> (<em>Bool</em>) – If true then plots theoretical upper bounds for dame_bs algorithm. Default is ‘False’.</p></li>
+<li><p><strong>upper_bounds</strong> (<em>list</em><em> or </em><em>array-like</em>) – Theoretical upper bound values for dame_bs algorithm corresponding to <cite>alphas</cite>. Default is empty-list.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – If save_path is provided then saves the generated plot to provided path else displays plot. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None. Displays the plot using <cite>matplotlib.pyplot</cite> or or saves the plot at the given path.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="experiments.synthetic_data_experiments.univariate_experiment.run_param">
 <span class="sig-prename descclassname"><span class="pre">experiments.synthetic_data_experiments.univariate_experiment.</span></span><span class="sig-name descname"><span class="pre">run_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_per_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_csv_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results_param.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/synthetic_data_experiments/univariate_experiment.html#run_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.synthetic_data_experiments.univariate_experiment.run_param" title="Link to this definition"></a></dt>
 <dd><p>Run multiple experimental trials varying one parameter.</p>
@@ -210,6 +239,7 @@ Summary statistics (median, quantile error rates and computation time) are also 
 - “param_values” : list of parameter values
 - “median_dame”, “lower10_dame”, “upper90_dame”
 - “median_kent”, “lower10_kent”, “upper90_kent”
+- “median_girgis”,”lower10_girgis”,”upper90_girgis”
 - “df” : pandas DataFrame containing all per-trial rows</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -241,8 +271,9 @@ dictionary suitable for logging to CSV.</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>row</strong> – Dictionary containing per-trial information with keys:
 - “n”, “m”, “alpha”, “distribution”, “true_mean”, “seed”
-- “dame_estimate”, “dame_mse”, “dame_time”
-- “kent_estimate”, “kent_mse”, “kent_time”
+- “dame_estimate”, “dame_mse”, “dame_time”,
+- “kent_estimate”, “kent_mse”, “kent_time”,
+- “girgis_estimate”,”girgis_mse”,”girgis_time”,
 - “status” : “ok” or error string</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -344,6 +375,7 @@ can be written directly to CSV.</p>
 - “n”, “m”, “alpha”, “d”, “distribution”, “true_mean”, “seed”
 - “dame_estimate”, “dame_mse”, “dame_time”
 - “kent_estimate”, “kent_mse”, “kent_time”
+- “girgis_estimate”, “girgis_mse”, “girgis_time”
 - “status” : “ok” or error string</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -499,13 +531,13 @@ where each user’s samples are truncated and shuffled.</p>
 <dl class="py function" id="module-experiments.real_data_experiments.mimic.run_mimic_experiment">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.mimic.run_mimic_experiment.main">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.mimic.run_mimic_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/mimic/run_mimic_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.mimic.run_mimic_experiment.main" title="Link to this definition"></a></dt>
-<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
+<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator, algorithm proposed by Girgis and DAME-BS
 on real heart rate data from the MIMIC-III dataset.</p>
 <dl class="simple">
 <dt>Steps:</dt><dd><ul class="simple">
 <li><p>Loads and filters MIMIC-III CHARTEVENTS for heart rate data.</p></li>
 <li><p>Scales all values to [-1, 1] and truncates samples so each user have same number of samples.</p></li>
-<li><p>Runs both algorithms across 500 trials.</p></li>
+<li><p>Runs all three algorithms across 500 trials.</p></li>
 <li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
 <li><p>Saves each trial along with other parameter in a csv file.</p></li>
 <li><p>Also saves the final summary of results.</p></li>
@@ -786,7 +818,7 @@ hashes the string using MD5, and returns the first 32 bits
 <dl class="py function" id="module-experiments.real_data_experiments.stocks_data.run_stocks_experiment">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.stocks_data.run_stocks_experiment.main">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.stocks_data.run_stocks_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/stocks_data/run_stocks_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.stocks_data.run_stocks_experiment.main" title="Link to this definition"></a></dt>
-<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator and DAME-BS
+<dd><p>This script runs a 500-trial comparison of Kent’s mean estimator,Girgis mean estimator and DAME-BS
 on real stock prives data from the yfinance.</p>
 <dl class="simple">
 <dt>Steps:</dt><dd><ul class="simple">
@@ -795,7 +827,7 @@ on real stock prives data from the yfinance.</p>
 <li><p>Computes the log returns and check for stationarity of time series.</p></li>
 <li><p>Filter out all the time series with Nan values and truncate them so each of them have same number of sample.</p></li>
 <li><p>Scaled the data in range [-1,1].</p></li>
-<li><p>Runs both algorithms across 500 trials.</p></li>
+<li><p>Runs all three algorithms across 500 trials.</p></li>
 <li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
 <li><p>Saves each trial along with other parameter in a csv file.</p></li>
 <li><p>Also saves the final summary of results.</p></li>
@@ -981,7 +1013,7 @@ after shuffling their individual sample lists.</p>
 <dl class="py function" id="module-experiments.real_data_experiments.globem.run_sleep_experiment">
 <dt class="sig sig-object py" id="experiments.real_data_experiments.globem.run_sleep_experiment.main">
 <span class="sig-prename descclassname"><span class="pre">experiments.real_data_experiments.globem.run_sleep_experiment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/experiments/real_data_experiments/globem/run_sleep_experiment.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#experiments.real_data_experiments.globem.run_sleep_experiment.main" title="Link to this definition"></a></dt>
-<dd><p>Main experiment function for evaluating Kent’s algorithm and DAME-BS
+<dd><p>Main experiment function for evaluating Kent’s algorithm, Girgis’ algorithm and DAME-BS
 on GLOBEM sleep duration data.</p>
 <section id="steps">
 <h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading"></a></h3>
@@ -990,7 +1022,7 @@ on GLOBEM sleep duration data.</p>
 <li><p>Loads and concatenates multiple CSV files containing Fitbit-derived sleep duration.</p></li>
 <li><p>Handles missing data and prepares a uniform sample length across users.</p></li>
 <li><p>Scales the sleep duration values to the range [-1, 1].</p></li>
-<li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
+<li><p>Runs all three algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
 <li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
 <li><p>Saves each trial along with other parameter in a csv file.</p></li>
 <li><p>Also saves the final summary of results.</p></li>
@@ -1011,7 +1043,7 @@ on GLOBEM sleep duration data.</p>
 <li><p>Preprocess the data: merge, remove NaNs, flatten per-user data, and truncate to uniform length.</p></li>
 <li><p>Scale data to the [-1, 1] range and compute true means.</p></li>
 <li><p>Shuffle users and run both estimation algorithms (Kent’s and DAME-BS) 500 times.</p></li>
-<li><p>Runs both algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
+<li><p>Runs all three algorithms 500 times to estimate the mean and records time and accuracy.</p></li>
 <li><p>Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.</p></li>
 <li><p>Saves each trial along with other parameter in a csv file.</p></li>
 <li><p>Also saves the final summary of results.</p></li>
@@ -1175,10 +1207,10 @@ estimated mean and the scaled true mean across 200 trials.</p>
 <h2>Stock Prices<a class="headerlink" href="#stock-prices" title="Link to this heading"></a></h2>
 <p>We conducted experiments using a mean estimation algorithm to estimate the average price of stock data.
 In our setup, each stock was considered as a separate user, and its price history served as the sample data.
-For each stock, we used 249 data points and compared the performance of Kent’s algorithm with DAME-BS.
-The results below show the computation time and mean squared errors, both for scaled prices within the
+For each stock, we used 249 data points and compared the performance of Kent’s algorithm and Girgis’ algorithm with DAME-BS.
+The results below show the computation time and median squared errors, both for scaled prices within the
 range [-1, 1] and for the actual price scale.</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/stocks_data.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/stocks_data.png" style="width: 500px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/stocks_data.png"><img alt="MSE for DAME-BS, Kent and Girgis" class="align-center" src="_images/stocks_data.png" style="width: 500px;" />
 </a>
 <div style="margin: 1em 0; text-align: center;"></section>
 <section id="mimic-iii-medical-information-mart-for-intensive-care">
@@ -1186,10 +1218,10 @@ range [-1, 1] and for the actual price scale.</p>
 <p>We conducted this experiment using MIMIC-III Dataset which consists of comprehensive clinical data of critical
 care admissions from 2001-2012 (Dataset : <a class="reference external" href="https://www.kaggle.com/datasets/asjad99/mimiciii">https://www.kaggle.com/datasets/asjad99/mimiciii</a>). We used heart rate of patients over time.
 We could only find data for 48 patients with 11 samples per user. We conducted mean estimation using
-DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
+DAME-BS, Kent’s and Girgis’ algorithm 500 times and report median squared error. (for both scaled and unscaled values)
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/mimic_data.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/mimic_data.png" style="width: 500px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/mimic_data.png"><img alt="for DAME-BS, Kent and Girgis" class="align-center" src="_images/mimic_data.png" style="width: 500px;" />
 </a>
 <div style="margin: 1em 0; text-align: center;"></section>
 <section id="globem-dataset">
@@ -1200,14 +1232,14 @@ and Sleep behavior. The datasets capture various aspects of participants’ life
 such as general behavior patterns, the weekly routine cycle, the impact of COVID (Year3, 2020), and
 the gradual recovery after COVID (Year4, 2021) (Dataset : <a class="reference external" href="https://github.com/UW-EXP/GLOBEM/tree/main/data_raw">https://github.com/UW-EXP/GLOBEM/tree/main/data_raw</a>).
 We used steps from four segments of the day and total sleep duration per day for each user.
-For both cases, we conducted mean estimation using DAME-BS and Kent’s algorithm 500 times and report MSE (for both scaled and unscaled values)
+For both cases, we conducted mean estimation using DAME-BS, Kent’s and Girgis algorithm 500 times and report median squared error (for both scaled and unscaled values)
 and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
 and low number of samples per user.</p>
 <p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results -</p>
-<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/globem_steps.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/globem_steps.png" style="width: 500px;" />
+<div style="margin: 1em 0; text-align: center;"><a class="reference internal image-reference" href="_images/globem_steps.png"><img alt="MSE for DAME-BS, Kent and Girgis" class="align-center" src="_images/globem_steps.png" style="width: 500px;" />
 </a>
 <div style="margin: 2em 0;"><p>For sleep data, we had a total of 40 users with 15 samples per user. Here are the results -</p>
-<div style="margin: 2em 0;"><a class="reference internal image-reference" href="_images/globem_sleep.png"><img alt="MSE for DAME-BS and Kent" class="align-center" src="_images/globem_sleep.png" style="width: 500px;" />
+<div style="margin: 2em 0;"><a class="reference internal image-reference" href="_images/globem_sleep.png"><img alt="MSE for DAME-BS, Kent and Girgis" class="align-center" src="_images/globem_sleep.png" style="width: 500px;" />
 </a>
 <div style="margin: 2em 0;"></section>
 </section>
@@ -1216,7 +1248,7 @@ and low number of samples per user.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kent.html" class="btn btn-neutral float-left" title="Kent’s Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="girgis.html" class="btn btn-neutral float-left" title="Girgis’ Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

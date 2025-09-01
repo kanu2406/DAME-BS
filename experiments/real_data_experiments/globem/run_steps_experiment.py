@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..","..
 from kent.kent import kent_mean_estimator
 from dame_bs.dame_bs import dame_with_binary_search
 from experiments.real_data_experiments.globem.preprocess import *
+from girgis.scalar import *
 
 def main():
 
@@ -17,7 +18,7 @@ def main():
         - Preprocess the data: merge, remove NaNs, flatten per-user data, and truncate to uniform length.
         - Scale data to the [-1, 1] range and compute true means.
         - Shuffle users and run both estimation algorithms (Kent's and DAME-BS) 500 times.
-        - Runs both algorithms 500 times to estimate the mean and records time and accuracy.
+        - Runs all three algorithms 500 times to estimate the mean and records time and accuracy.
         - Reports runtime, mean estimates, and median MSE (in both scaled and original ranges) including 10th and 90th percentile.
         - Saves each trial along with other parameter in a csv file.
         - Also saves the final summary of results.
@@ -119,11 +120,41 @@ def main():
             time_d = t1 - t0
             theta_hat_dame_orig = 0.5 * (theta_hat_dame_scaled + 1) * (vmax - vmin) + vmin
 
+            # Girgis
+            pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
+            term1 = 2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+            logA = np.log(81 / (8 * alpha**2))
+            logB = np.log(n)
+            logC = np.log(81 / (8 * n * alpha**2))
+            term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+            term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
+            delta = min(max(term1, term2),1)
+
+
+            gamma = delta
+            tau = np.sqrt((np.log(2*n/gamma))/m)
+            
+            inv_tau = 1/tau
+
+            # Round to nearest power of 2
+            nearest_pow2 = 2**int(np.round(np.log2(inv_tau)))
+
+            # Adjusted tau
+            tau_adj = 1/nearest_pow2
+            t0 = time.time()
+            theta_hat_girgis_scaled = meanscalar(X, tau_adj, alpha, B=1.0)
+            t1 = time.time()
+            time_g = t1 - t0
+            theta_hat_girgis_orig = 0.5 * (theta_hat_girgis_scaled + 1) * (vmax - vmin) + vmin
+
+
             # errors (scaled and original)
             scaled_mse_kent = (theta_hat_kent_scaled - true_mean_scaled) ** 2
             scaled_mse_dame = (theta_hat_dame_scaled - true_mean_scaled) ** 2
+            scaled_mse_girgis = (theta_hat_girgis_scaled - true_mean_scaled) ** 2
             orig_mse_kent = (theta_hat_kent_orig - true_mean) ** 2
             orig_mse_dame = (theta_hat_dame_orig - true_mean) ** 2
+            orig_mse_girgis = (theta_hat_girgis_orig - true_mean) ** 2
 
             status = "ok"
 
@@ -131,14 +162,19 @@ def main():
             # on error, record NaNs and error message
             theta_hat_kent_scaled = np.nan
             theta_hat_dame_scaled = np.nan
+            theta_hat_girgis_scaled = np.nan
             theta_hat_kent_orig = np.nan
             theta_hat_dame_orig = np.nan
+            theta_hat_girgis_orig = np.nan
             scaled_mse_kent = np.nan
             scaled_mse_dame = np.nan
+            scaled_mse_girgis = np.nan
             orig_mse_kent = np.nan
             orig_mse_dame = np.nan
+            orig_mse_girgis = np.nan
             time_k = np.nan
             time_d = np.nan
+            time_g = np.nan
             status = f"error: {repr(e)}"
             print(f"Trial {trial}: error: {repr(e)}")
 
@@ -151,14 +187,19 @@ def main():
             "alpha": float(alpha),
             "theta_hat_kent_scaled": float(theta_hat_kent_scaled) if not np.isnan(theta_hat_kent_scaled) else np.nan,
             "theta_hat_dame_scaled": float(theta_hat_dame_scaled) if not np.isnan(theta_hat_dame_scaled) else np.nan,
+            "theta_hat_girgis_scaled": float(theta_hat_girgis_scaled) if not np.isnan(theta_hat_girgis_scaled) else np.nan,
             "theta_hat_kent_orig": float(theta_hat_kent_orig) if not np.isnan(theta_hat_kent_orig) else np.nan,
             "theta_hat_dame_orig": float(theta_hat_dame_orig) if not np.isnan(theta_hat_dame_orig) else np.nan,
+            "theta_hat_girgis_orig": float(theta_hat_girgis_orig) if not np.isnan(theta_hat_girgis_orig) else np.nan,
             "scaled_mse_kent": float(scaled_mse_kent) if not np.isnan(scaled_mse_kent) else np.nan,
             "scaled_mse_dame": float(scaled_mse_dame) if not np.isnan(scaled_mse_dame) else np.nan,
+            "scaled_mse_girgis": float(scaled_mse_girgis) if not np.isnan(scaled_mse_girgis) else np.nan,
             "orig_mse_kent": float(orig_mse_kent) if not np.isnan(orig_mse_kent) else np.nan,
             "orig_mse_dame": float(orig_mse_dame) if not np.isnan(orig_mse_dame) else np.nan,
+            "orig_mse_girgis": float(orig_mse_girgis) if not np.isnan(orig_mse_girgis) else np.nan,
             "time_kent_s": float(time_k) if not np.isnan(time_k) else np.nan,
             "time_dame_s": float(time_d) if not np.isnan(time_d) else np.nan,
+            "time_girgis_s": float(time_g) if not np.isnan(time_g) else np.nan,
             "status": status
         }
         append_row_csv(out_trials_csv, row)
@@ -170,21 +211,26 @@ def main():
 
     # compute summary
     summary = {
-        "dataset": "GLOBEM_steps_count_data",
+        "dataset": "GLOBEM_step_count_Data",
         "n": n,
         "m": m,
         "alpha": alpha,
         "trials": num_exp,
         "median_scaled_mse_kent": float(df["scaled_mse_kent"].median(skipna=True)),
         "median_scaled_mse_dame": float(df["scaled_mse_dame"].median(skipna=True)),
+        "median_scaled_mse_girgis": float(df["scaled_mse_girgis"].median(skipna=True)),
         "10pct_scaled_mse_kent": float(df["scaled_mse_kent"].quantile(0.1)),
         "90pct_scaled_mse_kent": float(df["scaled_mse_kent"].quantile(0.9)),
         "10pct_scaled_mse_dame": float(df["scaled_mse_dame"].quantile(0.1)),
         "90pct_scaled_mse_dame": float(df["scaled_mse_dame"].quantile(0.9)),
+        "10pct_scaled_mse_girgis": float(df["scaled_mse_girgis"].quantile(0.1)),
+        "90pct_scaled_mse_girgis": float(df["scaled_mse_girgis"].quantile(0.9)),
         "median_orig_mse_kent": float(df["orig_mse_kent"].median(skipna=True)),
         "median_orig_mse_dame": float(df["orig_mse_dame"].median(skipna=True)),
+        "median_orig_mse_girgis": float(df["orig_mse_girgis"].median(skipna=True)),
         "mean_time_kent_s": float(df["time_kent_s"].mean(skipna=True)),
         "mean_time_dame_s": float(df["time_dame_s"].mean(skipna=True)),
+        "mean_time_girgis_s": float(df["time_girgis_s"].mean(skipna=True)),
         }
     
     # save summary
@@ -202,15 +248,19 @@ def main():
           f"(10%: {summary['10pct_scaled_mse_kent']:.2e}, 90%: {summary['90pct_scaled_mse_kent']:.2e})")
     print(f"   DAME median MSE:   {summary['median_scaled_mse_dame']:.4e} "
           f"(10%: {summary['10pct_scaled_mse_dame']:.2e}, 90%: {summary['90pct_scaled_mse_dame']:.2e})")
+    print(f"   Girgis median MSE:   {summary['median_scaled_mse_girgis']:.4e} "
+          f"(10%: {summary['10pct_scaled_mse_girgis']:.2e}, 90%: {summary['90pct_scaled_mse_girgis']:.2e})")
     print("-" * 60)
     print(" Mean Squared Error (Original values)")
     print(f"   Kent median MSE:   {summary['median_orig_mse_kent']:.4e}")
     print(f"   DAME median MSE:   {summary['median_orig_mse_dame']:.4e}")
+    print(f"   Girgis median MSE:   {summary['median_orig_mse_girgis']:.4e}")
     print("-" * 60)
     
     print(" Runtime (seconds)")
     print(f"   Kent mean runtime: {summary['mean_time_kent_s']:.4f}")
     print(f"   DAME mean runtime: {summary['mean_time_dame_s']:.4f}")
+    print(f"   Girgis mean runtime: {summary['mean_time_girgis_s']:.4f}")
     print("-" * 60)
    
 

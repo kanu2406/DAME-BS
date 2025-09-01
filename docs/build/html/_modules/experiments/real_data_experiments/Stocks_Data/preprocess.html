@@ -42,6 +42,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../dame_bs.html">dame_bs package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../girgis.html">Girgis’ Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html#results">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">Tests</a></li>
@@ -87,7 +88,7 @@
 
 
 <div class="viewcode-block" id="load_and_clean_tickers">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_and_clean_tickers">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_and_clean_tickers</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4996</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads and filters NASDAQ-listed stock tickers.</span>
@@ -129,7 +130,7 @@
 
 
 <div class="viewcode-block" id="batch_download_close_prices">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.batch_download_close_prices">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">batch_download_close_prices</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&quot;1y&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="s2">&quot;1d&quot;</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function downloads stock prices in batches using tikcers over period </span>
 <span class="sd">    of 1 year with and interval of 1 day. It returns a dictionary with available </span>
@@ -171,7 +172,7 @@
 
 
 <div class="viewcode-block" id="compute_log_returns">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.compute_log_returns">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.compute_log_returns">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_log_returns</span><span class="p">(</span><span class="n">prices_dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes log returns from stock price series.</span>
@@ -195,7 +196,7 @@
 
 
 <div class="viewcode-block" id="check_stationarity">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.check_stationarity">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.check_stationarity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">check_stationarity</span><span class="p">(</span><span class="n">returns_dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks stationarity of return series using Augmented Dickey-Fuller test.</span>
@@ -226,7 +227,7 @@
 
     
 <div class="viewcode-block" id="filter_and_truncate">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.filter_and_truncate">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.filter_and_truncate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filter_and_truncate</span><span class="p">(</span><span class="n">returns_dict</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">230</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filters out time series with NaNs or insufficient length,</span>
@@ -266,7 +267,7 @@
 
 
 <div class="viewcode-block" id="scale_series">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.scale_series">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.scale_series">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scale_series</span><span class="p">(</span><span class="n">series_dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scales all time series to the range [-1, 1] using min-max normalization.</span>
@@ -291,23 +292,37 @@
 <span class="sd">                Maximum value in the original data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">all_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">series_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+    
+    <span class="n">data</span><span class="o">=</span><span class="n">series_dict</span>
+    <span class="n">user_samples_scaled</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
     <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
     <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
     <span class="n">true_mean</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_vals</span><span class="p">)</span>
-    <span class="n">scaled_returns</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">series_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">vals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-            <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vals</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">scaled</span><span class="p">)</span>
-            <span class="n">scaled_returns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scaled</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-    <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">true_mean</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">scaled_returns</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">true_mean_scaled</span><span class="p">,</span><span class="n">min_val</span><span class="p">,</span><span class="n">max_val</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean: &quot;</span><span class="p">,</span><span class="n">true_mean</span><span class="p">)</span>
 
+
+    <span class="n">user_samples_norm</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">vals_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">vals_arr</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipped</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span><span class="o">-</span><span class="n">min_val</span><span class="p">)</span>   <span class="c1"># in [0,1]</span>
+        <span class="n">user_samples_norm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">norm</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">norm</span> <span class="ow">in</span> <span class="n">user_samples_norm</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">norm</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">user_samples_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">scaled</span><span class="p">))</span>
+
+    <span class="n">true_mean_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+    <span class="n">true_mean_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">true_mean_clipped</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span><span class="o">-</span><span class="n">min_val</span><span class="p">)</span>
+    <span class="n">true_mean_scaled</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">true_mean_norm</span> <span class="o">-</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="n">user_samples_scaled</span><span class="p">,</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">true_mean_scaled</span><span class="p">,</span><span class="n">min_val</span><span class="p">,</span><span class="n">max_val</span></div>
+
+    
 
 
 <div class="viewcode-block" id="save_dict">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.save_dict">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.save_dict">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves a Python dictionary to a pickle file.</span>
@@ -324,7 +339,7 @@
 
 
 <div class="viewcode-block" id="load_dict">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.load_dict">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.load_dict">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_dict</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads a Python dictionary from a pickle file.</span>
@@ -347,7 +362,7 @@
 
 
 <div class="viewcode-block" id="make_file">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.make_file">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.make_file">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensure that the directory for a given file path exists.</span>
@@ -373,7 +388,7 @@
 
 
 <div class="viewcode-block" id="make_seed">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.make_seed">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.make_seed">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_seed</span><span class="p">(</span><span class="n">base_seed</span><span class="p">,</span> <span class="n">trial_index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a deterministic 32-bit integer seed from a base seed </span>
@@ -401,7 +416,7 @@
 
 
 <div class="viewcode-block" id="init_results_csv">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.init_results_csv">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.init_results_csv">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">init_results_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize (create or overwrite) a results CSV file with </span>
@@ -426,11 +441,11 @@
         <span class="s2">&quot;trial&quot;</span><span class="p">,</span>
         <span class="s2">&quot;seed&quot;</span><span class="p">,</span>
         <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">,</span>  <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;time_kent_s&quot;</span><span class="p">,</span> <span class="s2">&quot;time_dame_s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;theta_hat_dame_scaled&quot;</span><span class="p">,</span><span class="s2">&quot;theta_hat_girgis_scaled&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta_hat_kent_orig&quot;</span><span class="p">,</span>  <span class="s2">&quot;theta_hat_dame_orig&quot;</span><span class="p">,</span><span class="s2">&quot;theta_hat_girgis_orig&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scaled_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;scaled_mse_dame&quot;</span><span class="p">,</span><span class="s2">&quot;scaled_mse_girgis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orig_mse_kent&quot;</span><span class="p">,</span> <span class="s2">&quot;orig_mse_dame&quot;</span><span class="p">,</span><span class="s2">&quot;orig_mse_girgis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_kent_s&quot;</span><span class="p">,</span> <span class="s2">&quot;time_dame_s&quot;</span><span class="p">,</span><span class="s2">&quot;time_girgis_s&quot;</span><span class="p">,</span>
         <span class="s2">&quot;status&quot;</span>
     <span class="p">]</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
@@ -438,7 +453,7 @@
 
 
 <div class="viewcode-block" id="append_row_csv">
-<a class="viewcode-back" href="../../../../experiments.real_data_experiments.stocks_data.html#experiments.real_data_experiments.stocks_data.preprocess.append_row_csv">[docs]</a>
+<a class="viewcode-back" href="../../../../experiments.html#experiments.real_data_experiments.stocks_data.preprocess.append_row_csv">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">append_row_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Append a single row of results to an existing CSV file.</span>

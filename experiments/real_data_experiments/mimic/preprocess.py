@@ -164,11 +164,11 @@ def init_results_csv(path):
         "trial",
         "seed",
         "n", "m", "alpha",
-        "theta_hat_kent_scaled", "theta_hat_dame_scaled",
-        "theta_hat_kent_orig",  "theta_hat_dame_orig",
-        "scaled_mse_kent", "scaled_mse_dame",
-        "orig_mse_kent", "orig_mse_dame",
-        "time_kent_s", "time_dame_s",
+        "theta_hat_kent_scaled", "theta_hat_dame_scaled","theta_hat_girgis_scaled",
+        "theta_hat_kent_orig",  "theta_hat_dame_orig","theta_hat_girgis_orig",
+        "scaled_mse_kent", "scaled_mse_dame","scaled_mse_girgis",
+        "orig_mse_kent", "orig_mse_dame","orig_mse_girgis",
+        "time_kent_s", "time_dame_s","time_girgis_s",
         "status"
     ]
     df = pd.DataFrame(columns=columns)

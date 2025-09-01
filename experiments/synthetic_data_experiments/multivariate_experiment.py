@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 import sys
 import os
 from concurrent.futures import TimeoutError as FutTimeout
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from dame_bs.utils import plot_errorbars
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..","..")))
 from dame_bs.multivariate_dame_bs import multivariate_dame_bs_l_inf
 from kent.multivariate_kent import kent_multivariate_estimator
+from girgis.multivariate import *
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -42,43 +42,83 @@ def generate_multivariate_scaled_data(distribution, n, m,d, true_mean,seed=42):
         The true_mean vector under the same per‐coordinate scaling.
     """
 
-    np.random.seed(seed)
+    r= np.random.default_rng(seed)
     true_mean = np.asarray(true_mean, dtype=float)
     
 
     # Generating raw samples of shape (n, m, d)
     if distribution == "normal":
-        user_samples = np.random.normal(loc=true_mean, scale=1.0, size=(n, m, d))
+        user_samples = r.normal(loc=true_mean, scale=1.0, size=(n, m, d))
     elif distribution == "uniform":
-        user_samples = np.random.uniform(low=true_mean - 1, high=true_mean + 1, size=(n, m, d))
+        user_samples = r.uniform(low=true_mean - 1, high=true_mean + 1, size=(n, m, d))
     elif distribution == "standard_t":
-        user_samples = np.random.standard_t(df=3, size=(n, m, d)) + true_mean
+        user_samples = r.standard_t(df=2, size=(n, m, d)) + true_mean
     elif distribution == "binomial":
-        user_samples = np.random.binomial(n=50,p=true_mean/50,size=(n, m,d)).astype(float)
+        trials=50
+        p = true_mean # for true_mean in (0,1)
+        user_samples = r.binomial(trials,p,size=(n, m,d)).astype(float)
+        actual_mean=trials*p
+        user_samples = user_samples / float(trials)   # now nominally in [0,1]
+        true_mean = actual_mean / float(trials)
     else:
         raise ValueError(f"Unknown distribution: {distribution}")
 
     # Compute per‐coordinate min and max across all users and samples
-    vmin = user_samples.min(axis=(0, 1))  # shape (d,)
-    vmax = user_samples.max(axis=(0, 1))  # shape (d,)
-    eps=1e-5
-    rng = vmax - vmin
-    user_samples_scaled = np.zeros_like(user_samples)
-    true_mean_scaled = np.zeros_like(true_mean)
+    # vmin = user_samples.min(axis=(0, 1))  # shape (d,)
+    # vmax = user_samples.max(axis=(0, 1))  # shape (d,)
+    
 
     
-    for k in range(d):
-        if rng[k] == 0:
-            # if all values of that coordinate are equal
-            print(f"Generated values of the coordinate {d} are equal so mapping all of them to zero.")
-            user_samples_scaled[:, :, k] = 0.0
-            true_mean_scaled[k]      = 0.0
-        else:
-            # safe denominator
-            safe_rng = rng[k] if rng[k] > eps else eps
-            # scaling in [-1,1]^d
-            user_samples_scaled[:, :, k] = (2 * (user_samples[:, :, k] - vmin[k]) / safe_rng) - 1
-            true_mean_scaled[k]  = (2 * (true_mean[k]    - vmin[k]) / safe_rng )- 1
+    # optional: if you want deterministic bounds for binomial proportions, you could override:
+    if distribution == "binomial":
+        vmin = 0
+        vmax = 1
+    else:
+        vmin = np.min(user_samples)
+        vmax = np.max(user_samples)
+        denom = vmax-vmin
+        # broadcast subtraction/division across axes 0 and 1
+        user_samples = (user_samples - vmin) / denom
+        true_mean = (true_mean - vmin) / denom
+
+    
+    # data_clipped = np.clip(user_samples, 0, 1)
+    # user_samples=data_clipped
+    vmin,vmax=0,1
+    # vmin = user_samples.min()
+    # vmax = user_samples.max()
+    # jitter_eps = 1e-6
+    # if jitter_eps and jitter_eps > 0:
+    # noise = np.random.uniform(low=-jitter_eps, high=jitter_eps, size=user_samples.shape)
+    # user_samples = user_samples + noise
+    # data_clipped = np.clip(user_samples, vmin, vmax)
+    # user_samples=data_clipped
+
+    eps=1e-5
+    
+    rng = vmax - vmin
+    # user_samples_scaled = np.zeros_like(user_samples)
+    # true_mean_scaled = np.zeros_like(true_mean)
+
+    
+    # for k in range(d):
+    if rng == 0:
+        # if all values of that coordinate are equal
+        print(f"Generated values of the coordinate {d} are equal so mapping all of them to zero.")
+        # user_samples_scaled[:, :, k] = 0.0
+        # true_mean_scaled[k]      = 0.0
+        user_samples_scaled = np.zeros_like(user_samples)
+        true_mean_scaled = np.zeros_like(true_mean)
+    else:
+        # safe denominator
+        # safe_rng = rng[k] if rng[k] > eps else eps
+        safe_rng = rng if rng > eps else eps
+        # scaling in [-1,1]^d
+        # user_samples_scaled[:, :, k] = (2 * (user_samples[:, :, k] - vmin[k]) / safe_rng) - 1
+        # true_mean_scaled[k]  = (2 * (true_mean[k]    - vmin[k]) / safe_rng )- 1
+        user_samples_scaled = (2 * (user_samples - vmin) / safe_rng) - 1
+        true_mean_scaled  = (2 * (true_mean    - vmin) / safe_rng )- 1
+
 
 
     return user_samples_scaled, true_mean_scaled
@@ -122,6 +162,7 @@ def single_trial(n, m, alpha,d, distribution, true_mean, trial_seed):
         - "n", "m", "alpha", "d", "distribution", "true_mean", "seed"
         - "dame_estimate", "dame_mse", "dame_time"
         - "kent_estimate", "kent_mse", "kent_time"
+        - "girgis_estimate", "girgis_mse", "girgis_time"
         - "status" : "ok" or error string
     """
     try:
@@ -144,6 +185,32 @@ def single_trial(n, m, alpha,d, distribution, true_mean, trial_seed):
         kent_time = t1 - t0
         kent_mse = np.linalg.norm(est_kent - true_mean_scaled)**2
 
+        # run Girgis
+        pi_alpha = math.exp(alpha) / (1 + math.exp(alpha))
+        term1 = 2 * n * np.exp(-n * (2 * pi_alpha - 1)**2 / 2)
+        logA = np.log(81 / (8 * alpha**2))
+        logB = np.log(n)
+        logC = np.log(81 / (8 * n * alpha**2))
+        term2_inside_sqrt = logA**2 - 4 * logB * logC + 2 * n * (2 * pi_alpha - 1)**2 * np.log(3/2)
+        term2 = np.exp(0.5 * logA - 0.5 * np.sqrt(term2_inside_sqrt))
+        delta = min(max(term1, term2),1)
+
+
+        gamma = delta
+        tau = np.sqrt((np.log(2*n/gamma))/m)
+        inv_tau = 1/tau
+
+        # Round to nearest power of 2
+        nearest_pow2 = 2**int(np.round(np.log2(inv_tau)))
+        tau_adj = 1/nearest_pow2
+
+        t0 = time.time()
+        est_girgis = mean_vector(X_scaled, tau, alpha,1.0, gamma)
+        t1 = time.time()
+        girgis_time = t1 - t0
+        girgis_mse = np.linalg.norm(est_girgis - true_mean_scaled)**2
+
+
         row = {
             "n": int(n),
             "m": int(m),
@@ -158,6 +225,9 @@ def single_trial(n, m, alpha,d, distribution, true_mean, trial_seed):
             "kent_estimate": est_kent,
             "kent_mse": kent_mse,
             "kent_time": float(kent_time),
+            "girgis_estimate": est_girgis,
+            "girgis_mse": girgis_mse,
+            "girgis_time": float(girgis_time),
             "status": "ok",
         }
     except Exception as e:
@@ -175,6 +245,9 @@ def single_trial(n, m, alpha,d, distribution, true_mean, trial_seed):
             "kent_estimate": None,
             "kent_mse": math.nan,
             "kent_time": math.nan,
+            "girgis_estimate": None,
+            "girgis_mse": math.nan,
+            "girgis_time": math.nan,
             "status": f"error: {repr(e)}",
         }
     return row
@@ -290,6 +363,9 @@ def run_param_multivariate(
         "kent_estimate",
         "kent_mse",
         "kent_time",
+        "girgis_estimate",
+        "girgis_mse",
+        "girgis_time",
         "status",
     ]
 
@@ -352,6 +428,9 @@ def run_param_multivariate(
                     "kent_estimate": None,
                     "kent_mse": math.nan,
                     "kent_time": math.nan,
+                    "girgis_estimate": None,
+                    "girgis_mse": math.nan,
+                    "girgis_time": math.nan,
                     "status": f"fatal_error: {repr(e)}",
                 }
 
@@ -381,6 +460,9 @@ def run_param_multivariate(
                 "kent_estimate": row.get("kent_estimate"),
                 "kent_mse": row.get("kent_mse"),
                 "kent_time": row.get("kent_time"),
+                "girgis_estimate": row.get("girgis_estimate"),
+                "girgis_mse":row.get("girgis_mse"),
+                "girgis_time": row.get("girgis_time"),
                 "status": row.get("status", "ok"),
             }
 
@@ -403,6 +485,11 @@ def run_param_multivariate(
     lower10_kent = grouped["kent_mse"].quantile(0.10).reindex(param_values).tolist()
     upper90_kent = grouped["kent_mse"].quantile(0.90).reindex(param_values).tolist()
 
+    median_girgis = grouped["girgis_mse"].median().reindex(param_values).tolist()
+    lower10_girgis = grouped["girgis_mse"].quantile(0.10).reindex(param_values).tolist()
+    upper90_girgis = grouped["girgis_mse"].quantile(0.90).reindex(param_values).tolist()
+
+
     return {
         "param_values": list(param_values),
         "median_dame": median_dame,
@@ -411,12 +498,11 @@ def run_param_multivariate(
         "median_kent": median_kent,
         "lower10_kent": lower10_kent,
         "upper90_kent": upper90_kent,
+        "median_girgis": median_girgis,
+        "lower10_girgis": lower10_girgis,
+        "upper90_girgis": upper90_girgis,
         "df": df,
     }
-
-
-
-
 
 
 
