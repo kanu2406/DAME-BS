@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results &mdash; dame_bs 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tests" href="tests.html" />
+    <link rel="prev" title="Experiments" href="experiments.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dame_bs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dame_bs.html">dame_bs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kent.html">Kent’s Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="girgis.html">Girgis’ Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#univariate-case">Univariate case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multivariate-case">Multivariate case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-world-data">Real World Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stock-prices">Stock Prices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mimic-iii-medical-information-mart-for-intensive-care">MIMIC-III (‘Medical Information Mart for Intensive Care’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#globem-dataset">GLOBEM Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dame_bs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Results</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/results.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="results">
+<h1>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h1>
+<p>This section presents a comparison between the dame_bs algorithm and Kent’s algorithm in both
+the univariate and multivariate case. We generated datasets from three distributions—
+Normal, Uniform, and Binomial—with a mean of 0.1. All data points and the true mean were then
+scaled to the range [-1, 1]. The comparison was based on the mean squared error between the
+estimated mean and the scaled true mean across 200 trials.</p>
+<section id="univariate-case">
+<h2>Univariate case<a class="headerlink" href="#univariate-case" title="Link to this heading"></a></h2>
+<p>Mean Squared Error vs privacy parameter alpha for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_normal.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_normal.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_uniform.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_binomial.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_standard_t.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean Squared Error vs n (total number of users) for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_n_normal.png"><img alt="MSE vs n" src="_images/mse_vs_n_normal.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_uniform.png"><img alt="MSE vs n" src="_images/mse_vs_n_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_n_binomial.png"><img alt="MSE vs n" src="_images/mse_vs_n_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_standard_t.png"><img alt="MSE vs n" src="_images/mse_vs_n_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_m_normal.png"><img alt="MSE vs m" src="_images/mse_vs_m_normal.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_uniform.png"><img alt="MSE vs m" src="_images/mse_vs_m_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_m_binomial.png"><img alt="MSE vs m" src="_images/mse_vs_m_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_standard_t.png"><img alt="MSE vs m" src="_images/mse_vs_m_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="multivariate-case">
+<h2>Multivariate case<a class="headerlink" href="#multivariate-case" title="Link to this heading"></a></h2>
+<p>Mean Squared Error vs privacy parameter alpha for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_normal1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_normal1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_uniform1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_alpha_binomial1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_alpha_standard_t1.png"><img alt="MSE vs alpha" src="_images/mse_vs_alpha_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean Squared Error vs n (total number of users) for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_n_normal1.png"><img alt="MSE vs n" src="_images/mse_vs_n_normal1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_uniform1.png"><img alt="MSE vs n" src="_images/mse_vs_n_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_n_binomial1.png"><img alt="MSE vs n" src="_images/mse_vs_n_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_n_standard_t1.png"><img alt="MSE vs n" src="_images/mse_vs_n_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean Squared Error vs m (number of samples per user) for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_m_normal1.png"><img alt="MSE vs m" src="_images/mse_vs_m_normal1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_uniform1.png"><img alt="MSE vs m" src="_images/mse_vs_m_uniform1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_m_binomial1.png"><img alt="MSE vs m" src="_images/mse_vs_m_binomial1.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_m_standard_t1.png"><img alt="MSE vs m" src="_images/mse_vs_m_standard_t1.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean Squared Error vs d (dimensionality of each sample) for the different distributions.</p>
+<table class="docutils align-center">
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/mse_vs_d_normal.png"><img alt="MSE vs d" src="_images/mse_vs_d_normal.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_d_uniform.png"><img alt="MSE vs d" src="_images/mse_vs_d_uniform.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal image-reference" href="_images/mse_vs_d_binomial.png"><img alt="MSE vs d" src="_images/mse_vs_d_binomial.png" style="width: 250px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mse_vs_d_standard_t.png"><img alt="MSE vs d" src="_images/mse_vs_d_standard_t.png" style="width: 250px;" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="real-world-data">
+<h2>Real World Data<a class="headerlink" href="#real-world-data" title="Link to this heading"></a></h2>
+</section>
+<section id="stock-prices">
+<h2>Stock Prices<a class="headerlink" href="#stock-prices" title="Link to this heading"></a></h2>
+<p>We conducted experiments using a mean estimation algorithm to estimate the average price of stock data.
+In our setup, each stock was considered as a separate user, and its price history served as the sample data.
+For each stock, we used 249 data points and compared the performance of Kent’s algorithm and Girgis’ algorithm with DAME-BS.
+The results below show the computation time and median squared errors, both for scaled prices within the
+range [-1, 1] and for the actual price scale.</p>
+<div style="margin: 1em 0; text-align: center;"><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Scaled Error</p></th>
+<th class="head"><p>Time (s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAME-BS</p></td>
+<td><p>0.0015</p></td>
+<td><p>0.00023</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kent’s</p></td>
+<td><p>0.0050</p></td>
+<td><p>0.00066</p></td>
+</tr>
+<tr class="row-even"><td><p>Girgis</p></td>
+<td><p>0.0246</p></td>
+<td><p>0.00320</p></td>
+</tr>
+</tbody>
+</table>
+<div style="margin: 1em 0; text-align: center;"></section>
+<section id="mimic-iii-medical-information-mart-for-intensive-care">
+<h2>MIMIC-III (‘Medical Information Mart for Intensive Care’)<a class="headerlink" href="#mimic-iii-medical-information-mart-for-intensive-care" title="Link to this heading"></a></h2>
+<p>We conducted this experiment using MIMIC-III Dataset which consists of comprehensive clinical data of critical
+care admissions from 2001-2012 (Dataset : <a class="reference external" href="https://www.kaggle.com/datasets/asjad99/mimiciii">https://www.kaggle.com/datasets/asjad99/mimiciii</a>). We used heart rate of patients over time.
+We could only find data for 48 patients with 11 samples per user. We conducted mean estimation using
+DAME-BS, Kent’s and Girgis’ algorithm 500 times and report median squared error. (for both scaled and unscaled values)
+and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
+and low number of samples per user.</p>
+<div style="margin: 1em 0; text-align: center;"><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Scaled Error</p></th>
+<th class="head"><p>Time (s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAME-BS</p></td>
+<td><p>0.0194</p></td>
+<td><p>0.00023</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kent’s</p></td>
+<td><p>0.0242</p></td>
+<td><p>0.00066</p></td>
+</tr>
+<tr class="row-even"><td><p>Girgis</p></td>
+<td><p>0.1028</p></td>
+<td><p>0.00320</p></td>
+</tr>
+</tbody>
+</table>
+<div style="margin: 1em 0; text-align: center;"></section>
+<section id="globem-dataset">
+<h2>GLOBEM Dataset<a class="headerlink" href="#globem-dataset" title="Link to this heading"></a></h2>
+<p>We conducted this experiment using GLOBEM Dataset which consists of data from a mobile phone and
+a wearable fitness tracker 24×7, including Location, PhoneUsage, Call, Bluetooth, PhysicalActivity,
+and Sleep behavior. The datasets capture various aspects of participants’ life experiences,
+such as general behavior patterns, the weekly routine cycle, the impact of COVID (Year3, 2020), and
+the gradual recovery after COVID (Year4, 2021) (Dataset : <a class="reference external" href="https://github.com/UW-EXP/GLOBEM/tree/main/data_raw">https://github.com/UW-EXP/GLOBEM/tree/main/data_raw</a>).
+We used steps from four segments of the day and total sleep duration per day for each user.
+For both cases, we conducted mean estimation using DAME-BS, Kent’s and Girgis algorithm 500 times and report median squared error (for both scaled and unscaled values)
+and average time taken by both algorithms. The results were limited in quality due to the small nummber of users
+and low number of samples per user.</p>
+<p>For steps data, we had a total of 40 user with 88 samples per user. Here are the results -</p>
+<div style="text-align: center;"><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Scaled Error</p></th>
+<th class="head"><p>Time (s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAME-BS</p></td>
+<td><p>0.3842</p></td>
+<td><p>0.00025</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kent’s</p></td>
+<td><p>0.4985</p></td>
+<td><p>0.00069</p></td>
+</tr>
+<tr class="row-even"><td><p>Girgis</p></td>
+<td><p>0.0353</p></td>
+<td><p>0.00417</p></td>
+</tr>
+</tbody>
+</table>
+</div><p>For sleep data, we had a total of 40 users with 15 samples per user. Here are the results -</p>
+<div style="text-align: center;"><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Scaled Error</p></th>
+<th class="head"><p>Time (s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAME-BS</p></td>
+<td><p>0.0327</p></td>
+<td><p>0.00045</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kent’s</p></td>
+<td><p>0.0423</p></td>
+<td><p>0.00118</p></td>
+</tr>
+<tr class="row-even"><td><p>Girgis</p></td>
+<td><p>0.1483</p></td>
+<td><p>0.00844</p></td>
+</tr>
+</tbody>
+</table>
+</div><p>We note that Girgis’ algorithm generally performs the worst across datasets, but achieves superior
+performance on the step-count data. This can be due to the discrete and highly clustered nature of
+step-count data. Note that we used step counts across four segments of the day which makes it highly
+clustered. Girgis’ algorithm is particularly well-suited to this regime. Its Range_scalar step identifies the
+dominant cluster through Hadamard-based frequency estimation, and the subsequent Mean_user step yields
+a robust estimate once the correct concentration interval is located. In contrast, Kent’s method, while also
+bin-based, does not apply such a transform and instead depends on noisy user votes for localization. Both
+Kent’s method and DAME-BS are designed to perform better when the data distribution is smoother
+or less clustered, whereas Girgis benefits in this specific discrete setting. Nonetheless, across real world
+datasets more broadly, DAME-BS consistently matches or outperforms the alternatives.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="experiments.html" class="btn btn-neutral float-left" title="Experiments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kanupriya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
